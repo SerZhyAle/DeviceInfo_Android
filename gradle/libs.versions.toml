@@ -1,0 +1,59 @@
+# Version catalog. Toolchain pins follow the working set of the sibling Android products on this machine
+# (FastMediaSorter docs/TECH_STACK.md and Tourist_mob gradle/libs.versions.toml, read 2026-11-10, S0002);
+# the products do not share a build, so a pin moves here on its own ticket, never by reference.
+[versions]
+agp = "9.2.1"
+kotlin = "2.2.10"
+
+# Platform levels. compileSdk, targetSdk and the two minSdk values are the upstream values (FastMediaSorter
+# app_v2 and wear modules); targetSdk is re-checked at the release ticket (S0008).
+compile-sdk = "37"
+target-sdk = "36"
+min-sdk-phone = "26"
+min-sdk-wear = "28"
+
+androidx-appcompat = "1.7.1"
+google-material = "1.14.0"
+androidx-activity-compose = "1.10.1"
+compose-bom = "2024.12.01"
+androidx-wear-compose = "1.4.1"
+
+# System info port (S0003): the working set Tourist_mob builds with on this toolchain and this machine,
+# read 2026-11-10; the upstream FastMediaSorter ports use the same stack (Hilt, Timber, JUnit 4, Robolectric).
+ksp = "2.3.8"
+hilt = "2.59"
+timber = "5.0.1"
+junit = "4.13.2"
+robolectric = "4.16.1"
+
+# Wear OS app and Data Layer port (S0005)
+androidx-hilt-navigation-compose = "1.1.0"
+google-gms-play-services-wearable = "18.1.0"
+gson = "2.10.1"
+kotlinx-coroutines = "1.7.3"
+
+[libraries]
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
+google-material = { group = "com.google.android.material", name = "material", version.ref = "google-material" }
+
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activity-compose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-wear-compose-foundation = { group = "androidx.wear.compose", name = "compose-foundation", version.ref = "androidx-wear-compose" }
+androidx-wear-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "androidx-wear-compose" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidx-hilt-navigation-compose" }
+google-gms-play-services-wearable = { group = "com.google.android.gms", name = "play-services-wearable", version.ref = "google-gms-play-services-wearable" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+
+dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+dagger-hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

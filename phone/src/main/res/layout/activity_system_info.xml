@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.sza.deviceinfo.ui.common.widget.StandardToolbar
+        android:id="@+id/system_info_toolbar"
+        style="@style/Widget.DeviceInfo.Toolbar.Flat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:stbTitleIcon="@drawable/ic_info"
+        android:title="@string/settings_system_info_title"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:menu="@menu/menu_system_info" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/systemInfoSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurfaceVariant"
+        android:queryHint="@string/sysinfo_search_hint"
+        app:iconifiedByDefault="false"
+        app:queryHint="@string/sysinfo_search_hint" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/systemInfoRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/margin_large" />
+
+</LinearLayout>

@@ -1,0 +1,51 @@
+package com.sza.deviceinfo.domain.model
+
+import android.graphics.Rect
+import android.util.Range
+import android.util.Size
+import android.util.SizeF
+
+/**
+ * What the device reports about its cameras, read once for the System info report.
+ *
+ * Kept free of Camera2 types so the diagnostics section can be formatted and reasoned about without
+ * holding a camera handle: the raw characteristic constants travel as plain ints and are resolved to
+ * text at render time.
+ */
+data class CameraHardwareInventory(
+    val entries: List<CameraHardwareEntry> = emptyList(),
+)
+
+/**
+ * One camera the platform declares, or one physical sub-lens of such a camera.
+ *
+ * Every field except [cameraId] is nullable on purpose: a device may refuse any individual
+ * characteristic, and a refused value must stay distinguishable from a real zero (a fixed-focus lens
+ * genuinely reports 0 diopters).
+ */
+data class CameraHardwareEntry(
+    val cameraId: String,
+    val logicalParentId: String? = null,
+    val lensFacing: Int? = null,
+    val focalLengthsMm: List<Float> = emptyList(),
+    val sensorSizeMm: SizeF? = null,
+    /** The sensor's active pixel rectangle, the frame every crop calculation is expressed against. */
+    val activeArrayPx: Rect? = null,
+    val zoomRange: Range<Float>? = null,
+    val minFocusDistanceDiopters: Float? = null,
+    val focusDistanceCalibration: Int? = null,
+    val hardwareLevel: Int? = null,
+    val maxJpegSize: Size? = null,
+    val maxHighResolutionJpegSize: Size? = null,
+    val apertures: List<Float> = emptyList(),
+    val flashAvailable: Boolean? = null,
+    val opticalStabilization: Boolean? = null,
+    val videoStabilization: Boolean? = null,
+    val maxVideoSize: Size? = null,
+    val maxVideoFps: Int? = null,
+    val supportsRaw: Boolean? = null,
+    val supportsTenBitDynamicRange: Boolean? = null,
+) {
+    /** The entry describes a lens inside a logical camera rather than a camera the app can list. */
+    val isPhysicalSubLens: Boolean get() = logicalParentId != null
+}

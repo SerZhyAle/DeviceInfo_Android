@@ -1,0 +1,33 @@
+package com.sza.deviceinfo.core.systeminfo
+
+/**
+ * One labelled group of the System info summary: a [title] header and a list of
+ * `label to value` [fields]. Pure data, no Android dependencies.
+ *
+ * [group] is the locale-independent identity of the section; a section built without one is
+ * identified by its title instead.
+ */
+data class SystemInfoSection(
+    val title: String,
+    val fields: List<Pair<String, String>>,
+    val group: SystemInfoGroup? = null,
+) {
+    /** Key for state that must survive a locale change; falls back to the localized title. */
+    val stateKey: String
+        get() = group?.key ?: title
+}
+
+/**
+ * Render a list of [SystemInfoSection] into the grouped text format used by the
+ * System info dialog: a title line, then `  label: value` per field, with a blank
+ * line between sections. Empty sections (no fields) are skipped.
+ */
+fun List<SystemInfoSection>.renderSystemInfo(): String =
+    filter { it.fields.isNotEmpty() }.joinToString(separator = "\n\n") { section ->
+        buildString {
+            append(section.title)
+            section.fields.forEach { (label, value) ->
+                append("\n  ").append(label).append(": ").append(value)
+            }
+        }
+    }

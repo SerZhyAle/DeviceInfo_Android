@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://serzhyale.github.io/DeviceInfo_Android/sitemap.xml

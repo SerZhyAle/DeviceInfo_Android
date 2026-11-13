@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StandardToolbar">
+        <attr name="stbTitleIcon" format="reference" />
+        <attr name="stbTitleIconTint" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="CollapsibleSectionHeader">
+        <attr name="cshTitle" format="string" />
+        <attr name="cshSummary" format="string" />
+        <attr name="cshIcon" format="reference" />
+        <attr name="cshExpanded" format="boolean" />
+    </declare-styleable>
+</resources>

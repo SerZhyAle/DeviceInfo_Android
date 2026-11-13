@@ -1,0 +1,31 @@
+/* Page layer of the product landing (S0012). Linked after the byte-identical family kit (sza-kit.css), which is never
+   edited; everything here styles what the kit has no component for. No rule gives a wrapper, a section or the page a
+   max-width: the landing spans the viewport less the kit's gutter (PAGE-STYLE section 5, "Width"). */
+
+/* The documentation link of the header is a text link, not a .btn: the kit hides `.site-header .btn` under 481 px,
+   and the documentation has to stay one click away at 360 px (PAGE-CONTENT, "The landing always carries" item 4). */
+.nav-link{display:inline-flex;align-items:center;gap:var(--ui-gap);min-height:var(--ui-target);padding:0 var(--ui-gap);
+  font-family:var(--font-heading);font-weight:700;font-size:.9rem;color:var(--text)}
+.nav-link:hover{color:var(--acc-strong)}
+
+.section h2,.get h2{font-size:clamp(1.3rem,2.6vw,1.7rem);font-weight:800;margin-bottom:1rem}
+.card h3{font-size:1.05rem;font-weight:700;margin-bottom:.5rem}
+.card p{color:var(--text-2);font-size:.93rem}
+.intro{color:var(--text-2);margin-bottom:1rem}
+
+.get .whatfor{margin:0}
+.get .note{margin:0}
+.quickstart{padding:0}
+
+.pills{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0 0;padding:0;list-style:none}
+.pills .pill{display:inline-block}
+
+.help .btn-row,#help .btn-row{margin-bottom:1.25rem}
+.qa h3{font-size:.98rem;font-weight:700;margin:.9rem 0 .25rem}
+.qa:first-of-type h3{margin-top:0}
+.qa p{color:var(--text-2);font-size:.93rem}
+ul.plain{padding-inline-start:1.3rem}
+ul.plain li{margin:.4rem 0;color:var(--text-2);font-size:.93rem}
+details.sec code{font-size:.88em;overflow-wrap:anywhere}
+
+.lang-links{margin:.5rem 0;color:var(--muted)}

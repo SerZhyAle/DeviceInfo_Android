@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Розширена діагностика обмеженої збірки (S0009): назви розділів. Підписи полів лишаються
+         технічними ключами англійською, як в оригіналі. -->
+    <string name="sysinfo_section_os_security">ОС та безпека</string>
+    <string name="sysinfo_section_permissions">Спеціальні дозволи</string>
+    <string name="sysinfo_section_installer">Інсталятор та підпис</string>
+    <string name="sysinfo_section_runtimes">Середовища виконання</string>
+    <string name="sysinfo_section_mounts">Монтування та сховище</string>
+    <string name="sysinfo_section_network_diagnostics">Мережева діагностика</string>
+    <string name="sysinfo_section_process">Ресурси процесу</string>
+</resources>

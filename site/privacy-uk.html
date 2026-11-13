@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="uk" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Політика конфіденційності - DeviceInfo</title>
+  <meta name="description" content="Що DeviceInfo для Android і Wear OS читає, зберігає і для чого запитує дозволи. Розробник не отримує жодних ваших даних.">
+  <meta name="theme-color" content="#0a0f1a">
+  <link rel="canonical" href="https://serzhyale.github.io/DeviceInfo_Android/privacy-uk.html">
+  <link rel="alternate" hreflang="en" href="https://serzhyale.github.io/DeviceInfo_Android/privacy.html">
+  <link rel="alternate" hreflang="ru" href="https://serzhyale.github.io/DeviceInfo_Android/privacy-ru.html">
+  <link rel="alternate" hreflang="uk" href="https://serzhyale.github.io/DeviceInfo_Android/privacy-uk.html">
+  <link rel="alternate" hreflang="x-default" href="https://serzhyale.github.io/DeviceInfo_Android/privacy.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="DeviceInfo">
+  <meta property="og:title" content="Політика конфіденційності - DeviceInfo">
+  <meta property="og:description" content="Що DeviceInfo для Android і Wear OS читає, зберігає і для чого запитує дозволи. Розробник не отримує жодних ваших даних.">
+  <meta property="og:url" content="https://serzhyale.github.io/DeviceInfo_Android/privacy-uk.html">
+  <meta property="og:image" content="https://serzhyale.github.io/DeviceInfo_Android/assets/icon-512.png">
+  <meta property="og:locale" content="uk_UA">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="https://serzhyale.github.io/DeviceInfo_Android/assets/icon-512.png">
+  <meta name="twitter:title" content="Політика конфіденційності - DeviceInfo">
+  <meta name="twitter:description" content="Що DeviceInfo для Android і Wear OS читає, зберігає і для чого запитує дозволи. Розробник не отримує жодних ваших даних.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Політика конфіденційності - DeviceInfo","description":"Що DeviceInfo для Android і Wear OS читає, зберігає і для чого запитує дозволи. Розробник не отримує жодних ваших даних.","url":"https://serzhyale.github.io/DeviceInfo_Android/privacy-uk.html","inLanguage":"uk","publisher":{"@type":"Person","name":"Serhii Zhyhunenko","url":"https://sza.od.ua"}}</script>
+  <!-- PAGE-STYLE section 7: theme and the touch profile are resolved before the first stylesheet, so nothing flashes.
+       sza-theme holds exactly dark or light and is shared with every page of this origin. -->
+  <script>
+(function(){try{
+  var h=document.documentElement,t=localStorage.getItem('sza-theme');
+  if(t!=='dark'&&t!=='light')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';
+  h.setAttribute('data-theme',t);
+  h.setAttribute('data-ui-profile',matchMedia('(pointer: coarse)').matches?'touch':'pointer');
+}catch(e){}})();
+  </script>
+  <link rel="stylesheet" href="assets/sza-kit.css">
+  <link rel="stylesheet" href="assets/policy.css">
+</head>
+<body>
+<div class="bg-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div></div>
+<header class="site-header">
+  <span class="brand">DeviceInfo<span class="dot">.</span></span>
+  <div class="seg" role="group" aria-label="Мова">
+    <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    <button type="button" data-lang="ua" aria-pressed="true">UA</button>
+  </div>
+  <button type="button" class="theme-btn" id="themeBtn" aria-label="Увімкнути світлу тему"><span class="gi gi-theme" aria-hidden="true"></span><span>Тема</span></button>
+</header>
+<main class="container section" id="main">
+  <noscript><p class="lang-links"><a href="privacy.html" hreflang="en">English</a> &middot; <a href="privacy-ru.html" hreflang="ru">Русский</a> &middot; <a href="privacy-uk.html" hreflang="uk">Українська</a></p></noscript>
+  <article class="policy-card">
+<h1 id="politika-konfidenciinosti-deviceinfo">Політика конфіденційності DeviceInfo</h1>
+<p><strong>Оновлено: 13 листопада 2026 р.</strong></p>
+<p>DeviceInfo показує відомості про пристрій Android, на якому працює: система, обладнання, екран, пам'ять, батарея,
+датчики, камери, стан мережі та діагностика. Це застосунок для телефонів Android і застосунок для годинників Wear OS,
+які публікує Serhii Zhyhunenko (SerZhyAle). Політика охоплює обидва пакети й зазначає, про який із них ідеться, де вони
+відрізняються.</p>
+<p>Коротко:</p>
+<ul>
+<li><strong>Розробник не отримує жодних ваших даних.</strong> У розробника немає сервера, він не веде облікових записів, а в
+застосунках немає аналітики, звітів про збої, реклами та коду стеження.</li>
+<li><strong>Застосунки не можуть вийти в інтернет.</strong> Жоден із пакетів не оголошує дозвіл на доступ до інтернету.</li>
+<li><strong>Показане лишається на тому пристрої, який його показує,</strong> доки ви самі не скопіюєте, не збережете,
+не надішлете це або не передасте з годинника на телефон.</li>
+</ul>
+<h2 id="what-the-apps-do-not-do">1. Чого застосунки не роблять</h2>
+<ul>
+<li>У них немає телеметрії: ні аналітики, ні звітів про збої, ні реклами, ні рекламного ідентифікатора, ні сторонніх
+бібліотек стеження. Компоненти, з яких їх зібрано, перелічено в розділі 8.</li>
+<li>Вони не створюють облікового запису й ніде не просять увійти.</li>
+<li>Вони не запитують ваше місцеперебування, контакти, фотографії, файли, мікрофон, камеру й номер телефону. Вони
+перелічують датчики та камери пристрою і їхні можливості; вони не роблять знімків і не записують звук.</li>
+<li>Вони не читають даних інших застосунків. Застосунок на телефоні перевіряє про один сторонній застосунок лише те,
+чи встановлено служби Google Play і якої вони версії, бо звіт називає цю версію.</li>
+</ul>
+<h2 id="what-the-apps-read">2. Що застосунки читають на вашому пристрої</h2>
+<p>Застосунки читають на самому пристрої те, що Android надає будь-якому застосунку: версію та збірку системи, обладнання
+й процесор, екран, обсяги пам'яті й сховища, стан батареї, датчики та можливості камер, чи під'єднано пристрій до мережі
+і яким типом зв'язку, а також подібну діагностику. Значення, за якими можна впізнати пристрій чи його місце в мережі -
+хеш підпису застосунку, локальні мережеві адреси та шляхи монтування сховища, - за замовчуванням приховані в копії, яку
+ви робите, і з'являються лише тоді, коли ви самі вибираєте копіювання повного звіту й підтверджуєте його.</p>
+<h2 id="what-the-apps-store">3. Що застосунки зберігають</h2>
+<ul>
+<li><strong>Телефон:</strong> які розділи звіту розгорнуто, чи відповідали ви на запитання про сповіщення, і звіти, які годинник надіслав на телефон. Звіти - це файли у власному
+сховищі застосунку; телефон лишає тільки кілька останніх і видаляє старіші.</li>
+<li><strong>Годинник:</strong> ні звіту, ні облікового запису.</li>
+<li>Резервне копіювання Android вимкнено для обох пакетів, тож нічого з цього не копіюється до вашого облікового запису
+Google. Усе видаляється, коли ви видаляєте застосунок.</li>
+</ul>
+<h2 id="what-leaves-the-device">4. Що залишає пристрій</h2>
+<p>Лише за дією, яку ви вибрали:</p>
+<ul>
+<li><strong>Копіювати</strong> поміщає текст звіту або одного розділу в буфер обміну. Інші застосунки можуть читати буфер
+обміну в межах, які допускає Android.</li>
+<li><strong>Зберегти</strong> записує звіт текстовим файлом у теку «Завантаження» телефона.</li>
+<li><strong>Поділитися</strong> передає текст звіту застосунку, який ви виберете в системному меню «Поділитися» Android.
+DeviceInfo не вибирає одержувача й не бачить його.</li>
+<li><strong>Надіслати на телефон</strong> на годиннику передає текст звіту годинника на спарений телефон через Wearable Data Layer
+служб Google Play - канал між вашими власними пристроями. Телефон зберігає звіт, показує сповіщення
+«Звіт із годинника отримано» і відповідає коротким підтвердженням. Через сервер розробника не проходить нічого.</li>
+</ul>
+<h2 id="permissions">5. Дозволи</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Пакет</th><th>Дозвіл</th><th>Для чого</th></tr></thead>
+<tbody>
+<tr><td>Телефон</td><td><code>ACCESS_NETWORK_STATE</code></td><td>Показує, чи під'єднано пристрій до мережі, через Wi-Fi чи мобільні дані, чи підключення лімітне і чи немає VPN, - для розділу «Мережа» звіту.</td></tr>
+<tr><td>Телефон</td><td><code>POST_NOTIFICATIONS</code></td><td>Показує сповіщення «Звіт із годинника отримано», коли годинник надсилає звіт. Застосунок запитує один раз, з коротким поясненням, під час першого відкриття; пізніше сповіщення можна ввімкнути в меню екрана «Відомості про систему». Коли сповіщення вимкнено, телефон усе одно зберігає звіт, а годинник повідомляє, що сповіщення вимкнено.</td></tr>
+<tr><td>Годинник</td><td><code>ACCESS_WIFI_STATE</code></td><td>Називає діапазони та стандарти Wi-Fi, які підтримує радіомодуль годинника.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Інших немає: немає дозволів на інтернет, місцеперебування, контакти, сховище, камеру й мікрофон.</p>
+<h2 id="google">6. Служби Google Play і Google Play</h2>
+<p>Зв'язок між годинником і телефоном використовує Wearable Data Layer служб Google Play, які Google запускає на пристроях
+на власних умовах. Google Play, крамниця, може передавати розробникові зведену статистику - наприклад, кількість
+встановлень і частку збоїв - з пристроїв, власники яких діляться нею з Google. Розробник не отримує від застосунків
+жодних даних про окремі пристрої.</p>
+<h2 id="children">7. Діти</h2>
+<p>Застосунки не призначені для дітей і не збирають персональних даних ні в кого.</p>
+<h2 id="components">8. Сторонні компоненти</h2>
+<p>Ліцензії компонентів, з яких зібрано застосунки, перелічено у файлі <code>THIRD-PARTY-NOTICES.txt</code>, який входить до
+обох пакетів і лежить у репозиторії початкового коду: AndroidX, Material Components, Jetpack Compose і Wear Compose,
+Dagger і Hilt, Gson, Timber, бібліотеки Kotlin і служби Google Play (Wearable). Жоден із них не є бібліотекою аналітики,
+реклами чи стеження.</p>
+<h2 id="deleting-your-data">9. Видалення ваших даних</h2>
+<p>Видалення застосунку стирає все, що він зберігає, зокрема звіти, отримані з годинника. Сховище можна очистити й у
+налаштуваннях Android. Файл, збережений у «Завантаження», і текст, який ви скопіювали чи кудись надіслали, ви видаляєте
+самі.</p>
+<h2 id="open-source">10. Відкритий початковий код</h2>
+<p>DeviceInfo - програмне забезпечення з відкритим початковим кодом за ліцензією MIT. Повний початковий код загальнодоступний
+на <a rel="noopener" href="https://github.com/SerZhyAle/DeviceInfo_Android">GitHub</a>.</p>
+<h2 id="changes-to-this-policy">11. Зміни політики</h2>
+<p>Коли застосунки змінюють те, що вони читають, зберігають чи надсилають, ця сторінка змінюється в тому самому випуску, а
+дата «Оновлено» вгорі зсувається. Текст на цій сторінці - це текст тієї версії застосунків, яку опубліковано зараз.</p>
+<h2 id="contact">12. Контакти</h2>
+<p>Запитання, відгуки та звернення до підтримки:</p>
+<ul>
+<li><strong>E-mail:</strong> sza@ukr.net</li>
+<li><strong>Трекер завдань:</strong> <a rel="noopener" href="https://github.com/SerZhyAle/DeviceInfo_Android/issues">https://github.com/SerZhyAle/DeviceInfo_Android/issues</a></li>
+<li><strong>Розробник і видавець:</strong> Serhii Zhyhunenko (SerZhyAle)</li>
+</ul>
+  </article>
+</main>
+<footer class="site-footer"><div class="container">
+  <div class="footer-bottom">
+    <span>&copy; 2026 <a href="https://sza.od.ua" rel="noopener">Serhii Zhyhunenko</a></span>
+    <span><a href="https://sza.od.ua" rel="noopener">sza.od.ua</a> &middot; <a href="https://github.com/SerZhyAle" rel="noopener">GitHub</a> &middot; <a href="mailto:sza@ukr.net">sza@ukr.net</a></span>
+  </div>
+</div></footer>
+<button type="button" class="to-top" id="toTop" aria-label="Нагору"><span class="gi gi-top" aria-hidden="true"></span></button>
+<script>
+(function(){
+  var h=document.documentElement,urls={ru:'privacy-ru.html',en:'privacy.html',ua:'privacy-uk.html'};
+  var tb=document.getElementById('themeBtn'),labels={light:'Увімкнути темну тему',dark:'Увімкнути світлу тему'};
+  function sync(){tb.setAttribute('aria-label',labels[h.getAttribute('data-theme')==='light'?'light':'dark'])}
+  sync();
+  tb.addEventListener('click',function(){
+    var n=h.getAttribute('data-theme')==='light'?'dark':'light';
+    h.setAttribute('data-theme',n);
+    try{localStorage.setItem('sza-theme',n)}catch(e){}
+    sync();
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.seg button[data-lang]'),function(b){
+    b.addEventListener('click',function(){
+      var k=b.getAttribute('data-lang');
+      try{localStorage.setItem('sza-lang',k)}catch(e){}
+      location.href=urls[k];
+    });
+  });
+  var top=document.getElementById('toTop');
+  addEventListener('scroll',function(){top.classList.toggle('show',scrollY>600)},{passive:true});
+  top.addEventListener('click',function(){scrollTo({top:0})});
+})();
+</script>
+</body>
+</html>

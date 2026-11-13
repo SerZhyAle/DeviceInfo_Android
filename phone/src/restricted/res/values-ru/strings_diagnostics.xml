@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Расширенная диагностика ограниченной сборки (S0009): названия разделов. Подписи полей остаются
+         техническими ключами на английском, как в оригинале. -->
+    <string name="sysinfo_section_os_security">ОС и безопасность</string>
+    <string name="sysinfo_section_permissions">Специальные разрешения</string>
+    <string name="sysinfo_section_installer">Установщик и подпись</string>
+    <string name="sysinfo_section_runtimes">Среды выполнения</string>
+    <string name="sysinfo_section_mounts">Монтирования и хранилище</string>
+    <string name="sysinfo_section_network_diagnostics">Сетевая диагностика</string>
+    <string name="sysinfo_section_process">Ресурсы процесса</string>
+</resources>

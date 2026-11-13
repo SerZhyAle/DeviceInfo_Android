@@ -1,0 +1,44 @@
+DeviceInfo - third-party notices
+================================
+
+DeviceInfo itself is released under the MIT License (LICENSE in the source repository).
+The phone package and the watch package link the components below. None of them is a native
+library, a codec or a copyleft component; every one is used unmodified, as a binary from the
+public Maven repositories of Google or Maven Central. This file ships inside both packages
+(assets/THIRD-PARTY-NOTICES.txt) and is kept byte-identical in both.
+
+Component                                   Used in        License
+------------------------------------------  -------------  --------------------------------------------
+AndroidX (appcompat, core, activity,        phone, watch   Apache License 2.0
+  fragment, lifecycle, savedstate, ..)
+Material Components for Android             phone          Apache License 2.0
+Jetpack Compose (ui, foundation, runtime)   watch          Apache License 2.0
+Wear Compose (foundation, material)         watch          Apache License 2.0
+AndroidX Hilt navigation for Compose        watch          Apache License 2.0
+Dagger and Hilt                             phone, watch   Apache License 2.0
+Gson                                        phone, watch   Apache License 2.0
+Timber                                      phone, watch   Apache License 2.0
+Kotlin standard library, kotlinx.coroutines phone, watch   Apache License 2.0
+Google Play services (Wearable)             phone, watch   Android Software Development Kit License
+
+Upstream sources
+----------------
+AndroidX, Jetpack Compose, Wear Compose, Hilt navigation   https://developer.android.com/jetpack/androidx
+Material Components for Android                            https://github.com/material-components/material-components-android
+Dagger and Hilt                                            https://github.com/google/dagger
+Gson                                                       https://github.com/google/gson
+Timber                                                     https://github.com/JakeWharton/timber
+Kotlin and kotlinx.coroutines                              https://github.com/JetBrains/kotlin  https://github.com/Kotlin/kotlinx.coroutines
+Google Play services                                       https://developers.google.com/android/guides/overview
+
+License texts
+-------------
+Apache License 2.0
+    https://www.apache.org/licenses/LICENSE-2.0
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use these components except in
+    compliance with the License. Unless required by applicable law or agreed to in writing, software distributed
+    under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+    express or implied. See the License for the specific language governing permissions and limitations.
+
+Android Software Development Kit License (Google Play services)
+    https://developer.android.com/studio/terms

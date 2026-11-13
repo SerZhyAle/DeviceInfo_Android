@@ -1,0 +1,49 @@
+name: Site
+run-name: Publish site/ to GitHub Pages
+
+# S0008 and S0012: site/ holds the hand-authored privacy pages and the landing in three locales, rendered by
+# tools/site/render-landing.ps1 and committed. This workflow publishes site/ as it is, and refuses to unless the landing
+# equals its sources. The check runs on Windows, where the renderer is measured; the deploy runs on Linux.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - 'tools/site/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Landing pages equal their sources
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -File tools/site/render-landing.ps1 -Check
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+  deploy:
+    needs: check
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_tiny">2dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_normal">8dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="touch_target_min_height">48dp</dimen>
+    <dimen name="system_info_group_copy_button_width">40dp</dimen>
+    <dimen name="system_info_group_padding_horizontal">6dp</dimen>
+    <dimen name="system_info_group_padding_vertical">4dp</dimen>
+    <dimen name="system_info_group_leading_spacing">4dp</dimen>
+    <dimen name="system_info_group_title_text_size">14sp</dimen>
+    <dimen name="collapsible_section_title_text_size">16sp</dimen>
+    <dimen name="icon_tier_24">24dp</dimen>
+    <dimen name="settings_help_icon_size">24dp</dimen>
+    <dimen name="settings_padding_vertical">12dp</dimen>
+    <dimen name="toggler_desc_text_size">12sp</dimen>
+    <dimen name="toolbar_title_icon_gap">8dp</dimen>
+</resources>

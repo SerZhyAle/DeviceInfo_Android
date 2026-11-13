@@ -1,0 +1,277 @@
+package com.sza.deviceinfo.ui.systeminfo.helpers
+
+import android.content.ContentValues
+import android.content.Context
+import android.content.Intent
+import android.content.res.Configuration
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import com.sza.deviceinfo.R
+import com.sza.deviceinfo.core.clipboard.copyTextToClipboard
+import com.sza.deviceinfo.core.systeminfo.SystemInfoReport
+import com.sza.deviceinfo.core.systeminfo.SystemInfoSection
+import com.sza.deviceinfo.core.systeminfo.renderSystemInfo
+import com.sza.deviceinfo.core.util.rethrowIfCancellation
+import com.sza.deviceinfo.databinding.ActivitySystemInfoBinding
+import com.sza.deviceinfo.di.IoDispatcher
+import com.sza.deviceinfo.domain.repository.SystemInfoGroupStateRepository
+import com.sza.deviceinfo.ui.systeminfo.adapter.SystemInfoAdapter
+import com.sza.deviceinfo.ui.systeminfo.model.SystemInfoListItem
+import com.sza.deviceinfo.util.applySystemBarInsetPadding
+import com.sza.deviceinfo.util.queryIntentActivitiesCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import timber.log.Timber
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import javax.inject.Inject
+
+/** Keeps report gathering, rendering and export behaviour out of the screen host. */
+class SystemInfoWindowManager @Inject constructor(
+    private val systemInfoDialogManager: SystemInfoDialogManager,
+    private val notificationPermission: NotificationPermissionCoordinator,
+    @ApplicationContext private val appContext: Context,
+    groupStateRepository: SystemInfoGroupStateRepository,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+) {
+    private var currentReport: SystemInfoReport? = null
+    private var systemInfoAdapter: SystemInfoAdapter? = null
+    private val expansionState = SystemInfoExpansionState(groupStateRepository)
+    private var currentQuery: String = ""
+
+    suspend fun gather(context: Context): SystemInfoReport = systemInfoDialogManager.gather(context)
+
+    /** Raises the one-time notification explanation once the report is on screen. */
+    fun onScreenShown(activity: AppCompatActivity) = notificationPermission.onScreenShown(activity)
+
+    /** Re-reads whether notifications are on, so the menu entry follows a return from the system settings. */
+    fun onResume(binding: ActivitySystemInfoBinding) = notificationPermission.refreshMenu(binding)
+
+    fun bind(activity: AppCompatActivity, binding: ActivitySystemInfoBinding) {
+        notificationPermission.bind(activity, binding)
+        binding.root.applySystemBarInsetPadding()
+        binding.systemInfoToolbar.setUpNavigation(activity)
+        binding.systemInfoToolbar.setOnMenuItemClickListener { item -> onAction(activity, binding, item.itemId) }
+
+        systemInfoAdapter = SystemInfoAdapter(
+            onToggleSection = { stateKey ->
+                expansionState.toggle(stateKey)
+                updateExpandCollapseIcon(binding)
+                filterAndSubmit(currentQuery)
+            },
+            onCopySection = { stateKey -> onCopySection(stateKey) },
+            onCopyField = { label, value -> onCopyField(label, value) },
+        )
+
+        val isLandscape = activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        val spanCount = if (isLandscape) SPAN_COUNT_LANDSCAPE else SPAN_COUNT_PORTRAIT
+        val gridLayoutManager = GridLayoutManager(activity, spanCount).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    val item = systemInfoAdapter?.currentList?.getOrNull(position) ?: return spanCount
+                    return when (item) {
+                        is SystemInfoListItem.SectionHeader -> if (item.isExpanded) spanCount else 1
+                        is SystemInfoListItem.Field -> spanCount
+                        is SystemInfoListItem.EmptyState -> spanCount
+                    }
+                }
+            }
+        }
+
+        binding.systemInfoRecyclerView.apply {
+            layoutManager = gridLayoutManager
+            adapter = systemInfoAdapter
+        }
+
+        binding.systemInfoSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                currentQuery = query.orEmpty()
+                filterAndSubmit(currentQuery)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                currentQuery = newText.orEmpty()
+                filterAndSubmit(currentQuery)
+                return true
+            }
+        })
+    }
+
+    private fun onAction(activity: AppCompatActivity, binding: ActivitySystemInfoBinding, itemId: Int): Boolean {
+        val report = currentReport
+        when (itemId) {
+            R.id.action_system_info_copy -> report?.let(::copyReport)
+            R.id.action_system_info_save -> report?.let { activity.lifecycleScope.launch { saveReport(it) } }
+            R.id.action_system_info_share -> report?.let { share(activity, it.fullText) }
+            R.id.action_system_info_expand_collapse -> toggleExpandCollapseAll(binding)
+            R.id.action_system_info_notifications -> notificationPermission.onMenuAction(activity)
+            R.id.action_help -> { /* In-app help opened when help contract is implemented */ }
+            else -> return false
+        }
+        return true
+    }
+
+    fun render(binding: ActivitySystemInfoBinding, report: SystemInfoReport) {
+        currentReport = report
+        updateExpandCollapseIcon(binding)
+        filterAndSubmit(currentQuery)
+    }
+
+    private fun toggleExpandCollapseAll(binding: ActivitySystemInfoBinding) {
+        val sections = nonEmptySections() ?: return
+        expansionState.setAll(sections, expanded = !expansionState.allExpanded(sections))
+        updateExpandCollapseIcon(binding)
+        filterAndSubmit(currentQuery)
+    }
+
+    private fun nonEmptySections(): List<SystemInfoSection>? =
+        currentReport?.sections?.filter { it.fields.isNotEmpty() }
+
+    private fun updateExpandCollapseIcon(binding: ActivitySystemInfoBinding) {
+        val sections = nonEmptySections() ?: return
+        val item = binding.systemInfoToolbar.menu.findItem(R.id.action_system_info_expand_collapse) ?: return
+        if (expansionState.allExpanded(sections)) {
+            item.setIcon(R.drawable.ic_expand_less)
+            item.setTitle(R.string.sysinfo_action_collapse_all)
+        } else {
+            item.setIcon(R.drawable.ic_expand_more)
+            item.setTitle(R.string.sysinfo_action_expand_all)
+        }
+    }
+
+    private fun filterAndSubmit(query: String) {
+        val report = currentReport ?: return
+        val items = mutableListOf<SystemInfoListItem>()
+        val trimmedQuery = query.trim()
+        val isSearch = trimmedQuery.isNotEmpty()
+
+        report.sections.filter { it.fields.isNotEmpty() }.forEach { section ->
+            val matchingFields = if (isSearch) {
+                section.fields.filter { (label, value) ->
+                    label.contains(trimmedQuery, ignoreCase = true) ||
+                        value.contains(trimmedQuery, ignoreCase = true) ||
+                        section.title.contains(trimmedQuery, ignoreCase = true)
+                }
+            } else {
+                section.fields
+            }
+
+            if (matchingFields.isNotEmpty()) {
+                val isExpanded = isSearch || expansionState.isExpanded(section.stateKey)
+                items.add(
+                    SystemInfoListItem.SectionHeader(
+                        title = section.title,
+                        stateKey = section.stateKey,
+                        count = matchingFields.size,
+                        isExpanded = isExpanded,
+                        iconRes = SystemInfoGroupIcons.iconFor(section.group),
+                    )
+                )
+                if (isExpanded) {
+                    matchingFields.forEachIndexed { index, (label, value) ->
+                        items.add(
+                            SystemInfoListItem.Field(
+                                sectionKey = section.stateKey,
+                                label = label,
+                                value = value,
+                                isShaded = index % 2 == 1,
+                            )
+                        )
+                    }
+                }
+            }
+        }
+
+        if (items.isEmpty() && isSearch) {
+            items.add(
+                SystemInfoListItem.EmptyState(
+                    message = appContext.getString(R.string.sysinfo_search_empty),
+                )
+            )
+        }
+
+        systemInfoAdapter?.submitList(items)
+    }
+
+    private fun onCopySection(stateKey: String) {
+        val section = currentReport?.sections?.firstOrNull { it.stateKey == stateKey } ?: return
+        val text = listOf(section).renderSystemInfo()
+        appContext.copyTextToClipboard("System info ${section.title}", text)
+        val message = appContext.getString(R.string.sysinfo_toast_section_copied, section.title)
+        Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun onCopyField(label: String, value: String) {
+        val textToCopy = "$label: $value"
+        appContext.copyTextToClipboard(label, textToCopy)
+        Toast.makeText(appContext, textToCopy, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun copyReport(report: SystemInfoReport) = appContext.copyTextToClipboard("System info", report.fullText)
+
+    private fun share(activity: AppCompatActivity, text: String) {
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+        if (activity.packageManager.queryIntentActivitiesCompat(shareIntent, 0).isEmpty()) {
+            currentReport?.let(::copyReport)
+            Toast.makeText(activity, R.string.export_logs_no_share_target, Toast.LENGTH_LONG).show()
+        } else {
+            activity.startActivity(
+                Intent.createChooser(
+                    shareIntent,
+                    activity.getString(R.string.share)
+                )
+            )
+        }
+    }
+
+    private suspend fun saveReport(report: SystemInfoReport) {
+        val name = "device_info_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())}.txt"
+        try {
+            withContext(ioDispatcher) { writeReport(name, report.fullText) }
+            val message = appContext.getString(R.string.s0116_toast_saved_to_downloads, name)
+            Toast.makeText(appContext, message, Toast.LENGTH_SHORT).show()
+        } catch (@Suppress("TooGenericExceptionCaught") e: Exception) {
+            e.rethrowIfCancellation()
+            Timber.w(e, "SystemInfoWindowManager: saving the report to Downloads failed")
+            Toast.makeText(appContext, R.string.system_info_save_failed, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun writeReport(name: String, text: String) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val values = ContentValues().apply {
+                put(MediaStore.Downloads.DISPLAY_NAME, name)
+                put(MediaStore.Downloads.MIME_TYPE, "text/plain")
+            }
+            val resolver = appContext.contentResolver
+            val uri = checkNotNull(resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)) {
+                "MediaStore refused the Downloads entry"
+            }
+            checkNotNull(resolver.openOutputStream(uri)) { "No output stream for $uri" }
+                .use { it.write(text.toByteArray()) }
+        } else {
+            @Suppress("DEPRECATION")
+            File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), name)
+                .writeText(text)
+        }
+    }
+
+    private companion object {
+        const val SPAN_COUNT_PORTRAIT = 2
+        const val SPAN_COUNT_LANDSCAPE = 4
+    }
+}

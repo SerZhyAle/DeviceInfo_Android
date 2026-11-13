@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Extended diagnostics sections of the restricted build (S0009): section titles. Field labels stay fixed
+         English technical keys, like the upstream. -->
+    <string name="sysinfo_section_os_security">OS &amp; Security</string>
+    <string name="sysinfo_section_permissions">Special Permissions</string>
+    <string name="sysinfo_section_installer">Installer &amp; Signature</string>
+    <string name="sysinfo_section_runtimes">Runtimes</string>
+    <string name="sysinfo_section_mounts">Mounts &amp; Storage</string>
+    <string name="sysinfo_section_network_diagnostics">Network Diagnostics</string>
+    <string name="sysinfo_section_process">Process Resources</string>
+</resources>

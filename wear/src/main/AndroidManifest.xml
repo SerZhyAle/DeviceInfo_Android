@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <!-- Lets the report name the Wi-Fi bands and standards the watch radio supports. The only permission of the
+         watch app: it has no INTERNET permission, and the unused WAKE_LOCK and ACCESS_NETWORK_STATE of the
+         upstream manifest were dropped at the release preparation (S0008) because no code of this module uses them. -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- allowBackup is off: the watch app keeps nothing worth restoring, and the privacy page says that nothing
+         it holds leaves the device. -->
+    <application
+        android:name=".DeviceInfoWearApplication"
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.DeviceDefault">
+
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

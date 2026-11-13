@@ -1,0 +1,27 @@
+package com.sza.deviceinfo.wear.domain.repository
+
+private const val ACCELEROMETER_POWER_MA = 0.25f
+private const val ACCELEROMETER_RESOLUTION = 0.0012f
+private const val HEART_RATE_POWER_MA = 6.5f
+private const val HEART_RATE_RESOLUTION = 1.0f
+private const val CORE_COUNT = 4
+
+class FakeWearHardwareDataSource : WearHardwareDataSource {
+    override var sensors: List<WearSensorDescriptor>? = listOf(
+        WearSensorDescriptor(
+            "accelerometer",
+            "LSM6DSO Accelerometer",
+            "STM",
+            ACCELEROMETER_POWER_MA,
+            ACCELEROMETER_RESOLUTION
+        ),
+        WearSensorDescriptor("heart_rate", "Samsung HR Sensor", "Samsung", HEART_RATE_POWER_MA, HEART_RATE_RESOLUTION)
+    )
+    override var supportedAbis: List<String>? = listOf("arm64-v8a", "armeabi-v7a")
+    override var socManufacturer: String? = "Samsung"
+    override var socModel: String? = "Exynos W1000"
+    override var cpuCoreCount: Int? = CORE_COUNT
+    override var lowRamDevice: Boolean? = false
+    override var supportedWifiBands: List<String>? = listOf("2.4 GHz", "5 GHz")
+    override var supportedWifiStandards: List<String>? = listOf("Wi-Fi 4", "Wi-Fi 5")
+}

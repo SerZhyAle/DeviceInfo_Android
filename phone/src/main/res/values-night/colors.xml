@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="system_info_row_shade">#0AFFFFFF</color>
+    <color name="focus_button_stroke">#FF64B5F6</color>
+    <color name="text_color_secondary">#99FFFFFF</color>
+</resources>

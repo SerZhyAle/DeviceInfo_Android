@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- The restricted build declares no permission: its extended diagnostics rows read the state of permissions,
+         settings and system files and report a denial as a denial. What it adds is package visibility (API 30+),
+         narrowly: the seven packages the root-marker and alternative-store rows look for, and the three intents
+         whose handlers the Installer and Default launcher / browser rows name. It does not hold QUERY_ALL_PACKAGES. -->
+    <queries>
+        <package android:name="com.topjohnwu.magisk" />
+        <package android:name="me.weishu.kernelsu" />
+        <package android:name="me.bmax.apatch" />
+        <package android:name="org.fdroid.fdroid" />
+        <package android:name="com.aurora.store" />
+        <package android:name="com.amazon.venezia" />
+        <package android:name="com.huawei.appmarket" />
+
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.HOME" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+</manifest>

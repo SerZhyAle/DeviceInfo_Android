@@ -1,0 +1,29 @@
+{
+  "version": "1",
+  "projectName": "deviceinfo_mob",
+  "envPrefix": "SZA",
+  "modules": {
+    "default": "phone",
+    "names": ["phone", "wear"]
+  },
+  "locks": {
+    "domains": [
+      { "name": "Build.Main", "type": "Build", "rank": 1 },
+      { "name": "Code.Main", "type": "Code", "rank": 2 },
+      { "name": "Code.Scripts", "type": "Code", "rank": 3 }
+    ],
+    "pathRules": [
+      { "pattern": "^PLAN/", "domain": null },
+      { "pattern": "^(phone/|wear/|settings\\.gradle\\.kts|build\\.gradle\\.kts|gradle\\.properties|gradle/)", "domain": "Code.Main" },
+      { "pattern": "^(tools/|docs/|AGENTS\\.md|CLAUDE\\.md|README\\.md|\\.sza-)", "domain": "Code.Scripts" }
+    ]
+  },
+  "probes": {
+    "enabled": true,
+    "scanRoots": ["phone/src", "wear/src"],
+    "sourceRoots": ["phone/src", "wear/src"]
+  },
+  "commands": {
+    "statusCommands": {}
+  }
+}

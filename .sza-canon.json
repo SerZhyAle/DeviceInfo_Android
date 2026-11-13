@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0",
+  "$comment": "Overlay B (Android), bootstrap of 2026-11-10, adoption completed under S0001 on 2026-11-10. Release preparation declared by S0008 on 2026-11-13 from the owner's decisions of the S0008 quiz: the first release goes to Google Play only (phone and watch in one listing, no sideload channel, so INSTALL-TRUST and UPDATE-MANIFEST stay unbound), hence channels is [\"play\"] and, with it, the compliance gate SZA-SURF01 requires a hosted privacy page: site/privacy.html, site/privacy-ru.html and site/privacy-uk.html are hand-authored sources, not render targets. The product landing (S0012) is authored: site/index.html, site/ru/index.html and site/uk/index.html are render targets of tools/site/render-landing.ps1, never edited by hand, and sit in site.pages; its SITE-FAMILY-MAP row is filed to the hub after the three URLs answer. The release tag is v + the versionName of the Android profile (PACKAGE-VERSIONING rule 2), e.g. v2.61.1130.822; no tag exists yet. sensitiveAccess is true: the report shows values that identify the device in a network (local addresses, the signature hash) and the app writes the clipboard on request, even though nothing leaves the device without the user's action and neither package declares the internet permission. The license is MIT (LICENSE), which closed the SZA-LAY01 exemption.",
+
+  "canon": {
+    "version": "2026.11.09.1",
+    "coreDigest": "sha256:9abe1d231e865abf4d6cb3bdf5cb6806a4c4ef4a6430efefa9813c3ee41af680",
+    "adoptedOn": "2026-11-10",
+    "reconciledOn": "2026-11-10",
+    "model": "reference",
+    "contribRecord": "contrib/deviceinfo_mob.md"
+  },
+
+  "role": "product",
+
+  "overlay": ["B"],
+  "shapes": [],
+  "editions": [],
+
+  "versionShape": {
+    "tagRegex": "^v\\d+\\.\\d+\\.\\d+\\.\\d+$",
+    "editionTagPrefixes": []
+  },
+
+  "ledgerShape": 1,
+  "ledgerFile": null,
+
+  "channels": ["play"],
+
+  "site": {
+    "kind": "product",
+    "root": "site",
+    "pages": ["index.html", "ru/index.html", "uk/index.html", "privacy.html", "privacy-ru.html", "privacy-uk.html"]
+  },
+
+  "privacy": {
+    "page": "site/privacy.html",
+    "carveOut": null,
+    "sensitiveAccess": true
+  },
+
+  "byteIdenticalPairs": [
+    ["phone/src/main/assets/THIRD-PARTY-NOTICES.txt", "wear/src/main/assets/THIRD-PARTY-NOTICES.txt"]
+  ],
+  "vendorAllow": [],
+  "exemptions": []
+}

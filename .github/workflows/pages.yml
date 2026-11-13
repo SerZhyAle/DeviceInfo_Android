@@ -26,6 +26,10 @@ jobs:
   check:
     runs-on: windows-latest
     steps:
+      # The pages and their sources are LF in the repository and the check compares bytes; the Windows runner's default
+      # core.autocrlf=true would turn them into CRLF on checkout.
+      - name: Keep line endings as committed
+        run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
       - name: Landing pages equal their sources
         shell: pwsh

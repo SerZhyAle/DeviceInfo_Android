@@ -12,7 +12,7 @@ round. Limits: title 30, short description 80, full description 4000, release no
 | Default language | English (United States) `en-US`; translations Russian `ru-RU` and Ukrainian `uk` |
 | Category | Tools |
 | Contact e-mail | sza@ukr.net |
-| Website | https://github.com/SerZhyAle/DeviceInfo_Android |
+| Website | https://serzhyale.github.io/DeviceInfo_Android/ (the product landing; the source is linked from it) |
 | Privacy policy | https://serzhyale.github.io/DeviceInfo_Android/privacy.html |
 | Form factors | Phone and Wear OS (the watch package is uploaded to the same app) |
 | Icon | `docs/play/icon-512.png` |

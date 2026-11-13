@@ -23,10 +23,15 @@ These need the owner's hands, a console account or a physical device; the build 
 2. **Tell Gradle where the key is.** Put `deviceinfo.signing.dir=P:/ANDROID/DeviceInfo_credentials` in
    `%USERPROFILE%\.gradle\gradle.properties` (or set the environment variable `DEVICEINFO_SIGNING_DIR`), the way the build
    JDK is set. Without it every release packaging task stops with a message that says exactly this.
-3. **Create the Play Console app** `com.sza.deviceinfo`, enter the listing from `docs/play/PLAY_LISTING.md`, the Data safety
-   and content-rating answers from `docs/play/PLAY_DATA_SAFETY.md` (file a fresh IARC questionnaire), the privacy URL, and
-   opt the app in to the Wear OS form factor. Import the app signing key at the first upload (Google's `pepk` tool encrypts
-   it for the import) and register the upload key.
+3. **The Play Console app** `com.sza.deviceinfo` was created on 2026-11-13 on the owner's order (personal account, App,
+   Free; the package name is bound to the account from that day). Done there: every App content declaration from
+   `docs/play/PLAY_DATA_SAFETY.md` (privacy URL, no restricted access, no ads, audience 18 and over, no advertising ID, not a
+   government app, no financial or health features, Data safety "no data collected or shared", a fresh IARC questionnaire:
+   ESRB Everyone, ClassInd L), store settings (Tools, `sza@ukr.net`, the landing as website), the default listing saved as
+   a draft in en-US, ru-RU and uk from `docs/play/PLAY_LISTING.md` with the icon and the feature graphic, and the Wear OS
+   form factor added. Still open: phone and watch screenshots (step 5), the Wear OS opt-in, which the console allows only
+   after Wear screenshots and a Wear bundle on a testing track, the app signing key import at the first upload (Google's
+   `pepk` tool encrypts it for the import) and registering the upload key.
 4. **The remote** `SerZhyAle/DeviceInfo_Android` (public, created 2026-11-13, branch `main`) deploys `site/` to its Pages
    address (`https://serzhyale.github.io/DeviceInfo_Android/`) through `.github/workflows/pages.yml` on every push to `main`
    that touches `site/` or `tools/site/`, so the privacy URL answers before the Play submission. The same deploy publishes

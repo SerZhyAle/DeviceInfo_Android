@@ -3,7 +3,7 @@
 | Field | Value |
 | --- | --- |
 | **Id** | `TASK-FLOW` |
-| **Version** | 0.26, draft (shared contracts catalog, `task-flow/`, read 2026-11-14) |
+| **Version** | 0.27, draft (shared contracts catalog, `task-flow/`, read 2026-11-15) |
 | **Home** | shared contracts catalog, `task-flow/` |
 | **Owner** | shared |
 | **Role here** | consumer - this repository runs the shared harness unmodified |
@@ -14,4 +14,6 @@ Checked on 2026-11-14: `pwsh -NoProfile -File tools/harness.ps1 spec_catalog/val
 
 Not claimed: the contract (about 1 200 lines, dozens of rules) was not read rule by rule, so the registry row stays `pending` and carries no verification date.
 
-State: the registry row `TASK-FLOW | DeviceInfo Android` is declared (2026-11-14, ticket S0026), reads 0.26, `pending`.
+Re-read at 0.27 on 2026-11-15 (S0014): the 0.27 entry is additive - rule 70 moves a finished spec into `paths.specArchiveDir` and back on reopen, done by every harness tool that writes a status; this repository runs those tools unmodified, so nothing here changes.
+
+State: the registry row `TASK-FLOW | DeviceInfo Android` is declared (2026-11-14, ticket S0026), reads 0.27, `pending`.

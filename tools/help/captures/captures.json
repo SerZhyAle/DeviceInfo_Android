@@ -1,0 +1,318 @@
+{
+  "schemaVersion": 1,
+  "records": {
+    "system-info": {
+      "en": {
+        "version": "2.61.1151.340",
+        "date": "2026-11-15",
+        "device": "sdk_gphone64_x86_64, Android 15 (API 35), 1080x2424, 420 dpi",
+        "themes": [
+          "dark",
+          "light"
+        ],
+        "image": {
+          "width": 540,
+          "height": 1212
+        },
+        "images": {
+          "dark": "9adf33f438935151ea28d9a428a0bd03de4aae8178c49aed86f46df19b53305f",
+          "light": "54bc554a4d49a93e4cfb52d1ffd1592f4486aa4c1c4a6c76bb11fd75e4ea260b"
+        },
+        "pins": [
+          {
+            "id": "copy",
+            "x": 45.44,
+            "y": 9.28
+          },
+          {
+            "id": "save",
+            "x": 57.2,
+            "y": 9.28
+          },
+          {
+            "id": "share",
+            "x": 68.96,
+            "y": 9.28
+          },
+          {
+            "id": "help",
+            "x": 80.72,
+            "y": 9.28
+          },
+          {
+            "id": "search",
+            "x": 2.0,
+            "y": 15.39
+          },
+          {
+            "id": "groups",
+            "x": 2.66,
+            "y": 20.79
+          },
+          {
+            "id": "copy-section",
+            "x": 90.07,
+            "y": 20.79
+          },
+          {
+            "id": "field",
+            "x": 2.0,
+            "y": 26.2
+          }
+        ],
+        "absent": [
+          "expand-collapse",
+          "notifications",
+          "interface-size"
+        ],
+        "inputsHash": "a01af6b573ea2a49689b742f8914f430a22efb0805a7f1e3c491c06cf8b13f74"
+      },
+      "ru": {
+        "version": "2.61.1151.340",
+        "date": "2026-11-15",
+        "device": "sdk_gphone64_x86_64, Android 15 (API 35), 1080x2424, 420 dpi",
+        "themes": [
+          "dark",
+          "light"
+        ],
+        "image": {
+          "width": 540,
+          "height": 1212
+        },
+        "images": {
+          "dark": "3ce8508cebf85f70f674077c8e3567f07cc0e350da0286a39a68c6771fa07eda",
+          "light": "312538ddc52d39c17b18924589081b0748492ae47e335a3f42b895cd8c26a94f"
+        },
+        "pins": [
+          {
+            "id": "copy",
+            "x": 45.44,
+            "y": 9.28
+          },
+          {
+            "id": "save",
+            "x": 57.2,
+            "y": 9.28
+          },
+          {
+            "id": "share",
+            "x": 68.96,
+            "y": 9.28
+          },
+          {
+            "id": "help",
+            "x": 80.72,
+            "y": 9.28
+          },
+          {
+            "id": "search",
+            "x": 2.0,
+            "y": 15.39
+          },
+          {
+            "id": "groups",
+            "x": 2.66,
+            "y": 20.79
+          },
+          {
+            "id": "copy-section",
+            "x": 90.07,
+            "y": 20.79
+          },
+          {
+            "id": "field",
+            "x": 2.0,
+            "y": 26.2
+          }
+        ],
+        "absent": [
+          "expand-collapse",
+          "notifications",
+          "interface-size"
+        ],
+        "inputsHash": "e9bb5a14e65aa64a70c3eb1fe35f861700b77ff944b5d6263bd6a1b8cc78b7ac"
+      },
+      "uk": {
+        "version": "2.61.1151.340",
+        "date": "2026-11-15",
+        "device": "sdk_gphone64_x86_64, Android 15 (API 35), 1080x2424, 420 dpi",
+        "themes": [
+          "dark",
+          "light"
+        ],
+        "image": {
+          "width": 540,
+          "height": 1212
+        },
+        "images": {
+          "dark": "f92dc7f462e423af87f4480af82407bc06d04f3b6b73f7a7c72b769b60ffc50b",
+          "light": "8dfca21a7119831d89ba3852064825e4d213996db94faf98cb7f301a8ecf900a"
+        },
+        "pins": [
+          {
+            "id": "copy",
+            "x": 45.44,
+            "y": 9.28
+          },
+          {
+            "id": "save",
+            "x": 57.2,
+            "y": 9.28
+          },
+          {
+            "id": "share",
+            "x": 68.96,
+            "y": 9.28
+          },
+          {
+            "id": "help",
+            "x": 80.72,
+            "y": 9.28
+          },
+          {
+            "id": "search",
+            "x": 2.0,
+            "y": 15.39
+          },
+          {
+            "id": "groups",
+            "x": 2.66,
+            "y": 20.79
+          },
+          {
+            "id": "copy-section",
+            "x": 90.07,
+            "y": 20.79
+          },
+          {
+            "id": "field",
+            "x": 2.0,
+            "y": 26.2
+          }
+        ],
+        "absent": [
+          "expand-collapse",
+          "notifications",
+          "interface-size"
+        ],
+        "inputsHash": "c51491da53489ccbcaa727f3d02f7fa09a088ca08b10154e745d50ce6ec06dc5"
+      }
+    },
+    "watch-system-info": {
+      "en": {
+        "version": "2.61.1151.340",
+        "date": "2026-11-15",
+        "device": "sdk_gwear_x86_64, Android 17 (API 37), 454x454, 320 dpi",
+        "themes": [
+          "dark"
+        ],
+        "image": {
+          "width": 454,
+          "height": 454
+        },
+        "images": {
+          "dark": "a6c7779bf14380465b1a2ed3f2d373dd6f5c5016326ef88f1b5a905a62d5ad17"
+        },
+        "pins": [
+          {
+            "id": "refresh",
+            "x": 45.15,
+            "y": 3.85
+          },
+          {
+            "id": "send",
+            "x": 35.46,
+            "y": 27.64
+          },
+          {
+            "id": "groups",
+            "x": 30.39,
+            "y": 50.0
+          }
+        ],
+        "absent": [
+          "row",
+          "interface-size",
+          "help-row"
+        ],
+        "inputsHash": "4d9133acc4c852b25c586a0f3ca7b7ba1aaed78debfedf43572b928369c0fb37"
+      },
+      "ru": {
+        "version": "2.61.1151.340",
+        "date": "2026-11-15",
+        "device": "sdk_gwear_x86_64, Android 17 (API 37), 454x454, 320 dpi",
+        "themes": [
+          "dark"
+        ],
+        "image": {
+          "width": 454,
+          "height": 454
+        },
+        "images": {
+          "dark": "b656c984b9018e1df174b5d5813bc1bcd9b22e9051170f28435ee9538e5795fc"
+        },
+        "pins": [
+          {
+            "id": "refresh",
+            "x": 41.63,
+            "y": 3.85
+          },
+          {
+            "id": "send",
+            "x": 21.58,
+            "y": 27.64
+          },
+          {
+            "id": "groups",
+            "x": 30.39,
+            "y": 50.0
+          }
+        ],
+        "absent": [
+          "row",
+          "interface-size",
+          "help-row"
+        ],
+        "inputsHash": "6067b774c6c3cf5a481125f7f3c89789abb12cef98809ea33ec85e90aecb7bde"
+      },
+      "uk": {
+        "version": "2.61.1151.340",
+        "date": "2026-11-15",
+        "device": "sdk_gwear_x86_64, Android 17 (API 37), 454x454, 320 dpi",
+        "themes": [
+          "dark"
+        ],
+        "image": {
+          "width": 454,
+          "height": 454
+        },
+        "images": {
+          "dark": "e93904f5cdaa054f7af582ecdb2f30da78411e386b4fa46960cfa841da7bf28b"
+        },
+        "pins": [
+          {
+            "id": "refresh",
+            "x": 43.61,
+            "y": 3.85
+          },
+          {
+            "id": "send",
+            "x": 22.24,
+            "y": 27.64
+          },
+          {
+            "id": "groups",
+            "x": 30.39,
+            "y": 50.0
+          }
+        ],
+        "absent": [
+          "row",
+          "interface-size",
+          "help-row"
+        ],
+        "inputsHash": "e182f34f1bcc0893d641f1170f135726e49e1eb70fec46d43365ba85d1eb20fd"
+      }
+    }
+  }
+}

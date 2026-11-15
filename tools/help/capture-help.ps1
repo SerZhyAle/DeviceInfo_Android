@@ -278,6 +278,10 @@ try {
                 $tag = "$pageId/$l/$theme"
                 [void](Invoke-Adb $serial @('shell', 'am', 'force-stop', $package) -AllowFail)
                 [void](Invoke-Adb $serial @('shell', 'pm', 'clear', $package))
+                # pm clear revokes the runtime grants of install -g, and the phone's notification explanation (S0011)
+                # would then cover the screen; demo content is the app as used, so the grant is restored. The watch
+                # declares no such permission, hence AllowFail.
+                [void](Invoke-Adb $serial @('shell', 'pm', 'grant', $package, 'android.permission.POST_NOTIFICATIONS') -AllowFail)
                 [void](Invoke-Adb $serial @('shell', 'cmd', 'locale', 'set-app-locales', $package, '--locales', $l))
                 $applied = Invoke-Adb $serial @('shell', 'cmd', 'locale', 'get-app-locales', $package)
                 if ($applied -notmatch "\[\s*$l\b") { throw "$tag`: the app language did not take effect (get-app-locales: $($applied.Trim()))" }

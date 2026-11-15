@@ -20,6 +20,27 @@ Gson                                        phone, watch   Apache License 2.0
 Timber                                      phone, watch   Apache License 2.0
 Kotlin standard library, kotlinx.coroutines phone, watch   Apache License 2.0
 Google Play services (Wearable)             phone, watch   Android Software Development Kit License
+Annotation and support libraries pulled in  phone, watch   Apache License 2.0
+  by the above (Guava, Error Prone
+  annotations, JSR 305, javax.inject,
+  jakarta.inject, JSpecify, JetBrains
+  annotations)
+
+Maven group ids in the release packages
+---------------------------------------
+Every group id of the phone and watch release runtime classpaths, as listed by the dependency check of the release
+procedure, belongs to one of the components above:
+androidx.activity androidx.annotation androidx.appcompat androidx.arch.core androidx.autofill androidx.cardview
+androidx.collection androidx.compose androidx.compose.animation androidx.compose.foundation androidx.compose.material
+androidx.compose.runtime androidx.compose.ui androidx.concurrent androidx.constraintlayout androidx.coordinatorlayout
+androidx.core androidx.cursoradapter androidx.customview androidx.databinding androidx.drawerlayout
+androidx.dynamicanimation androidx.emoji2 androidx.fragment androidx.graphics androidx.hilt androidx.interpolator
+androidx.lifecycle androidx.loader androidx.navigation androidx.profileinstaller androidx.recyclerview
+androidx.resourceinspection androidx.savedstate androidx.startup androidx.tracing androidx.transition
+androidx.vectordrawable androidx.versionedparcelable androidx.viewpager androidx.viewpager2 androidx.wear.compose
+com.google.android.gms com.google.android.material com.google.code.findbugs com.google.code.gson com.google.dagger
+com.google.errorprone com.google.guava com.jakewharton.timber jakarta.inject javax.inject org.jetbrains
+org.jetbrains.kotlin org.jetbrains.kotlinx org.jspecify
 
 Upstream sources
 ----------------
@@ -30,6 +51,9 @@ Gson                                                       https://github.com/go
 Timber                                                     https://github.com/JakeWharton/timber
 Kotlin and kotlinx.coroutines                              https://github.com/JetBrains/kotlin  https://github.com/Kotlin/kotlinx.coroutines
 Google Play services                                       https://developers.google.com/android/guides/overview
+Guava, Error Prone annotations                             https://github.com/google/guava  https://github.com/google/error-prone
+JSR 305, javax.inject, jakarta.inject                      https://github.com/findbugsproject/findbugs  https://github.com/javax-inject/javax-inject  https://github.com/jakartaee/inject
+JSpecify, JetBrains annotations                            https://github.com/jspecify/jspecify  https://github.com/JetBrains/java-annotations
 
 License texts
 -------------

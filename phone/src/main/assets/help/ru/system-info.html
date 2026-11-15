@@ -30,6 +30,22 @@
     <p class="lead">Узнайте, из чего сделан ваш телефон и как он себя чувствует, - в одном списке. Откройте блок, чтобы прочитать значения, найдите нужное через поиск и скопируйте, сохраните или отправьте то, что нужно.</p>
   </header>
 
+  <figure class="shot">
+    <div class="frame" style="max-width:540px;margin-inline:auto">
+      <img class="on-dark" src="system-info-dark.png" width="540" height="1212" alt="Окно «Сведения о системе» с пронумерованными частями: 1 Копировать, 2 Сохранить, 4 Поделиться, 5 Справка, 8 Поиск, 9 Заголовки блоков, 10 Копировать блок, 11 Строки.">
+      <img class="on-light" src="system-info-light.png" width="540" height="1212" alt="">
+      <a class="pin" style="--x:45.44%;--y:9.28%" href="#copy" aria-label="1, Копировать">1</a>
+      <a class="pin" style="--x:57.2%;--y:9.28%" href="#save" aria-label="2, Сохранить">2</a>
+      <a class="pin" style="--x:68.96%;--y:9.28%" href="#share" aria-label="4, Поделиться">4</a>
+      <a class="pin" style="--x:80.72%;--y:9.28%" href="#help" aria-label="5, Справка">5</a>
+      <a class="pin" style="--x:2%;--y:15.39%" href="#search" aria-label="8, Поиск">8</a>
+      <a class="pin" style="--x:2.66%;--y:20.79%" href="#groups" aria-label="9, Заголовки блоков">9</a>
+      <a class="pin" style="--x:90.07%;--y:20.79%" href="#copy-section" aria-label="10, Копировать блок">10</a>
+      <a class="pin" style="--x:2%;--y:26.2%" href="#field" aria-label="11, Строки">11</a>
+    </div>
+    <figcaption>Демонстрационные данные. Выберите номер, чтобы прочитать об этой части окна.</figcaption>
+  </figure>
+
   <h2>По порядку</h2>
   <ol class="order">
     <li>Откройте блок по его заголовку <a class="ref" href="#groups">9</a> или разверните все сразу кнопкой <a class="ref" href="#expand-collapse">3</a>. Блоки остаются открытыми или закрытыми так, как вы их оставили.</li>
@@ -187,6 +203,7 @@
 
 <footer class="help-foot">
   <span>Обновлено 2026-11-14.</span>
+  <span>Снимок экрана сделан в DeviceInfo 2.61.1151.340, 2026-11-15.</span>
   <a href="index.html">Оглавление справки</a>
   <a href="https://github.com/SerZhyAle/DeviceInfo_Android/issues" rel="noopener">Задать вопрос или сообщить о проблеме</a>
 </footer>
@@ -202,6 +219,21 @@
   }
   addEventListener('hashchange', openHash);
   openHash();
+})();
+</script>
+<script>
+/* Progressive enhancement only: the page is complete without it. */
+(function () {
+  document.querySelectorAll('details.el').forEach(function (d) {
+    var pin = document.querySelector('.pin[href="#' + d.id + '"]');
+    if (!pin) { return; }
+    function on() { pin.classList.add('on'); d.classList.add('on'); }
+    function off() { pin.classList.remove('on'); d.classList.remove('on'); }
+    d.addEventListener('mouseenter', on); d.addEventListener('mouseleave', off);
+    d.addEventListener('focusin', on); d.addEventListener('focusout', off);
+    pin.addEventListener('mouseenter', on); pin.addEventListener('mouseleave', off);
+    pin.addEventListener('focus', on); pin.addEventListener('blur', off);
+  });
 })();
 </script>
 </body>

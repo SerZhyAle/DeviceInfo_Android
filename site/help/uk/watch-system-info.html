@@ -30,6 +30,16 @@
     <p class="lead">У DeviceInfo на годиннику один екран. Він показує, з чого зроблено ваш годинник і як він себе почуває, і може передати весь звіт на телефон.</p>
   </header>
 
+  <figure class="shot">
+    <div class="frame" style="max-width:454px;margin-inline:auto">
+      <img src="watch-system-info-dark.png" width="454" height="454" alt="Екран «Відомості про систему» на годиннику з пронумерованими частинами: 1 Оновити, 2 Надіслати на телефон, 3 Заголовки блоків.">
+      <a class="pin" style="--x:43.61%;--y:3.85%" href="#refresh" aria-label="1, Оновити">1</a>
+      <a class="pin" style="--x:22.24%;--y:27.64%" href="#send" aria-label="2, Надіслати на телефон">2</a>
+      <a class="pin" style="--x:30.39%;--y:50%" href="#groups" aria-label="3, Заголовки блоків">3</a>
+    </div>
+    <figcaption>Демонстраційні дані. Виберіть номер, щоб прочитати про цю частину екрана.</figcaption>
+  </figure>
+
   <h2>По порядку</h2>
   <ol class="order">
     <li>Розгорніть блоки, які хочете прочитати <a class="ref" href="#groups">3</a>. Згорнуті блоки показують, скільки в них рядків.</li>
@@ -124,6 +134,7 @@
 
 <footer class="help-foot">
   <span>Оновлено 2026-11-14.</span>
+  <span>Знімок екрана зроблено в DeviceInfo 2.61.1151.340, 2026-11-15.</span>
   <a href="index.html">Зміст довідки</a>
   <a href="https://github.com/SerZhyAle/DeviceInfo_Android/issues" rel="noopener">Поставити запитання або повідомити про проблему</a>
 </footer>
@@ -139,6 +150,21 @@
   }
   addEventListener('hashchange', openHash);
   openHash();
+})();
+</script>
+<script>
+/* Progressive enhancement only: the page is complete without it. */
+(function () {
+  document.querySelectorAll('details.el').forEach(function (d) {
+    var pin = document.querySelector('.pin[href="#' + d.id + '"]');
+    if (!pin) { return; }
+    function on() { pin.classList.add('on'); d.classList.add('on'); }
+    function off() { pin.classList.remove('on'); d.classList.remove('on'); }
+    d.addEventListener('mouseenter', on); d.addEventListener('mouseleave', off);
+    d.addEventListener('focusin', on); d.addEventListener('focusout', off);
+    pin.addEventListener('mouseenter', on); pin.addEventListener('mouseleave', off);
+    pin.addEventListener('focus', on); pin.addEventListener('blur', off);
+  });
 })();
 </script>
 </body>

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "absent": {
+    "system-info": {
+      "en": [
+        "expand-collapse",
+        "interface-size",
+        "notifications"
+      ],
+      "ru": [
+        "expand-collapse",
+        "interface-size",
+        "notifications"
+      ],
+      "uk": [
+        "expand-collapse",
+        "interface-size",
+        "notifications"
+      ]
+    },
+    "watch-system-info": {
+      "en": [
+        "help-row",
+        "interface-size",
+        "row"
+      ],
+      "ru": [
+        "help-row",
+        "interface-size",
+        "row"
+      ],
+      "uk": [
+        "help-row",
+        "interface-size",
+        "row"
+      ]
+    }
+  }
+}

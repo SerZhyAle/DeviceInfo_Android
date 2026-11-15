@@ -36,9 +36,14 @@ These need the owner's hands, a console account or a physical device; the build 
    a draft in en-US, ru-RU and uk from `docs/play/PLAY_LISTING.md` with the icon and the feature graphic, and the Wear OS
    form factor added. On 2026-11-15 (S0029) four phone screenshots and three watch screenshots per listing language were
    uploaded from the `Pixel_9` and `Wear_OS_Large_Round` emulators and the listing saved, so all setup tasks are done and the
-   Wear OS form reads "1 of 3 complete". Still open: the Wear OS opt-in, which the console allows only
-   after a Wear bundle on a testing track, the app signing key import at the first upload (Google's
-   `pepk` tool encrypts it for the import) and registering the upload key.
+   Wear OS form reads "1 of 3 complete". On 2026-11-15 (S0014) the Google-generated app signing key that the console
+   created with the app was replaced by the product's own key (SHA-256 `25:2C:D1..`) through App signing > Change key,
+   the upload key was registered, both bundles went to internal testing, the Wear OS opt-in was accepted and the first
+   production release was sent for review. `pepk.jar` does not run on an Oracle JDK (its JCE refuses the unsigned
+   BouncyCastle inside the jar: `NoSuchAlgorithmException: RSA/NONE/OAEPWithSHA1AndMGF1Padding`); put a signed
+   `bcprov-jdk18on` jar (the Gradle cache holds one) first on the classpath and run the main class
+   `com.google.wireless.android.vending.developer.signing.tools.extern.export.ExportEncryptedPrivateKeyTool`, or use an
+   OpenJDK.
 4. **The remote** `SerZhyAle/DeviceInfo_Android` (public, created 2026-11-13, branch `main`) deploys `site/` to its Pages
    address (`https://serzhyale.github.io/DeviceInfo_Android/`) through `.github/workflows/pages.yml` on every push to `main`
    that touches `site/` or `tools/site/`, so the privacy URL answers before the Play submission. The same deploy publishes

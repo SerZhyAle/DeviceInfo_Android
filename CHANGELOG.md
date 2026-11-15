@@ -8,6 +8,11 @@ semantic version.
 
 ## [Unreleased]
 
+## [2.61.1151.340] - 2026-11-15
+
+First release on Google Play: phone versionCode 261115134, watch versionCode 261115138, one listing
+`com.sza.deviceinfo`.
+
 ### Added
 - The phone app shows the full information of the device in grouped, collapsible sections - App, Battery, Cameras,
   Device, Display, Hardware, Locale, Media and audio, Memory, Network, OS, Sensors, Storage, System, Time and User - and

@@ -9,7 +9,7 @@
       "apk": "phone/build/outputs/apk/store/debug/phone-store-debug.apk",
       "deviceProfile": "Pixel_9",
       "themes": ["dark", "light"],
-      "languageProof": ["settings_system_info_title"],
+      "languageProof": ["settings_system_info_title", "sysinfo_search_hint"],
       "steps": [
         { "op": "tap", "find": { "by": "id", "value": "csh_toggleRow" }, "unless": { "by": "id", "value": "rowSystemInfoField" } }
       ],

@@ -185,6 +185,8 @@ function Find-UiNode {
         if ($Resolved.Texts.Count -gt 0) {
             foreach ($text in $Resolved.Texts) {
                 if ($node.Text.Trim() -ceq $text -or $node.ContentDesc.Trim() -ceq $text) { $match = $true }
+                # A collapsible group header carries its row count after the title (COLLAPSIBLE-GROUP), "Device (7)".
+                elseif ($node.Text.Trim() -cmatch ('^' + [regex]::Escape($text) + ' \(\d+\)$')) { $match = $true }
             }
         }
         if ($null -ne $Resolved.DescPattern -and $node.ContentDesc -ne '' -and $Resolved.DescPattern.IsMatch($node.ContentDesc)) { $match = $true }

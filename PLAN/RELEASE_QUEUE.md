@@ -2,7 +2,7 @@
 
 current-next-release: 1
 1
-S0014_play-first-publication                                   26-11-15 02:15  BlockQuestions
+S0014_play-first-publication                                   26-11-15 18:32  BlockExternal      [taken 13:35, spec-all, ff4cdd7a]
 S0015_footer-grid-streamsplayer-android                        26-11-13 23:38  BlockByOtherTask
 S0028_footer-grid-tourist-android                              26-11-14 03:27  BlockByOtherTask
 S0030_footer-grid-filler-android                               26-11-14 03:34  BlockByOtherTask

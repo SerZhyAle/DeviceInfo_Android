@@ -32,8 +32,8 @@ Shared contracts live outside this repository, in the catalog at `P:\Contracts` 
   - license MIT: `LICENSE` is added and the `SZA-LAY01` exemption is closed;
   - a local git repository for this tree: initialized on 2026-11-13, branch `main`; the first commit and the push to `origin` (`https://github.com/SerZhyAle/DeviceInfo_Android.git`) were made on the owner's order the same day.
 - **Play Console app, 2026-11-13** (owner's order): `com.sza.deviceinfo` created in the owner's personal account (App, Free; the package name is bound to the account from then), every App content declaration, a fresh IARC rating, store settings, the en/ru/uk listing draft with icon and feature graphic, and the Wear OS form factor are in place; the record is `docs/RELEASE.md` owner step 3. The repeatable procedure was filed to the canon as canon:S0058, the contrib refresh as canon:S0057, and the family link notices as hub:S0009 plus one footer-grid ticket per map consumer.
-- **Still open:** nothing of the owner decisions above. What remains is the owner's own steps (the off-machine copy of the key directory, key import at the first upload, phone and watch screenshots, the Wear OS opt-in) and the release-tier proof; both are listed in `docs/RELEASE.md` and in S0008.
-- Until the owner orders it: no package is published or uploaded, no tag is cut, and no further commit or push is made. The release flow (`docs/RELEASE.md`) is run only on the owner's order.
+- **First release, 2026-11-15 (S0014, owner's order):** version `2.61.1151.340` (phone 261115134, watch 261115138); the product's own app signing key imported, the upload key registered, both packages on internal testing, Wear OS opted in, production sent for Google's review, tag `v2.61.1151.340` pushed. Still open: the review itself, the live checks after the listing answers 200, and Send to phone on a real paired phone and watch (S0014).
+- Until the owner orders it: no further package is published or uploaded, no tag is cut, and no further commit or push is made. The release flow (`docs/RELEASE.md`) is run only on the owner's order.
 
 ## 4. Ticket store and the release package plan
 

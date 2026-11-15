@@ -39,7 +39,7 @@ android {
     compileSdk = libs.versions.compile.sdk.get().toInt()
 
     defaultConfig {
-        // FROZEN with the first shipped package (owner decision of S0008). MUST stay identical to the watch app's
+        // FROZEN since the Play Console app was created with it (2026-11-13). MUST stay identical to the watch app's
         // applicationId: the Data Layer drops messages whose package name differs across the two devices.
         // Declared once in gradle.properties; no applicationIdSuffix on any build type.
         applicationId = providers.gradleProperty("deviceinfo.applicationId").get()
@@ -124,6 +124,7 @@ dependencies {
     implementation(libs.timber)
     implementation(libs.gson)
     implementation(libs.google.gms.play.services.wearable)
+    implementation(libs.kotlinx.coroutines.play.services)
 
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.android.compiler)

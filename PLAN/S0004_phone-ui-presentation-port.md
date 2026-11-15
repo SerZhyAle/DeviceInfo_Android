@@ -150,3 +150,7 @@ None for this ticket.
 ### Manual / on-target
 
 - [ ] On-device/emulator validation: Launch `DeviceInfo` on phone target, observe `MainActivity` forward to `SystemInfoActivity`, verify report sections render with icons and field values, toggle group expansion, search filtering, copy/share/save actions, and D-pad/keyboard navigation.
+
+## Correction 2026-11-13 (S0016)
+
+This ticket's contract-pointer lines record what was created on 2026-11-10, when the help pointer file was named `docs/contracts/IN-APP-HELP.md`. That id is no id of the shared contracts catalog and never was; the contract is `CONTEXT-HELP`, the file is now `docs/contracts/CONTEXT-HELP.md`, and the pointer versions above were stale against the catalog until S0016's re-read of 2026-11-13. The historical mentions above quote the old name as the name at the time and stay as history.

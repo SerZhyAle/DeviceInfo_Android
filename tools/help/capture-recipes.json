@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "scaleMaxWidth": 540,
+  "demoContent": "The clean state of a stock emulator system image: the app's data is cleared before each page, no account is signed into, and the one thing the driver changes on screen is that it opens the first section. No demo mode exists in the app.",
+  "pages": {
+    "system-info": {
+      "module": "phone",
+      "package": "com.sza.deviceinfo",
+      "apk": "phone/build/outputs/apk/store/debug/phone-store-debug.apk",
+      "deviceProfile": "Pixel_9",
+      "themes": ["dark", "light"],
+      "languageProof": ["settings_system_info_title"],
+      "steps": [
+        { "op": "tap", "find": { "by": "id", "value": "csh_toggleRow" }, "unless": { "by": "id", "value": "rowSystemInfoField" } }
+      ],
+      "locate": {
+        "help": { "by": "id", "value": "action_help" }
+      },
+      "inputs": {
+        "roots": ["phone/src/main/res"],
+        "include": [
+          "^phone/src/main/res/(layout|menu|drawable|color|anim|font)[^/]*/.+$",
+          "^phone/src/main/res/values(-night|-v[0-9]+|-sw[0-9]+dp|-w[0-9]+dp|-land|-port)*/(?!strings)[^/]+\\.xml$",
+          "^phone/src/main/res/values/strings[^/]*\\.xml$",
+          "^phone/src/main/res/values-{locale}/strings[^/]*\\.xml$"
+        ]
+      }
+    },
+    "watch-system-info": {
+      "module": "wear",
+      "package": "com.sza.deviceinfo",
+      "apk": "wear/build/outputs/apk/debug/wear-debug.apk",
+      "deviceProfile": "Wear_OS_Large_Round",
+      "themes": ["dark"],
+      "languageProof": ["system_info_refresh", "system_info_send_to_phone"],
+      "steps": [
+        { "op": "tap", "find": { "by": "textRefPrefix", "value": "system_info_section_" }, "unless": { "by": "descPattern", "value": "^[^:]+: ." } }
+      ],
+      "locate": {
+        "refresh": { "by": "textRef", "value": "system_info_refresh" },
+        "send": { "by": "textRef", "value": "system_info_send_to_phone" },
+        "groups": { "by": "textRefPrefix", "value": "system_info_section_" },
+        "row": { "by": "descPattern", "value": "^[^:]+: .", "clickable": true },
+        "interface-size": { "by": "textRefFormat", "value": "system_info_interface_scale", "clickable": true },
+        "help-row": { "by": "textRef", "value": "system_info_help_title" }
+      },
+      "inputs": {
+        "roots": ["wear/src/main/kotlin", "wear/src/main/res"],
+        "include": [
+          "^wear/src/main/kotlin/com/sza/deviceinfo/wear/ui/.+\\.kt$",
+          "^wear/src/main/res/(layout|menu|drawable|color|anim|font)[^/]*/.+$",
+          "^wear/src/main/res/values(-night|-v[0-9]+|-sw[0-9]+dp|-w[0-9]+dp|-round|-notround)*/(?!strings)[^/]+\\.xml$",
+          "^wear/src/main/res/values/strings[^/]*\\.xml$",
+          "^wear/src/main/res/values-{locale}/strings[^/]*\\.xml$"
+        ]
+      }
+    }
+  }
+}

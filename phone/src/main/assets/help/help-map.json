@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "product": "DeviceInfo",
+  "helpRoot": "help",
+  "pageTemplate": "{locale}/{help}.html",
+  "index": "index",
+  "locales": ["en", "ru", "uk"],
+  "siteRoot": "https://serzhyale.github.io/DeviceInfo_Android/help/",
+  "surfaces": [
+    {
+      "id": "launcher",
+      "module": "phone",
+      "source": "activity:.MainActivity",
+      "nameRef": "app_name",
+      "form": "none",
+      "reason": "A launcher trampoline: it starts System information and finishes at once, so it shows nothing to explain."
+    },
+    {
+      "id": "system-info",
+      "module": "phone",
+      "source": "activity:.ui.systeminfo.SystemInfoActivity",
+      "nameRef": "settings_system_info_title",
+      "form": "page",
+      "help": "system-info",
+      "elements": [
+        { "id": "search", "view": "systemInfoSearchView" },
+        { "id": "groups", "view": "csh_toggleRow" },
+        { "id": "copy-section", "view": "csh_trailingSlot" },
+        { "id": "field", "view": "rowSystemInfoField" },
+        { "id": "copy", "view": "action_system_info_copy" },
+        { "id": "save", "view": "action_system_info_save" },
+        { "id": "expand-collapse", "view": "action_system_info_expand_collapse" },
+        { "id": "share", "view": "action_system_info_share" },
+        { "id": "notifications", "view": "action_system_info_notifications" },
+        { "id": "interface-size", "view": "action_system_info_interface_size" }
+      ]
+    },
+    {
+      "id": "help-viewer",
+      "module": "phone",
+      "source": "activity:.ui.help.HelpActivity",
+      "nameRef": "help",
+      "form": "none",
+      "reason": "The help viewer is the answer, not a surface that asks: it shows a help page and nothing else, with Back to return and one action that opens the same page on the site."
+    },
+    {
+      "id": "notifications-prompt",
+      "module": "phone",
+      "source": "dialog:phone/src/main/kotlin/com/sza/deviceinfo/ui/systeminfo/helpers/NotificationPermissionCoordinator.kt",
+      "nameRef": "notifications_prompt_title",
+      "form": "none",
+      "reason": "A confirmation whose text is the whole explanation (CONTEXT-HELP rule 4); the Notifications entry of the System information page covers the same question."
+    },
+    {
+      "id": "copy-full-report-confirm",
+      "module": "phone",
+      "source": "dialog:phone/src/main/kotlin/com/sza/deviceinfo/ui/systeminfo/helpers/SystemInfoDialogManager.kt",
+      "nameRef": "system_info_reveal_confirm_title",
+      "form": "none",
+      "reason": "A confirmation whose text is the whole explanation (CONTEXT-HELP rule 4)."
+    },
+    {
+      "id": "report-text-dialog",
+      "module": "phone",
+      "source": "dialog:phone/src/main/kotlin/com/sza/deviceinfo/ui/systeminfo/helpers/SystemInfoDialogManager.kt",
+      "nameRef": "settings_system_info_title",
+      "form": "none",
+      "reason": "A message box with the report text and OK. No screen opens it today (SystemInfoDialogManager.show has no caller); when one does, this row becomes inherit from system-info."
+    },
+    {
+      "id": "interface-size-dialog",
+      "module": "phone",
+      "source": "dialog:phone/src/main/kotlin/com/sza/deviceinfo/ui/systeminfo/helpers/InterfaceScalePicker.kt",
+      "nameRef": "sysinfo_action_interface_size",
+      "form": "none",
+      "reason": "A short list of the sizes with Cancel, whose title and options are the whole explanation (CONTEXT-HELP rule 4); the Interface size entry of the System information page covers the same choice."
+    },
+    {
+      "id": "watch-system-info",
+      "module": "wear",
+      "source": "activity:.MainActivity",
+      "nameRef": "system_info_title",
+      "form": "page",
+      "help": "watch-system-info",
+      "entry": "row-end-of-list",
+      "reason": "Reading A of CONTEXT-HELP 0.4 item L: a watch with no companion carries its own entry, the Help row at the end of the list; the page is the one the phone app and the site carry."
+    }
+  ]
+}

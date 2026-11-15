@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.DeviceInfo" parent="Theme.Material3.DayNight.NoActionBar" />
+    <!-- The product identity (S0022): every role below points at an identity_* token; docs/design/IDENTITY.md maps
+         each token to its watch role. Day and night come from the values and values-night colors. -->
+    <style name="Theme.DeviceInfo" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/identity_accent</item>
+        <item name="colorOnPrimary">@color/identity_on_accent</item>
+        <item name="colorPrimaryContainer">@color/identity_accent_container</item>
+        <item name="colorOnPrimaryContainer">@color/identity_on_accent_container</item>
+        <item name="colorSecondary">@color/identity_accent</item>
+        <item name="colorOnSecondary">@color/identity_on_accent</item>
+        <item name="colorSecondaryContainer">@color/identity_accent_container</item>
+        <item name="colorOnSecondaryContainer">@color/identity_on_accent_container</item>
+        <item name="colorSurface">@color/identity_surface</item>
+        <item name="android:colorBackground">@color/identity_surface</item>
+        <item name="colorOnSurface">@color/identity_on_surface</item>
+        <item name="colorOnBackground">@color/identity_on_surface</item>
+        <item name="colorSurfaceVariant">@color/identity_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/identity_on_surface_variant</item>
+        <item name="colorError">@color/identity_error</item>
+        <item name="colorOnError">@color/identity_on_error</item>
+    </style>
 </resources>

@@ -1,14 +1,17 @@
 package com.sza.deviceinfo.ui.systeminfo.adapter
 
+import android.content.Context
 import android.text.Layout
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -33,22 +36,46 @@ class SystemInfoAdapter(
         is SystemInfoListItem.EmptyState -> TYPE_EMPTY
     }
 
+    private val headerWidthCache = HashMap<String, Int>()
+    private var headerPrototype: HeaderViewHolder? = null
+
+    private fun createHeaderHolder(context: Context) = HeaderViewHolder(
+        header = CollapsibleSectionHeader(context).apply {
+            val margin = resources.getDimensionPixelSize(R.dimen.margin_tiny)
+            layoutParams = RecyclerView.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+            ).apply {
+                setMargins(margin, margin, margin, margin)
+            }
+        },
+        onToggleSection = onToggleSection,
+        onCopySection = onCopySection,
+    )
+
+    /**
+     * The width a collapsed [item] needs as a list cell, margins included, measured on a real header built the same
+     * way as the ones the list shows (S0023, exception E3). Cached by what the width depends on; the screen is
+     * recreated when the font or display scale changes, which discards the cache.
+     */
+    fun collapsedHeaderCellWidthPx(context: Context, item: SystemInfoListItem.SectionHeader): Int {
+        val cacheKey = "${item.title}\u0000${item.count}\u0000${item.iconRes ?: 0}"
+        return headerWidthCache.getOrPut(cacheKey) {
+            val holder = headerPrototype ?: createHeaderHolder(context).also { headerPrototype = it }
+            holder.bind(item.copy(isExpanded = false))
+            holder.itemView.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+            )
+            val margins = holder.itemView.layoutParams as ViewGroup.MarginLayoutParams
+            holder.itemView.measuredWidth + margins.leftMargin + margins.rightMargin
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            TYPE_HEADER -> HeaderViewHolder(
-                header = CollapsibleSectionHeader(parent.context).apply {
-                    val margin = resources.getDimensionPixelSize(R.dimen.margin_tiny)
-                    layoutParams = RecyclerView.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ).apply {
-                        setMargins(margin, margin, margin, margin)
-                    }
-                },
-                onToggleSection = onToggleSection,
-                onCopySection = onCopySection,
-            )
+            TYPE_HEADER -> createHeaderHolder(parent.context)
             TYPE_FIELD -> FieldViewHolder(
                 binding = ItemSystemInfoFieldBinding.inflate(inflater, parent, false),
                 onCopyField = onCopyField,
@@ -81,6 +108,7 @@ class SystemInfoAdapter(
             setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_copy))
             background = AppCompatResources.getDrawable(context, R.drawable.focus_button_background)
             contentDescription = context.getString(R.string.sysinfo_action_copy_section)
+            TooltipCompat.setTooltipText(this, contentDescription)
             isFocusable = true
             isClickable = true
         }

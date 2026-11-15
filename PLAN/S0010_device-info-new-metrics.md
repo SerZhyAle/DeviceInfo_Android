@@ -1,8 +1,8 @@
 # S0010 - Extended device info metrics, Sensors, and Media & Audio sections (FastMediaSorter S4543 port)
 
 **Ticket:** S0010
-**Status:** Partial
-**Status note:** Scope lines 1, 2 and the public sensors part of line 3 are written (no compile command declared: compiled no, tested no, RELEASE items in the audit); ledger carried 2026-11-12 after upstream GatherSystemInfoUseCase drift. The seven noLegal sections of line 3 wait for the owner's build decision in S0009. Blocker: S0009
+**Status:** Implemented
+**Status note:** All scope lines written; scope line 3's second bullet carried and implemented by S0009 (owner option 1, restricted build, 2026-11-13). No compile command declared: compiled no, tested no, RELEASE items in the audit; one MANUAL device check open.
 **Priority:** 55
 **Tier:** 3 - Moderate
 **Complexity:** medium (confirmed at the plan pass 2026-11-12) - porting extended device info collectors (`PlatformDetailsCollector`, `SensorsDiagnosticsCollector`, `MediaAudioDiagnosticsCollector`), expanded `BatteryDetailsCollector`, `SystemInfoBenchmark` CPU tests, `CameraHardwareDataSource` fields, and 83 localized strings in EN/RU/UK from FastMediaSorter S4543
@@ -70,7 +70,7 @@ Port all new device information metrics and the two new collapsible sections (`S
 
 ## Plan (2026-11-12)
 
-Shared-contract boundary: none touched. The new sections go through the existing `SystemInfoSection` / `SystemInfoGroup` model and the collapsible adapter; `ExtendedDiagnosticsContributor`, `DATA-LAYER-PAIR`, `INPUT-PARITY`, `IN-APP-HELP` and `UNIFIED-UI` are read-only here. Complexity read against the plan and confirmed: medium (about 20 files, no schema, no new screen, no new DI wiring beyond constructor injection).
+Shared-contract boundary: none touched. The new sections go through the existing `SystemInfoSection` / `SystemInfoGroup` model and the collapsible adapter; `ExtendedDiagnosticsContributor`, `DATA-LAYER-PAIR`, `INPUT-PARITY`, `CONTEXT-HELP` [named `IN-APP-HELP` here until S0016's 2026-11-13 correction; that id is no catalog id] and `UNIFIED-UI` are read-only here. Complexity read against the plan and confirmed: medium (about 20 files, no schema, no new screen, no new DI wiring beyond constructor injection).
 
 Coverage inventory (every goal and acceptance line mapped):
 
@@ -95,10 +95,7 @@ Topology (no phase consumes a later one): A (group enum, icons, drawables, strin
 
 ## Open questions
 
-1. **The seven noLegal diagnostic sections (scope line 3, second bullet).** Status: Open, owner call. Which sections DeviceInfo carries and in which build is S0009's question 1; this ticket does not answer it and ports none of the `OS_SECURITY`, `PERMISSIONS`, `INSTALLER_SIGNATURE`, `RUNTIMES`, `MOUNTS`, `NETWORK_DIAGNOSTICS`, `PROCESS_RESOURCES` rows. Fact for that sitting: upstream `NoLegalDiagnosticsCollectors.kt` grew from 386 lines (S0009's reading of 2026-11-10) to 901 lines, and now also carries the permission-gated step, heart-rate and off-body sensor rows that the public collector here leaves out.
-
-Carrier: S0009
-Blocker: S0009
+1. **The seven noLegal diagnostic sections (scope line 3, second bullet).** Status: Answered 2026-11-13 - carried and implemented by S0009 (owner option (1) in S0009's Quiz decisions: all seven in a restricted build only, the public build carries none). The seven sections, their ten sensitive fields and the permission-gated step, heart-rate and off-body sensor rows live in `phone/src/restricted/` (`RestrictedDiagnosticsCollectors`, `RestrictedExtendedDiagnosticsContributor`, `RestrictedExtendedDiagnosticsModule`, strings `strings_diagnostics.xml` in three locales); this ticket itself ports none of those rows.
 
 ### Assumed (unattended, 2026-11-12)
 
@@ -128,33 +125,31 @@ Park candidates for the FastMediaSorter project (not filed from here: the pass m
 
 ## Last Audit
 
-**Date:** 26-11-12 | **Mode:** static | **Outcome:** Partial
-**Counts:** PASS 9 | WARN 0 | FAIL 0 | MANUAL 1 | UNCHECKABLE 0 | EXEMPT 2 | RELEASE 2
+**Date:** 26-11-13 | **Mode:** static | **Outcome:** Partial
+**Counts:** PASS 10 | WARN 0 | FAIL 0 | MANUAL 1 | UNCHECKABLE 0 | EXEMPT 1 | RELEASE 2
+
+Re-audit of 2026-11-13; supersedes the audit of 2026-11-12 and its two re-checks. No source was edited in this pass; the tree changed by S0009 (restricted flavor, Implemented) and S0013 (three-collector drift carry, Implemented) since.
 
 Evidence, each run fresh in this pass (expected | actual):
 
-1. Port ledger: `pwsh -NoProfile -File tools/port-ledger/check-drift.ps1` | exit 0, "OK: nothing uncarried (89 in step, 0 decided)"; 13 drifted rows carried with `-Refresh`, 3 rows added (`PlatformDetailsCollector`, `SensorsDiagnosticsCollector`, `MediaAudioDiagnosticsCollector`). PASS.
-2. Diffs against upstream, `diff` of each ported file after the package rename | only the differences listed in the disposition table remain (`GatherSystemInfoUseCase`, `GatherCameraDiagnosticsUseCase`, `CameraHardwareDataSource`, `SystemInfoGroupIcons`, `BatteryDetailsCollector`, estimator files and tests). PASS.
-3. String completeness: every `R.string.*` referenced under `core/systeminfo` and `domain/usecase` (178 keys) | 0 missing in `values`, `values-ru`, `values-uk`; 0 duplicate names per file. PASS.
-4. Platform API existence: every Android API used by the three new collectors, the camera and battery changes (about 130 symbols) checked against the SDK stub sources | all present except `StorageManager.isFileEncrypted()`, replaced as recorded. PASS after the fix.
-5. Group model: `SystemInfoGroup.entries` gains `SENSORS`, `MEDIA_AUDIO`; `SystemInfoGroupIcons` maps both; `ic_compass.xml` and `ic_audio.xml` exist in `phone/src/main/res/drawable`; `SystemInfoExpansionStateTest` asserts an icon for every entry. PASS.
-6. Permissions: no `uses-permission` added; the permission-gated sensor types are filtered from the list and never sampled; `<queries>` names one package. PASS.
-7. Fast tier: `spec_catalog/validate` | exit 0, "Summary: 10 OK, 0 WARN, 0 FAIL"; `spec_catalog/release-queue -Validate` | exit 0, "10 ticket(s), no drift"; canon compliance gate | exit 0, 0 error(s), 1 warning (`SZA-CANON03` stale adoption stamp, present before this ticket). PASS.
-8. Probe invariant: no `S0010` string in `phone/src` or `wear/src`; the `S0006` probe line is untouched and S0006 is still `BlockNeedUserTest`. PASS.
-9. Scope purity: every edit is inside the plan's phases A to E; the upstream defects are recorded as park candidates, not fixed upstream. PASS.
-10. Contract boundary and persona pass: no shared contract changed; the new rows are technical values like the existing ones. EXEMPT.
-11. Scope line 3, noLegal sections: waits for S0009's owner decision. EXEMPT (Carrier: S0009).
-12. Build: no `commands.compileCheck` in `.sza-profile.json`, so no compile command is declared; the pass edited compiled source and ran none. Compiled: no. RELEASE: `.\gradlew.bat :phone:assembleDebug :wear:assembleDebug` under the Build lock.
-13. Tests: not run. RELEASE: `.\gradlew.bat :phone:testDebugUnitTest` under the Build lock (the suite grows by the CPU benchmark test, two use-case tests and the replaced estimator test).
-
-Re-check (2026-11-12, unattended resume, no source edited, so no compile gate applies): the tree matches the tracking. `check-drift.ps1` | exit 0, "OK: nothing uncarried (89 in step, 0 decided)"; `spec_catalog/validate` | "Summary: 10 OK, 0 WARN, 0 FAIL"; `release-queue -Validate` | "10 ticket(s), no drift"; on disk: `SENSORS` and `MEDIA_AUDIO` in `SystemInfoGroup.kt` and `SystemInfoGroupIcons.kt`, `ic_compass.xml` and `ic_audio.xml` present, 201 strings in each of `values`, `values-ru`, `values-uk`, the three new collectors, `SystemInfoBenchmark`, camera and battery files present, one `<queries>` package and no added `uses-permission`, no `S0010` string in `phone/src` or `wear/src`. The parity inventory line for `CameraHardwareDataSource` named a planned destination (`data/capture`); corrected to the ledger's `data/camera`. S0009 is still `BlockQuestions` (owner decision), so nothing in scope line 3's second bullet can move.
-
-Re-check (2026-11-12, second unattended resume, no source edited, so no compile gate applies): upstream `GatherSystemInfoUseCase.kt` changed after the carry above (upstream file time 03:04, the port's 02:23), so `check-drift.ps1` | exit 1, "UNCARRIED: 1 of 89" on that one row. Re-inventory: `diff` of the current upstream (package renamed) against the port | only the differences already in the disposition table remain (flavor row, `appCameraView` and `sysinfo_field_camera_app_view`, ticket-id references in comments, KDoc wording); no upstream behaviour is missing from the port. Carried with `record-port.ps1 -Refresh` | exit 0; `check-drift.ps1` | exit 0, "OK: nothing uncarried (89 in step, 0 decided)". No upstream `core/systeminfo`, `ui/systeminfo` or `ui/systeminfo/helpers` file is absent from the ledger. `spec_catalog/validate` | exit 0, "Summary: 10 OK, 0 WARN, 0 FAIL"; `release-queue -Validate` | exit 0, "10 ticket(s), no drift". S0009 is still `BlockQuestions` (updated 2026-11-10), S0009 does not depend on this ticket (no cycle). Status stays `Partial`, not `BlockNeedUserTest`: the port has never been compiled (no `commands.compileCheck` is declared) and scope line 3's second bullet is not ported, so inviting a device test now would test code nobody has built.
+1. Scope line 3, second bullet, closed by the carrier: S0009 status `Implemented` (catalog row updated 2026-11-13 07:32; owner option (1) in S0009's Quiz decisions). On disk: seven `SystemInfoGroup` entries `OS_SECURITY` to `PROCESS_RESOURCES` (`SystemInfoGroup.kt` lines 28 to 34); 7 `sysinfo_section_*` strings in each of `phone/src/restricted/res/values{,-ru,-uk}/strings_diagnostics.xml`; the permission-gated rows in `RestrictedDiagnosticsCollectors.kt` (`Step counter (since boot)` line 102, `Step detector` and `Significant motion` lines 554 to 555, `Heart rate`, `Heart beat`, `Off-body detect` lines 568 to 570). expected: the seven sections plus the gated rows in the restricted build | actual: present. PASS.
+2. Public build carries none of it: `SensorsDiagnosticsCollector.kt` exclusion set (lines 156 to 160) filters `TYPE_STEP_COUNTER`, `TYPE_STEP_DETECTOR`, `TYPE_HEART_RATE`, `SENSOR_TYPE_HEART_BEAT`, `SENSOR_TYPE_LOW_LATENCY_OFFBODY_DETECT`; header KDoc says the build asks for no extra permission; `Step counter` appears only in the presence list (line 74, a `getDefaultSensor` check). expected: gated types never listed or sampled | actual: holds. PASS.
+3. Parity inventory: all 11 ported files exist at the recorded destinations (`SystemInfoGroup`, `SystemInfoGroupIcons`, the three collectors, `SystemInfoBenchmark`, `CameraHardwareInventory`, `CameraHardwareDataSource` in `data/camera`, `GatherCameraDiagnosticsUseCase`, `GatherSystemInfoUseCase`). expected: 11 of 11 | actual: 11 of 11. PASS.
+4. String completeness: 199 `R.string.*` keys referenced under `core/systeminfo`, `domain/usecase` and `ui/systeminfo` | 0 missing in `values`, `values-ru`, `values-uk` (the one raw hit, `ok`, is `android.R.string.ok` in `SystemInfoDialogManager`, the framework resource). 208 `<string name=` per locale file; the growth from 201 is later tickets' strings, this ticket edited none since 2026-11-12. PASS.
+5. Group model: `SENSORS` and `MEDIA_AUDIO` in `SystemInfoGroup` (lines 16 and 18); `ic_compass.xml` and `ic_audio.xml` in `phone/src/main/res/drawable`. PASS.
+6. Port ledger: `check-drift.ps1` | exit 0, "OK: nothing uncarried (92 in step, 0 decided)" (89 at the 2026-11-12 audit; +3 S0009 rows; the three drifted collector rows carried by S0013). PASS.
+7. Fast tier: `spec_catalog/validate` | exit 0, "Summary: 9 OK, 1 WARN, 0 FAIL" (the WARN names S0019 and S0022 complexity lines, not this ticket); `release-queue -Validate` | exit 0, "OK - 30 ticket(s), no drift"; canon compliance gate | exit 0, 0 error(s), 1 warning (`SZA-CANON03` stale adoption stamp, pre-existing, S0026's surface). PASS.
+8. Probe invariant: `grep S0010` in `phone/src` and `wear/src` | 0 hits; the one `Timber.d` probe is S0006's in `BatteryDetailsCollector` (line 22) and S0006 is still `BlockNeedUserTest`. PASS.
+9. Disposition supersession: the `sampleEnvironmentScalar` row in the disposition table is this ticket's record of a past state, superseded by S0013 (the helper took upstream's name `sampleEnvironmentSensor`; S0007's re-read of disposition tables reads the row with S0013). The table is left as history. PASS.
+10. Scope purity: this pass edited no source; every S0010 edit remains inside plan phases A to E. PASS.
+11. Contract boundary and persona pass: no shared contract touched by this ticket (`ExtendedDiagnosticsContributor` is S0009's consumer of the S0003 contract, unchanged here). EXEMPT.
+12. On-device check of the sections (below). MANUAL 1.
+13. Build: no `commands.compileCheck` in `.sza-profile.json`, so no compile command is declared; the pass edited compiled source and ran none. Compiled: no. RELEASE: `.\gradlew.bat :phone:assembleDebug :wear:assembleDebug` under the Build lock.
+14. Tests: not run. RELEASE: `.\gradlew.bat :phone:testDebugUnitTest :wear:testDebugUnitTest` under the Build lock (the suite grows by the CPU benchmark test, two use-case tests and the replaced estimator test).
 
 ### Action items
 
-1. Scope line 3, second bullet (the seven noLegal sections) - S0009 - clear S0009's question 1 with `/sq`, then port the chosen sections on the contract S0003 ported.
-2. First compile of this port - `phone/src/main/kotlin/com/sza/deviceinfo/core/systeminfo/{PlatformDetailsCollector,SensorsDiagnosticsCollector,MediaAudioDiagnosticsCollector}.kt` - the three files and the camera and battery edits were checked by static inspection only; the release build is their first compile.
+1. First compile of this port - `phone/src/main/kotlin/com/sza/deviceinfo/core/systeminfo/{PlatformDetailsCollector,SensorsDiagnosticsCollector,MediaAudioDiagnosticsCollector}.kt` - the three files and the camera and battery edits were checked by static inspection only; the release build is their first compile.
 
 ### Manual / on-target
 

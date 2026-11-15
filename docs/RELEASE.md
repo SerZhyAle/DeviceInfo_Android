@@ -6,7 +6,8 @@ order**: nothing here tags, pushes, uploads or publishes by itself, and the buil
 
 ## Owner decisions this procedure carries out (S0008, 2026-11-13)
 
-- Application id `com.sza.deviceinfo`, shared by phone and watch, frozen with the first shipped package.
+- Application id `com.sza.deviceinfo`, shared by phone and watch, frozen since the Play Console app was created with it
+  (2026-11-13).
 - Signing: the key directory `P:\ANDROID\DeviceInfo_credentials` is outside this repository. Play App Signing: the
   product's own key is imported as the app signing key (possible only at the first release, so it is one-way) and a separate
   upload key signs the bundles. No key material, password or `keystore.properties` ever enters this tree.
@@ -17,20 +18,26 @@ order**: nothing here tags, pushes, uploads or publishes by itself, and the buil
 
 These need the owner's hands, a console account or a physical device; the build side cannot do them.
 
-1. **Create the upload key.** In `P:\ANDROID\DeviceInfo_credentials` create the upload keystore with `keytool` and a
-   `keystore.properties` beside it with four lines: `storeFile` (a file name relative to that directory, or an absolute
-   path), `storePassword`, `keyAlias`, `keyPassword`. Keep the app signing key there too, for the import.
-2. **Tell Gradle where the key is.** Put `deviceinfo.signing.dir=P:/ANDROID/DeviceInfo_credentials` in
-   `%USERPROFILE%\.gradle\gradle.properties` (or set the environment variable `DEVICEINFO_SIGNING_DIR`), the way the build
-   JDK is set. Without it every release packaging task stops with a message that says exactly this.
+1. **Create the upload key.** Done on 2026-11-14 by S0029: `P:\ANDROID\DeviceInfo_credentials` holds `upload-keystore.p12`
+   (alias `upload`) with `keystore.properties` beside it, and the app signing key `app-signing-keystore.p12` (alias
+   `appsigning`) with `app-signing.properties`; both are PKCS12, RSA 2048, valid 10000 days, and their passwords are only
+   in those two properties files. The `keystore.properties` format: `storeFile` (a file name relative to that directory,
+   or an absolute path), `storePassword`, `keyAlias`, `keyPassword`. The off-machine copy of the whole directory is still
+   the owner's step: it is the only copy of both keys.
+2. **Tell Gradle where the key is.** Done on 2026-11-14 by S0029: `deviceinfo.signing.dir=P:/ANDROID/DeviceInfo_credentials`
+   is in `%USERPROFILE%\.gradle\gradle.properties`. The same line, or the environment variable `DEVICEINFO_SIGNING_DIR`,
+   is how another machine is set, the way the build JDK is set. Without it every release packaging task stops with a
+   message that says exactly this.
 3. **The Play Console app** `com.sza.deviceinfo` was created on 2026-11-13 on the owner's order (personal account, App,
    Free; the package name is bound to the account from that day). Done there: every App content declaration from
    `docs/play/PLAY_DATA_SAFETY.md` (privacy URL, no restricted access, no ads, audience 18 and over, no advertising ID, not a
    government app, no financial or health features, Data safety "no data collected or shared", a fresh IARC questionnaire:
    ESRB Everyone, ClassInd L), store settings (Tools, `sza@ukr.net`, the landing as website), the default listing saved as
    a draft in en-US, ru-RU and uk from `docs/play/PLAY_LISTING.md` with the icon and the feature graphic, and the Wear OS
-   form factor added. Still open: phone and watch screenshots (step 5), the Wear OS opt-in, which the console allows only
-   after Wear screenshots and a Wear bundle on a testing track, the app signing key import at the first upload (Google's
+   form factor added. On 2026-11-15 (S0029) four phone screenshots and three watch screenshots per listing language were
+   uploaded from the `Pixel_9` and `Wear_OS_Large_Round` emulators and the listing saved, so all setup tasks are done and the
+   Wear OS form reads "1 of 3 complete". Still open: the Wear OS opt-in, which the console allows only
+   after a Wear bundle on a testing track, the app signing key import at the first upload (Google's
    `pepk` tool encrypts it for the import) and registering the upload key.
 4. **The remote** `SerZhyAle/DeviceInfo_Android` (public, created 2026-11-13, branch `main`) deploys `site/` to its Pages
    address (`https://serzhyale.github.io/DeviceInfo_Android/`) through `.github/workflows/pages.yml` on every push to `main`
@@ -49,14 +56,43 @@ same moment.
    `pwsh -NoProfile -File tools/harness.ps1 spec_catalog/validate`,
    `pwsh -NoProfile -File tools/harness.ps1 spec_catalog/release-queue -Validate`,
    `pwsh -NoProfile -File tools/port-ledger/check-drift.ps1`,
-   `pwsh -NoProfile -File tools/release/check-version-parity.ps1`, and the canon compliance gate `tools/check-compliance.ps1`
-   from the installed plugin root.
+   `pwsh -NoProfile -File tools/port-ledger/check-scope.ps1`,
+   `pwsh -NoProfile -File tools/port-ledger/check-local-divergence.ps1 -RequireClassified`,
+   `pwsh -NoProfile -File tools/docs/check-surfaces.ps1`,
+   `pwsh -NoProfile -File tools/docs/check-docs.ps1` (exit 0; a `PASS WITH ADVISORIES` verdict is read, not skipped: each advisory is a rule 4 gap the release notes),
+   `pwsh -NoProfile -File tools/store/render-store-assets.ps1 -Check` (exit 0: the listing graphics and the landing's social card equal their render, S0036),
+   `pwsh -NoProfile -File tools/parity/check-matrix.ps1`,
+   `pwsh -NoProfile -File tools/design/check-tokens.ps1`,
+   `pwsh -NoProfile -File tools/contracts/check-pointers.ps1`,
+   `java phone/src/test/java/com/sza/deviceinfo/ui/PhoneUiSizingResources.java`,
+   `java wear/src/test/java/com/sza/deviceinfo/wear/ui/WearUiSizingResources.java`,
+   `pwsh -NoProfile -File tools/release/check-version-parity.ps1`,
+   `java phone/src/test/java/com/sza/deviceinfo/service/WearPayloadParity.java phone/src/main/kotlin/com/sza/deviceinfo/domain/model/WearSystemInfoReportPayload.kt wear/src/main/kotlin/com/sza/deviceinfo/wear/data/wear/WearSystemInfoReportPayload.kt`,
+   and the canon compliance gate `tools/check-compliance.ps1`
+   from the installed plugin root. The **contract gate** (RELEASE_AND_DISTRIBUTION section 2) reads the registry rows that
+   `docs/contracts/README.md` lists: run `contract-lag.ps1 -Product DeviceInfo` from the plugin root's `tools/` folder (it
+   lists the 13 rows), write a `Verified` date into each of them from the evidence of this run (S0007, S0023, S0024 and the
+   checks above), and see that the canon-layer rows the register names as owned by S0026 exist. A row that stays `pending`
+   is reported in the verdict, not passed.
 2. **Tests.** `.\gradlew.bat -p buildSrc test` (the fixed-instant vectors of `VersionStampTest` and `ReleaseSigningTest`),
-   `.\gradlew.bat :phone:testDebugUnitTest :wear:testDebugUnitTest`.
+   `.\gradlew.bat :phone:testStoreDebugUnitTest :phone:testRestrictedDebugUnitTest :wear:testDebugUnitTest` (the bare `:phone:testDebugUnitTest` is ambiguous under the `distribution` flavors).
 3. **Pin the version.** `pwsh -NoProfile -File tools/release/new-version-pin.ps1` prints the three Gradle properties and the
    tag name for the instant of the run: `-Pdeviceinfo.pin.versionName=.. -Pdeviceinfo.pin.versionCode.phone=..
    -Pdeviceinfo.pin.versionCode.wear=..` and `tag v<versionName>`. The versionName is byte-identical in both packages, the
    codes sit in the disjoint bands of the two families, and buildSrc stops a pin that is not one instant of each partition.
+3a. **Help screenshots (S0032, CONTEXT-HELP rung 2).** The help pages carry a picture of the real screen per locale and
+   theme, captured against the pinned version, so this step needs the pin of step 3 and a device. Build the debug
+   packages with the pin (`.\gradlew.bat :phone:assembleDebug :wear:assembleDebug` with the three pin properties); start a
+   phone or emulator on API 33 or newer (the per-app language) and a Wear OS device or emulator; run
+   `pwsh -NoProfile -File tools/help/capture-help.ps1 -PhoneSerial <serial> -WearSerial <serial> -ProductVersion <versionName>`
+   (it refuses to record the build sentinel, and stops without writing when a capture fails its own proof of language or theme),
+   then `pwsh -NoProfile -File tools/help/render-help.ps1`. On the first adoption read what the capture recorded as absent
+   (parts the screen does not show: overflow entries, the watch's Help row at the end of the list), then
+   `pwsh -NoProfile -File tools/help/check-help-captures.ps1 -WriteBaseline` once. Then
+   `pwsh -NoProfile -File tools/help/check-help-captures.ps1 -Require -ExpectVersion <versionName>` and
+   `pwsh -NoProfile -File tools/help/check-help-map.ps1` exit 0, and a person looks at the rendered pages: every pin on the
+   part it names, in en, ru and uk, in both themes, demo content only. The pictures, the records and the pages are committed
+   with the release commit.
 4. **Notices and telemetry claim.** Run `.\gradlew.bat :phone:dependencies --configuration storeReleaseRuntimeClasspath`
    (the phone module has the flavors `store` and `restricted`, S0009; only `store` has a release variant and ships) and
    `.\gradlew.bat :wear:dependencies --configuration releaseRuntimeClasspath`; every group id they list is named in `phone/src/main/assets/THIRD-PARTY-NOTICES.txt` and none is an

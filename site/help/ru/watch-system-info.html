@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Справка - Сведения о системе - Часы</title>
+<script>
+(function () {
+  try {
+    var q = new URLSearchParams(location.search).get('theme');
+    var t = (q === 'light' || q === 'dark') ? q : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) { /* no script: help.css follows the system */ }
+})();
+</script>
+<link rel="stylesheet" href="../sza-kit.css">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body class="help">
+<main class="container">
+
+  <nav class="help-crumbs" aria-label="Breadcrumb">
+    <a href="index.html">Оглавление справки</a><span class="sep" aria-hidden="true">/</span><span>Сведения о системе</span>
+  </nav>
+  <header class="hero">
+    <p class="kicker">Справка по экрану часов</p>
+    <h1>Сведения о системе</h1>
+    <p class="lead">У DeviceInfo на часах один экран. Он показывает, из чего сделаны ваши часы и как они себя чувствуют, и может передать весь отчёт на телефон.</p>
+  </header>
+
+  <h2>По порядку</h2>
+  <ol class="order">
+    <li>Раскройте блоки, которые хотите прочитать <a class="ref" href="#groups">3</a>. Свёрнутые блоки показывают, сколько в них строк.</li>
+    <li>Коснитесь «Обновить» <a class="ref" href="#refresh">1</a>, чтобы прочитать актуальные значения.</li>
+    <li>Коснитесь строки <a class="ref" href="#row">4</a>, чтобы скопировать одно значение.</li>
+    <li>Коснитесь «Отправить на телефон» <a class="ref" href="#send">2</a>, чтобы передать весь отчёт на телефон.</li>
+    <li>Нужна подсказка? Её даёт последняя строка списка <a class="ref" href="#help-row">6</a>.</li>
+  </ol>
+
+  <h2>Элементы</h2>
+  <div class="elements">
+
+    <details class="el" id="refresh">
+      <summary><span class="mk">1</span><span><span class="name">Обновить</span><span class="one">Читает часы заново.</span></span></summary>
+      <div class="full">
+        <p>Заново читает все значения и обновляет строки. Пока идёт чтение, кнопка тускнеет.</p>
+        <dl class="facts">
+          <dt>Зачем</dt><dd>Заряд батареи, память и датчики меняются; «Обновить» показывает текущие значения.</dd>
+          <dt>Дальше</dt><dd>Строки обновляются на месте, а блоки, которые вы раскрыли, остаются раскрытыми.</dd>
+          <dt>Отмена</dt><dd>Чтение ничего не меняет на часах.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="send">
+      <summary><span class="mk">2</span><span><span class="name">Отправить на телефон</span><span class="one">Отправляет отчёт на телефон.</span></span></summary>
+      <div class="full">
+        <p>Отправляет все строки в приложение DeviceInfo на сопряжённом телефоне: оно сохраняет отчёт и показывает уведомление, из которого его можно открыть или отправить дальше. Строка под кнопками говорит, дошёл ли отчёт, а если нет - что делать: поднести телефон ближе, открыть на нём приложение или включить на нём уведомления.</p>
+        <dl class="facts">
+          <dt>Зачем</dt><dd>На телефоне есть буфер обмена и меню «Поделиться», поэтому длинный отчёт там проще читать и пересылать.</dd>
+          <dt>Дальше</dt><dd>Пока отчёт уходит, на кнопке написано «Отправка..», а результат появляется под кнопками.</dd>
+          <dt>Отмена</dt><dd>Отправка только копирует отчёт на телефон; на часах ничего не меняется.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="groups">
+      <summary><span class="mk">3</span><span><span class="name">Заголовки блоков</span><span class="one">Раскрывает или сворачивает блок.</span></span></summary>
+      <div class="full">
+        <p>В заголовке блока есть треугольник: он смотрит в сторону, пока блок закрыт, и вниз, пока открыт. Свёрнутые блоки стоят рядом, с числом строк в скобках; раскрытый блок показывает свои строки под заголовком.</p>
+        <dl class="facts">
+          <dt>Зачем</dt><dd>Экран часов маленький, поэтому вы раскрываете только то, что хотите прочитать.</dd>
+          <dt>Дальше</dt><dd>Ваш выбор запоминается до следующего открытия приложения.</dd>
+          <dt>Отмена</dt><dd>Коснитесь заголовка ещё раз.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="row">
+      <summary><span class="mk">4</span><span><span class="name">Строки</span><span class="one">Параметр и его значение; коснитесь или удерживайте, чтобы скопировать.</span></span></summary>
+      <div class="full">
+        <p>Строка показывает одно значение. Касание или долгое нажатие копирует его как название и значение, с короткой вибрацией. Строка, за которой стоит список, например датчики, по касанию раскрывает список, а по долгому нажатию копирует весь список.</p>
+        <dl class="facts">
+          <dt>Зачем</dt><dd>Буфер обмена часов позволяет вставить значение в текстовое поле на часах; чтобы унести весь отчёт, используйте «Отправить на телефон».</dd>
+          <dt>Дальше</dt><dd>Текст лежит в буфере обмена, пока вы не скопируете что-то другое.</dd>
+          <dt>Отмена</dt><dd>Копирование больше ничего не меняет.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="interface-size">
+      <summary><span class="mk">5</span><span><span class="name">Размер интерфейса</span><span class="one">Делает весь экран крупнее, шаг за шагом.</span></span></summary>
+      <div class="full">
+        <p>Кнопка «Размер интерфейса» стоит в конце списка, над строкой «Справка». Каждое касание переходит к следующему размеру: 100, 115, 130 и 150 процентов, а затем снова к 100. Размер одновременно увеличивает текст, значки, отступы и области касания. Он не зависит от размера текста в настройках часов, который по-прежнему применяется поверх него.</p>
+        <dl class="facts">
+          <dt>Зачем</dt><dd>На маленьком экране крупный интерфейс легче читать и легче нажимать.</dd>
+          <dt>Дальше</dt><dd>Экран меняется сразу, а на кнопке написан текущий размер. Выбор запоминается до следующего открытия приложения.</dd>
+          <dt>Отмена</dt><dd>Продолжайте касаться, пока на кнопке не появится 100 процентов.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="help-row">
+      <summary><span class="mk">6</span><span><span class="name">Справка</span><span class="one">Показывает короткую подсказку и говорит, где полная справка.</span></span></summary>
+      <div class="full">
+        <p>Строка «Справка» - последняя в списке. Коснитесь её, чтобы прочитать короткую подсказку, и ещё раз, чтобы скрыть её. Полная справка, со страницей для каждого экрана часов, есть в приложении DeviceInfo на телефоне и на сайте.</p>
+        <dl class="facts">
+          <dt>Зачем</dt><dd>У часов нет клавиатуры и верхней панели, поэтому справка стоит в конце списка, а не в углу.</dd>
+          <dt>Дальше</dt><dd>Подсказка остаётся открытой, пока вы снова не коснётесь строки.</dd>
+          <dt>Отмена</dt><dd>Коснитесь строки ещё раз, чтобы скрыть подсказку.</dd>
+        </dl>
+      </div>
+    </details>
+  </div>
+
+  <h2>Связанное</h2>
+  <ul class="related">
+  <li><a href="system-info.html"><b>Сведения о системе</b><span class="pill">Телефон</span><small>Окно отчёта в приложении на телефоне, с поиском, сохранением и отправкой.</small></a></li>
+  <li><a href="https://serzhyale.github.io/DeviceInfo_Android/ru/"><b>Сайт DeviceInfo</b><span class="pill gold">Сайт</span><small>Что показывает DeviceInfo, на телефоне и на часах.</small></a></li>
+  <li><a href="https://serzhyale.github.io/DeviceInfo_Android/privacy-ru.html"><b>Конфиденциальность</b><span class="pill gold">Сайт</span><small>Что приложение читает, хранит и для чего просит разрешения.</small></a></li>
+  </ul>
+
+<footer class="help-foot">
+  <span>Обновлено 2026-11-14.</span>
+  <a href="index.html">Оглавление справки</a>
+  <a href="https://github.com/SerZhyAle/DeviceInfo_Android/issues" rel="noopener">Задать вопрос или сообщить о проблеме</a>
+</footer>
+
+</main>
+<script>
+/* Progressive enhancement only: the page is complete without it. */
+(function () {
+  function openHash() {
+    var id = location.hash.slice(1);
+    var el = id && document.getElementById(id);
+    if (el && el.tagName === 'DETAILS') { el.open = true; }
+  }
+  addEventListener('hashchange', openHash);
+  openHash();
+})();
+</script>
+</body>
+</html>

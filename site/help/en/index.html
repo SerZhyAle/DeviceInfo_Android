@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>DeviceInfo help</title>
+<script>
+(function () {
+  try {
+    var q = new URLSearchParams(location.search).get('theme');
+    var t = (q === 'light' || q === 'dark') ? q : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) { /* no script: help.css follows the system */ }
+})();
+</script>
+<link rel="stylesheet" href="../sza-kit.css">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body class="help">
+<main class="container">
+
+  <header class="hero">
+    <p class="kicker">Help index</p>
+    <h1>DeviceInfo help</h1>
+    <p class="lead">Help for DeviceInfo on the phone and on the watch. Pick the screen you want to read about.</p>
+  </header>
+
+  <h2>Screens</h2>
+  <ul class="related">
+  <li><a href="system-info.html"><b>System information</b><span class="pill">Phone</span><small>The report window: every fact about this phone in sections, with search, copy, save and share.</small></a></li>
+  <li><a href="watch-system-info.html"><b>System information</b><span class="pill">Watch</span><small>The watch screen: sections, rows, Refresh and Send to phone.</small></a></li>
+  </ul>
+
+<footer class="help-foot">
+  <span>Revised 2026-11-14.</span>
+  <a href="https://github.com/SerZhyAle/DeviceInfo_Android/issues" rel="noopener">Ask a question or report a problem</a>
+</footer>
+
+</main>
+</body>
+</html>

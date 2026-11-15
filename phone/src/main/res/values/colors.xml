@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Product identity tokens, day members (S0022). The source is docs/design/tokens.json; the night members are in
+         values-night/colors.xml and tools/design/check-tokens.ps1 holds both equal to the source and to the watch theme. -->
+    <color name="identity_accent">#FF1976D2</color>
+    <color name="identity_on_accent">#FFFFFFFF</color>
+    <color name="identity_accent_container">#FFD3E3FD</color>
+    <color name="identity_on_accent_container">#FF0D2F5C</color>
+    <color name="identity_surface">#FFFDFCFF</color>
+    <color name="identity_on_surface">#FF1A1C1E</color>
+    <color name="identity_surface_variant">#FFE1E6EE</color>
+    <color name="identity_on_surface_variant">#FF43474E</color>
+    <color name="identity_error">#FFBA1A1A</color>
+    <color name="identity_on_error">#FFFFFFFF</color>
+
+    <!-- Neutral fills the ported vector drawables name (ic_*.xml); the upstream app defines the same two values. -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
     <color name="system_info_row_shade">#0A000000</color>
-    <color name="focus_button_stroke">#FF1976D2</color>
+    <color name="focus_button_stroke">@color/identity_accent</color>
     <color name="text_color_secondary">#99000000</color>
 </resources>

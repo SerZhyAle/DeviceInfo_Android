@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Справка DeviceInfo</title>
+<script>
+(function () {
+  try {
+    var q = new URLSearchParams(location.search).get('theme');
+    var t = (q === 'light' || q === 'dark') ? q : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) { /* no script: help.css follows the system */ }
+})();
+</script>
+<link rel="stylesheet" href="../sza-kit.css">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body class="help">
+<main class="container">
+
+  <header class="hero">
+    <p class="kicker">Оглавление справки</p>
+    <h1>Справка DeviceInfo</h1>
+    <p class="lead">Справка по DeviceInfo на телефоне и на часах. Выберите экран, о котором хотите прочитать.</p>
+  </header>
+
+  <h2>Экраны</h2>
+  <ul class="related">
+  <li><a href="system-info.html"><b>Сведения о системе</b><span class="pill">Телефон</span><small>Окно отчёта: все сведения об этом телефоне по блокам, с поиском, копированием, сохранением и отправкой.</small></a></li>
+  <li><a href="watch-system-info.html"><b>Сведения о системе</b><span class="pill">Часы</span><small>Экран часов: блоки, строки, «Обновить» и «Отправить на телефон».</small></a></li>
+  </ul>
+
+<footer class="help-foot">
+  <span>Обновлено 2026-11-14.</span>
+  <a href="https://github.com/SerZhyAle/DeviceInfo_Android/issues" rel="noopener">Задать вопрос или сообщить о проблеме</a>
+</footer>
+
+</main>
+</body>
+</html>

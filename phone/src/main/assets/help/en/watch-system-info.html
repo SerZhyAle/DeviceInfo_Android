@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Help - System information - Watch</title>
+<script>
+(function () {
+  try {
+    var q = new URLSearchParams(location.search).get('theme');
+    var t = (q === 'light' || q === 'dark') ? q : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) { /* no script: help.css follows the system */ }
+})();
+</script>
+<link rel="stylesheet" href="../sza-kit.css">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body class="help">
+<main class="container">
+
+  <nav class="help-crumbs" aria-label="Breadcrumb">
+    <a href="index.html">Help index</a><span class="sep" aria-hidden="true">/</span><span>System information</span>
+  </nav>
+  <header class="hero">
+    <p class="kicker">Watch screen help</p>
+    <h1>System information</h1>
+    <p class="lead">DeviceInfo on the watch has one screen. It shows what your watch is made of and how it is doing, and it can pass the whole report to your phone.</p>
+  </header>
+
+  <h2>In this order</h2>
+  <ol class="order">
+    <li>Open the sections you want to read <a class="ref" href="#groups">3</a>. Closed sections show how many rows they hold.</li>
+    <li>Tap <a class="ref" href="#refresh">1</a> to read the current values.</li>
+    <li>Tap a row <a class="ref" href="#row">4</a> to copy one value.</li>
+    <li>Tap <a class="ref" href="#send">2</a> to pass the whole report to the phone.</li>
+    <li>Need a reminder? The last row of the list <a class="ref" href="#help-row">6</a> explains the screen.</li>
+  </ol>
+
+  <h2>The elements</h2>
+  <div class="elements">
+
+    <details class="el" id="refresh">
+      <summary><span class="mk">1</span><span><span class="name">Refresh</span><span class="one">Reads the watch again.</span></span></summary>
+      <div class="full">
+        <p>Reads every value afresh and updates the rows. The button is dimmed while a read is under way.</p>
+        <dl class="facts">
+          <dt>Why</dt><dd>Values such as the battery, the memory and the sensors change; Refresh shows the current ones.</dd>
+          <dt>Next</dt><dd>The rows update in place, and the sections you opened stay open.</dd>
+          <dt>Undo</dt><dd>Reading changes nothing on the watch.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="send">
+      <summary><span class="mk">2</span><span><span class="name">Send to phone</span><span class="one">Sends the report to your phone.</span></span></summary>
+      <div class="full">
+        <p>Sends all rows to the DeviceInfo app on the paired phone, which saves the report and shows a notification you can tap to open or share it. A line under the buttons says whether it arrived, or what to do when it did not: bring the phone closer, open the app on it, or turn its notifications on.</p>
+        <dl class="facts">
+          <dt>Why</dt><dd>A phone has a clipboard and a share sheet, so a long report is easier to read and pass on there.</dd>
+          <dt>Next</dt><dd>While the report is going, the button reads Sending.., and the result appears under the buttons.</dd>
+          <dt>Undo</dt><dd>Sending only copies the report to the phone; nothing on the watch changes.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="groups">
+      <summary><span class="mk">3</span><span><span class="name">Section titles</span><span class="one">Opens or closes a section.</span></span></summary>
+      <div class="full">
+        <p>A section title has a triangle: it points to the side while the section is closed and down while it is open. Closed sections sit side by side with the number of their rows in brackets; an open section shows its rows under its title.</p>
+        <dl class="facts">
+          <dt>Why</dt><dd>The watch screen is small, so you open only what you want to read.</dd>
+          <dt>Next</dt><dd>Your choice is remembered the next time you open the app.</dd>
+          <dt>Undo</dt><dd>Tap the title again.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="row">
+      <summary><span class="mk">4</span><span><span class="name">Rows</span><span class="one">A parameter and its value; tap or press and hold to copy.</span></span></summary>
+      <div class="full">
+        <p>A row shows one value. Tapping it, or pressing and holding it, copies it as the name followed by the value, with a short vibration. A row that stands for a list, such as the sensors, opens the list on a tap and copies the whole list on a long press.</p>
+        <dl class="facts">
+          <dt>Why</dt><dd>The watch clipboard lets you paste a value into a text field of the watch; to take the whole report away, use Send to phone.</dd>
+          <dt>Next</dt><dd>The text stays on the clipboard until you copy something else.</dd>
+          <dt>Undo</dt><dd>Copying changes nothing else.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="interface-size">
+      <summary><span class="mk">5</span><span><span class="name">Interface size</span><span class="one">Makes the whole screen larger, step by step.</span></span></summary>
+      <div class="full">
+        <p>The Interface size button sits at the end of the list, above the Help row. Each tap moves to the next size: 100, 115, 130 and 150 percent, and then back to 100. The size scales text, pictures, spacing and touch targets together. It is separate from the text size in the watch settings, which still applies on top of it.</p>
+        <dl class="facts">
+          <dt>Why</dt><dd>On a small display a larger interface is easier to read and easier to tap.</dd>
+          <dt>Next</dt><dd>The screen changes at once, and the button shows the current size. The choice is remembered the next time you open the app.</dd>
+          <dt>Undo</dt><dd>Keep tapping until the button shows 100 percent.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="help-row">
+      <summary><span class="mk">6</span><span><span class="name">Help</span><span class="one">Shows a short note and says where the full help is.</span></span></summary>
+      <div class="full">
+        <p>The Help row is the last row of the list. Tap it to read a short note; tap it again to hide the note. The full help, with a page for every screen of the watch, is in the DeviceInfo app on the phone and on the site.</p>
+        <dl class="facts">
+          <dt>Why</dt><dd>The watch has no keyboard and no top bar, so its help sits at the end of the list instead of in a corner.</dd>
+          <dt>Next</dt><dd>The note stays open until you tap the row again.</dd>
+          <dt>Undo</dt><dd>Tap the row again to hide the note.</dd>
+        </dl>
+      </div>
+    </details>
+  </div>
+
+  <h2>Related</h2>
+  <ul class="related">
+  <li><a href="system-info.html"><b>System information</b><span class="pill">Phone</span><small>The report window of the phone app, with search, save and share.</small></a></li>
+  <li><a href="https://serzhyale.github.io/DeviceInfo_Android/"><b>DeviceInfo site</b><span class="pill gold">Site</span><small>What DeviceInfo shows, for the phone and for the watch.</small></a></li>
+  <li><a href="https://serzhyale.github.io/DeviceInfo_Android/privacy.html"><b>Privacy</b><span class="pill gold">Site</span><small>What the app reads, stores and asks permission for.</small></a></li>
+  </ul>
+
+<footer class="help-foot">
+  <span>Revised 2026-11-14.</span>
+  <a href="index.html">Help index</a>
+  <a href="https://github.com/SerZhyAle/DeviceInfo_Android/issues" rel="noopener">Ask a question or report a problem</a>
+</footer>
+
+</main>
+<script>
+/* Progressive enhancement only: the page is complete without it. */
+(function () {
+  function openHash() {
+    var id = location.hash.slice(1);
+    var el = id && document.getElementById(id);
+    if (el && el.tagName === 'DETAILS') { el.open = true; }
+  }
+  addEventListener('hashchange', openHash);
+  openHash();
+})();
+</script>
+</body>
+</html>

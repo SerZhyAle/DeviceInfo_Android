@@ -84,4 +84,9 @@
     <string name="system_info_send_no_answer">Телефон не відповів. Відкрийте на ньому застосунок і повторіть</string>
     <string name="system_info_send_notifications_off">Сповіщення на телефоні вимкнено. Увімкніть їх і повторіть</string>
     <string name="system_info_send_refused">Телефон не зміг прийняти звіт. Оновіть на ньому застосунок</string>
+    <string name="sysinfo_group_expanded">Розгорнуто</string>
+    <string name="sysinfo_group_collapsed">Згорнуто</string>
+    <string name="system_info_interface_scale">Розмір інтерфейсу: %1$d %%</string>
+    <string name="system_info_help_title">Довідка</string>
+    <string name="system_info_help_text">Торкніться заголовка блоку, щоб розгорнути його, і рядка, щоб скопіювати його. «Надіслати на телефон» передає весь звіт. Повна довідка є в застосунку DeviceInfo на телефоні та на serzhyale.github.io/DeviceInfo_Android/help/</string>
 </resources>

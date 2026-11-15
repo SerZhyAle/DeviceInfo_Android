@@ -5,10 +5,11 @@
     <dimen name="margin_normal">8dp</dimen>
     <dimen name="margin_large">16dp</dimen>
     <dimen name="touch_target_min_height">48dp</dimen>
-    <dimen name="system_info_group_copy_button_width">40dp</dimen>
+    <dimen name="system_info_group_copy_button_width">48dp</dimen>
     <dimen name="system_info_group_padding_horizontal">6dp</dimen>
     <dimen name="system_info_group_padding_vertical">4dp</dimen>
-    <dimen name="system_info_group_leading_spacing">4dp</dimen>
+    <dimen name="system_info_group_leading_spacing">8dp</dimen>
+    <dimen name="system_info_group_marker_size">16dp</dimen>
     <dimen name="system_info_group_title_text_size">14sp</dimen>
     <dimen name="collapsible_section_title_text_size">16sp</dimen>
     <dimen name="icon_tier_24">24dp</dimen>

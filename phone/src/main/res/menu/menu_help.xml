@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Leaves for the system browser with the same page on the site (CONTEXT-HELP section 2.5, Android). It has no
+         glyph: the icon vocabulary has no external-link meaning, and a glyph reused from another meaning would break
+         the one-glyph-one-meaning rule, so it is a text entry of the overflow menu. -->
+    <item
+        android:id="@+id/action_help_open_site"
+        android:title="@string/help_open_on_site"
+        app:showAsAction="never" />
+</menu>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="uk" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Довідка - Відомості про систему - Годинник</title>
+<script>
+(function () {
+  try {
+    var q = new URLSearchParams(location.search).get('theme');
+    var t = (q === 'light' || q === 'dark') ? q : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) { /* no script: help.css follows the system */ }
+})();
+</script>
+<link rel="stylesheet" href="../sza-kit.css">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body class="help">
+<main class="container">
+
+  <nav class="help-crumbs" aria-label="Breadcrumb">
+    <a href="index.html">Зміст довідки</a><span class="sep" aria-hidden="true">/</span><span>Відомості про систему</span>
+  </nav>
+  <header class="hero">
+    <p class="kicker">Довідка до екрана годинника</p>
+    <h1>Відомості про систему</h1>
+    <p class="lead">У DeviceInfo на годиннику один екран. Він показує, з чого зроблено ваш годинник і як він себе почуває, і може передати весь звіт на телефон.</p>
+  </header>
+
+  <h2>По порядку</h2>
+  <ol class="order">
+    <li>Розгорніть блоки, які хочете прочитати <a class="ref" href="#groups">3</a>. Згорнуті блоки показують, скільки в них рядків.</li>
+    <li>Торкніться «Оновити» <a class="ref" href="#refresh">1</a>, щоб прочитати актуальні значення.</li>
+    <li>Торкніться рядка <a class="ref" href="#row">4</a>, щоб скопіювати одне значення.</li>
+    <li>Торкніться «Надіслати на телефон» <a class="ref" href="#send">2</a>, щоб передати весь звіт на телефон.</li>
+    <li>Потрібна підказка? Її дає останній рядок списку <a class="ref" href="#help-row">6</a>.</li>
+  </ol>
+
+  <h2>Елементи</h2>
+  <div class="elements">
+
+    <details class="el" id="refresh">
+      <summary><span class="mk">1</span><span><span class="name">Оновити</span><span class="one">Читає годинник заново.</span></span></summary>
+      <div class="full">
+        <p>Заново читає всі значення й оновлює рядки. Поки триває читання, кнопка тьмяніє.</p>
+        <dl class="facts">
+          <dt>Навіщо</dt><dd>Заряд батареї, пам'ять і датчики змінюються; «Оновити» показує поточні значення.</dd>
+          <dt>Далі</dt><dd>Рядки оновлюються на місці, а блоки, які ви розгорнули, лишаються розгорнутими.</dd>
+          <dt>Скасування</dt><dd>Читання нічого не змінює на годиннику.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="send">
+      <summary><span class="mk">2</span><span><span class="name">Надіслати на телефон</span><span class="one">Надсилає звіт на телефон.</span></span></summary>
+      <div class="full">
+        <p>Надсилає всі рядки до застосунку DeviceInfo на спареному телефоні: він зберігає звіт і показує сповіщення, з якого його можна відкрити або надіслати далі. Рядок під кнопками каже, чи дійшов звіт, а якщо ні - що робити: піднести телефон ближче, відкрити на ньому застосунок або ввімкнути на ньому сповіщення.</p>
+        <dl class="facts">
+          <dt>Навіщо</dt><dd>На телефоні є буфер обміну і меню «Поділитися», тому довгий звіт там простіше читати й пересилати.</dd>
+          <dt>Далі</dt><dd>Поки звіт іде, на кнопці написано «Надсилання..», а результат з'являється під кнопками.</dd>
+          <dt>Скасування</dt><dd>Надсилання лише копіює звіт на телефон; на годиннику нічого не змінюється.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="groups">
+      <summary><span class="mk">3</span><span><span class="name">Заголовки блоків</span><span class="one">Розгортає або згортає блок.</span></span></summary>
+      <div class="full">
+        <p>У заголовку блоку є трикутник: він дивиться вбік, поки блок закритий, і вниз, поки відкритий. Згорнуті блоки стоять поруч, із кількістю рядків у дужках; розгорнутий блок показує свої рядки під заголовком.</p>
+        <dl class="facts">
+          <dt>Навіщо</dt><dd>Екран годинника малий, тому ви розгортаєте тільки те, що хочете прочитати.</dd>
+          <dt>Далі</dt><dd>Ваш вибір запам'ятовується до наступного відкриття застосунку.</dd>
+          <dt>Скасування</dt><dd>Торкніться заголовка ще раз.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="row">
+      <summary><span class="mk">4</span><span><span class="name">Рядки</span><span class="one">Параметр і його значення; торкніться або втримуйте, щоб скопіювати.</span></span></summary>
+      <div class="full">
+        <p>Рядок показує одне значення. Дотик або довге натискання копіює його як назву й значення, з короткою вібрацією. Рядок, за яким стоїть список, наприклад датчики, за дотиком розгортає список, а за довгим натисканням копіює весь список.</p>
+        <dl class="facts">
+          <dt>Навіщо</dt><dd>Буфер обміну годинника дає змогу вставити значення в текстове поле на годиннику; щоб забрати весь звіт, скористайтеся «Надіслати на телефон».</dd>
+          <dt>Далі</dt><dd>Текст лежить у буфері обміну, доки ви не скопіюєте щось інше.</dd>
+          <dt>Скасування</dt><dd>Копіювання більше нічого не змінює.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="interface-size">
+      <summary><span class="mk">5</span><span><span class="name">Розмір інтерфейсу</span><span class="one">Робить увесь екран більшим, крок за кроком.</span></span></summary>
+      <div class="full">
+        <p>Кнопка «Розмір інтерфейсу» стоїть наприкінці списку, над рядком «Довідка». Кожен дотик переходить до наступного розміру: 100, 115, 130 і 150 відсотків, а потім знову до 100. Розмір одночасно збільшує текст, значки, відступи та області дотику. Він не залежить від розміру тексту в налаштуваннях годинника, який і далі застосовується поверх нього.</p>
+        <dl class="facts">
+          <dt>Навіщо</dt><dd>На маленькому екрані більший інтерфейс легше читати і легше натискати.</dd>
+          <dt>Далі</dt><dd>Екран змінюється одразу, а на кнопці написано поточний розмір. Вибір зберігається до наступного відкриття застосунку.</dd>
+          <dt>Скасування</dt><dd>Продовжуйте торкатися, доки на кнопці не буде 100 відсотків.</dd>
+        </dl>
+      </div>
+    </details>
+
+    <details class="el" id="help-row">
+      <summary><span class="mk">6</span><span><span class="name">Довідка</span><span class="one">Показує коротку підказку і каже, де повна довідка.</span></span></summary>
+      <div class="full">
+        <p>Рядок «Довідка» - останній у списку. Торкніться його, щоб прочитати коротку підказку, і ще раз, щоб приховати її. Повна довідка, зі сторінкою для кожного екрана годинника, є в застосунку DeviceInfo на телефоні та на сайті.</p>
+        <dl class="facts">
+          <dt>Навіщо</dt><dd>У годинника немає клавіатури і верхньої панелі, тому довідка стоїть наприкінці списку, а не в куті.</dd>
+          <dt>Далі</dt><dd>Підказка лишається відкритою, доки ви знову не торкнетеся рядка.</dd>
+          <dt>Скасування</dt><dd>Торкніться рядка ще раз, щоб приховати підказку.</dd>
+        </dl>
+      </div>
+    </details>
+  </div>
+
+  <h2>Пов'язане</h2>
+  <ul class="related">
+  <li><a href="system-info.html"><b>Відомості про систему</b><span class="pill">Телефон</span><small>Вікно звіту в застосунку на телефоні, з пошуком, збереженням і надсиланням.</small></a></li>
+  <li><a href="https://serzhyale.github.io/DeviceInfo_Android/uk/"><b>Сайт DeviceInfo</b><span class="pill gold">Сайт</span><small>Що показує DeviceInfo, на телефоні та на годиннику.</small></a></li>
+  <li><a href="https://serzhyale.github.io/DeviceInfo_Android/privacy-uk.html"><b>Конфіденційність</b><span class="pill gold">Сайт</span><small>Що застосунок читає, зберігає і для чого просить дозволи.</small></a></li>
+  </ul>
+
+<footer class="help-foot">
+  <span>Оновлено 2026-11-14.</span>
+  <a href="index.html">Зміст довідки</a>
+  <a href="https://github.com/SerZhyAle/DeviceInfo_Android/issues" rel="noopener">Поставити запитання або повідомити про проблему</a>
+</footer>
+
+</main>
+<script>
+/* Progressive enhancement only: the page is complete without it. */
+(function () {
+  function openHash() {
+    var id = location.hash.slice(1);
+    var el = id && document.getElementById(id);
+    if (el && el.tagName === 'DETAILS') { el.open = true; }
+  }
+  addEventListener('hashchange', openHash);
+  openHash();
+})();
+</script>
+</body>
+</html>

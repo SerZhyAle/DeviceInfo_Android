@@ -1,6 +1,11 @@
 package com.sza.deviceinfo.domain.usecase
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.ContextWrapper
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.BatteryManager
 import com.sza.deviceinfo.BuildConfig
 import com.sza.deviceinfo.R
 import com.sza.deviceinfo.core.systeminfo.BatteryDetailsCollector
@@ -22,14 +27,16 @@ import org.robolectric.annotation.Config
 class GatherSystemInfoUseCaseTest {
 
     private val context: Context = RuntimeEnvironment.getApplication()
-    private val useCase = GatherSystemInfoUseCase(
-        context,
+    private val useCase = gatherWith(context)
+
+    private fun gatherWith(source: Context) = GatherSystemInfoUseCase(
+        source,
         emptySet(),
-        GatherCameraDiagnosticsUseCase(context, CameraHardwareDataSource(context)),
-        BatteryDetailsCollector(context, DischargeRateBatteryRuntimeEstimator()),
-        PlatformDetailsCollector(context),
-        SensorsDiagnosticsCollector(context),
-        MediaAudioDiagnosticsCollector(context),
+        GatherCameraDiagnosticsUseCase(source, CameraHardwareDataSource(source)),
+        BatteryDetailsCollector(source, DischargeRateBatteryRuntimeEstimator()),
+        PlatformDetailsCollector(source),
+        SensorsDiagnosticsCollector(source),
+        MediaAudioDiagnosticsCollector(source),
     )
 
     @Test
@@ -88,7 +95,8 @@ class GatherSystemInfoUseCaseTest {
 
     @Test
     fun `invoke contains localized battery detail field headers`() {
-        val summary = useCase().maskedText
+        val batteryUseCase = gatherWith(BatteryBroadcastContext(context, batteryIntent()))
+        val summary = batteryUseCase().maskedText
 
         listOf(
             R.string.sysinfo_field_battery_level,
@@ -139,5 +147,29 @@ class GatherSystemInfoUseCaseTest {
             val header = context.getString(resId)
             assertTrue("summary must contain field header '$header'", summary.contains(header))
         }
+    }
+
+    /** Answers the sticky battery lookup the way the system does on a device; Robolectric supplies none. */
+    private class BatteryBroadcastContext(base: Context, private val battery: Intent) : ContextWrapper(base) {
+        override fun registerReceiver(receiver: BroadcastReceiver?, filter: IntentFilter?): Intent? =
+            if (receiver == null && filter?.hasAction(Intent.ACTION_BATTERY_CHANGED) == true) {
+                battery
+            } else {
+                super.registerReceiver(receiver, filter)
+            }
+    }
+
+    private fun batteryIntent(): Intent = Intent(Intent.ACTION_BATTERY_CHANGED).apply {
+        putExtra(BatteryManager.EXTRA_LEVEL, BATTERY_LEVEL)
+        putExtra(BatteryManager.EXTRA_SCALE, BATTERY_SCALE)
+        putExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_DISCHARGING)
+        putExtra(BatteryManager.EXTRA_PLUGGED, 0)
+        putExtra(BatteryManager.EXTRA_VOLTAGE, BATTERY_VOLTAGE_MV)
+    }
+
+    private companion object {
+        const val BATTERY_LEVEL = 80
+        const val BATTERY_SCALE = 100
+        const val BATTERY_VOLTAGE_MV = 4000
     }
 }

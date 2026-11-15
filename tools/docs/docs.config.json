@@ -1,0 +1,10 @@
+{
+  "$comment": "Configuration of tools/docs/check-docs.ps1 (DOC-INTERNAL-QUALITY, S0034). corpus: what reverse coverage walks - whole folders, plus files matched by pattern; only files git tracks or could track (not git-ignored) are in it. registry: the one document registry. ignore: files of the corpus consciously left out of every record, each {path, reason}; empty means every file is declared. baseline: the set baseline of accepted findings, which may only fall. Outside the corpus by declaration: site/ and phone/src/main/assets/help/ (published pages and help renders, held by render-landing.ps1 -Check and render-help.ps1 -Check), .claude/commands/ (forwarders rendered by the harness scaffold), CHANGELOG.md and LICENSE (the release ledger and the licence), temp/ and build/.",
+  "corpus": {
+    "folders": ["docs", "PLAN"],
+    "files": ["AGENTS.md", "CLAUDE.md", "README.md", "tools/**/*.md"]
+  },
+  "registry": "docs/DOCUMENT_REGISTRY.jsonl",
+  "ignore": [],
+  "baseline": "tools/docs/baseline.txt"
+}

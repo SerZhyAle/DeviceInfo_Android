@@ -84,4 +84,9 @@
     <string name="system_info_send_no_answer">Телефон не ответил. Откройте на нём приложение и повторите</string>
     <string name="system_info_send_notifications_off">Уведомления на телефоне выключены. Включите их и повторите</string>
     <string name="system_info_send_refused">Телефон не смог принять отчёт. Обновите на нём приложение</string>
+    <string name="sysinfo_group_expanded">Развёрнуто</string>
+    <string name="sysinfo_group_collapsed">Свёрнуто</string>
+    <string name="system_info_interface_scale">Размер интерфейса: %1$d %%</string>
+    <string name="system_info_help_title">Справка</string>
+    <string name="system_info_help_text">Коснитесь заголовка блока, чтобы раскрыть его, и строки, чтобы скопировать её. «Отправить на телефон» передаёт весь отчёт. Полная справка есть в приложении DeviceInfo на телефоне и на serzhyale.github.io/DeviceInfo_Android/help/</string>
 </resources>

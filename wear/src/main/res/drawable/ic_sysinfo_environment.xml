@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Header glyph ic_sysinfo_environment, provisional meaning system.environment (S0035): a leaf on its stem with the midrib
+     cut out, drawn for this product on the 24 grid as one filled silhouette (only M, L, C and Z; the stem and the midrib
+     are one stripe wound against the leaf, so it is solid outside the leaf and a hole inside it), proposed in
+     PROPOSAL-2026-11-14-deviceinfo-system-info-meanings.md of the shared contracts catalog. Held to docs/design/tokens.json
+     by tools/design/check-tokens.ps1; the Icon composable tints it. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M6,18C5.72,8.38 10.38,3.72 20,4C20.28,13.62 15.62,18.28 6,18ZM2.43,20.43L3.57,21.57L15.57,9.57L14.43,8.43Z" />
+</vector>

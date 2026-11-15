@@ -17,6 +17,7 @@ import androidx.annotation.StringRes
 import androidx.core.content.res.use
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import androidx.core.view.ViewCompat
 import com.sza.deviceinfo.R
 
 /**
@@ -46,7 +47,7 @@ class CollapsibleSectionHeader @JvmOverloads constructor(
         orientation = VERTICAL
         LayoutInflater.from(context).inflate(R.layout.view_collapsible_section_header, this, true)
 
-        headerRow = findViewById(R.id.csh_headerRow)
+        headerRow = findViewById(R.id.csh_toggleRow)
         chevronView = findViewById(R.id.csh_chevron)
         iconView = findViewById(R.id.csh_icon)
         titleView = findViewById(R.id.csh_title)
@@ -56,9 +57,11 @@ class CollapsibleSectionHeader @JvmOverloads constructor(
         headerRow.setOnClickListener {
             setExpanded(!expanded, notify = true)
         }
+        ViewCompat.setAccessibilityHeading(headerRow, true)
 
         attrs?.let { applyAttributes(it, defStyleAttr) }
-        updateChevron(animate = false)
+        updateChevron()
+        updateStateDescription()
     }
 
     private fun applyAttributes(attrs: AttributeSet, defStyleAttr: Int) {
@@ -75,6 +78,7 @@ class CollapsibleSectionHeader @JvmOverloads constructor(
     fun setTitle(text: CharSequence) {
         titleText = text
         titleView.text = text
+        updateStateDescription()
     }
 
     fun setTitle(@StringRes resId: Int) {
@@ -90,6 +94,7 @@ class CollapsibleSectionHeader @JvmOverloads constructor(
             summaryView.text = text
             summaryView.visibility = View.VISIBLE
         }
+        updateStateDescription()
     }
 
     fun setSummary(@StringRes resId: Int) {
@@ -109,7 +114,8 @@ class CollapsibleSectionHeader @JvmOverloads constructor(
     fun setExpanded(expanded: Boolean, notify: Boolean = true) {
         if (this.expanded == expanded) return
         this.expanded = expanded
-        updateChevron(animate = notify)
+        updateChevron()
+        updateStateDescription()
         if (notify) {
             expandedChangeListener?.invoke(expanded)
         }
@@ -147,12 +153,29 @@ class CollapsibleSectionHeader @JvmOverloads constructor(
         }
     }
 
-    private fun updateChevron(animate: Boolean) {
-        val targetRotation = if (expanded) 180f else 0f
-        if (animate) {
-            chevronView.animate().rotation(targetRotation).setDuration(150).start()
+    private fun updateChevron() {
+        val targetRotation = if (expanded) 0f else if (layoutDirection == View.LAYOUT_DIRECTION_RTL) 90f else -90f
+        chevronView.animate().cancel()
+        chevronView.rotation = targetRotation
+    }
+
+    override fun onRtlPropertiesChanged(layoutDirection: Int) {
+        super.onRtlPropertiesChanged(layoutDirection)
+        findViewById<ImageView>(R.id.csh_chevron)?.let {
+            it.animate().cancel()
+            it.rotation = if (expanded) 0f else if (layoutDirection == View.LAYOUT_DIRECTION_RTL) 90f else -90f
+        }
+    }
+
+    private fun updateStateDescription() {
+        val state = context.getString(if (expanded) R.string.sysinfo_group_expanded else R.string.sysinfo_group_collapsed)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            ViewCompat.setStateDescription(headerRow, state)
         } else {
-            chevronView.rotation = targetRotation
+            // TalkBack on older Android versions does not consistently announce stateDescription.
+            headerRow.contentDescription = listOfNotNull(titleText, summaryText, state)
+                .filter { it.isNotBlank() }
+                .joinToString(", ")
         }
     }
 }

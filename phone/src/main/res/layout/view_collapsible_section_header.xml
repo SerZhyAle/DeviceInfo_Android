@@ -7,21 +7,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSurfaceVariant"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="@drawable/focus_button_background"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/settings_padding_vertical">
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/csh_toggleRow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/focus_button_background"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/touch_target_min_height"
+            android:orientation="horizontal"
+            android:padding="@dimen/settings_padding_vertical">
 
         <ImageView
             android:id="@+id/csh_chevron"
-            android:layout_width="@dimen/settings_help_icon_size"
-            android:layout_height="@dimen/settings_help_icon_size"
+            android:layout_width="@dimen/system_info_group_marker_size"
+            android:layout_height="@dimen/system_info_group_marker_size"
             android:layout_marginEnd="@dimen/margin_small"
             android:importantForAccessibility="no"
-            app:srcCompat="@drawable/ic_arrow_drop_down"
-            app:tint="?attr/colorOnSurfaceVariant" />
+            app:srcCompat="@drawable/ic_group_triangle"
+            app:tint="?attr/colorPrimary" />
 
         <ImageView
             android:id="@+id/csh_icon"
@@ -29,7 +38,7 @@
             android:layout_height="@dimen/settings_help_icon_size"
             android:layout_marginEnd="@dimen/settings_padding_vertical"
             android:importantForAccessibility="no"
-            app:tint="?attr/colorOnSurfaceVariant"
+            app:tint="?attr/colorPrimary"
             android:visibility="gone" />
 
         <TextView
@@ -61,8 +70,7 @@
                 android:id="@+id/csh_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="3"
+                android:textColor="?attr/colorOnSurface"
                 android:textSize="@dimen/collapsible_section_title_text_size"
                 android:textStyle="bold" />
 
@@ -76,6 +84,8 @@
                 android:textColor="?attr/colorOnSurfaceVariant"
                 android:textSize="@dimen/toggler_desc_text_size"
                 android:visibility="gone" />
+
+        </LinearLayout>
 
         </LinearLayout>
 

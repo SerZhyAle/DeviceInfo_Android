@@ -1,0 +1,312 @@
+{
+  "id": "system-info",
+  "surface": "system-info",
+  "module": "phone",
+  "revised": "2026-11-14",
+  "titleRef": "settings_system_info_title",
+  "elements": [
+    { "id": "copy", "nameRef": "copy" },
+    { "id": "save", "nameRef": "save", "shortcut": "Ctrl+S" },
+    { "id": "expand-collapse", "nameRefs": ["sysinfo_action_expand_all", "sysinfo_action_collapse_all"] },
+    { "id": "share", "nameRef": "share" },
+    { "id": "help", "nameRef": "help", "shortcut": "F1" },
+    { "id": "notifications", "nameRef": "sysinfo_action_notifications" },
+    { "id": "interface-size", "nameRef": "sysinfo_action_interface_size" },
+    { "id": "search", "shortcut": "Ctrl+F" },
+    { "id": "groups" },
+    { "id": "copy-section", "nameRef": "sysinfo_action_copy_section" },
+    { "id": "field" }
+  ],
+  "related": [
+    { "page": "watch-system-info", "kind": "window" },
+    { "site": "landing", "kind": "site" },
+    { "site": "privacy", "kind": "site" }
+  ],
+  "text": {
+    "en": {
+      "summary": "The report window: every fact about this phone in sections, with search, copy, save and share.",
+      "lead": "See what your phone is made of and how it is doing, in one list. Open a section to read its values, find one value with search, and copy, save or share what you need.",
+      "order": [
+        "Open a section by its title {groups}, or open all of them with {expand-collapse}. Sections stay open or closed the way you left them.",
+        "Looking for one value? Type a part of its name or value into {search}. Only matching rows stay, and the sections that hold them open.",
+        "Tap a row {field} to copy that one value, or the copy button of a section title {copy-section} to copy the whole section.",
+        "Need everything? Use {copy}, {save} or {share} to take the whole report out of the app."
+      ],
+      "elements": {
+        "copy": {
+          "one": "Puts the whole report on the clipboard.",
+          "full": ["Copies every value of every section as plain text, with the section titles, so you can paste it into a message or a note."],
+          "why": "A question about your device is easier to answer when you paste the exact values instead of describing them.",
+          "next": "A message confirms the copy, and the report stays on the clipboard until you copy something else.",
+          "undo": "Copying changes nothing in the app."
+        },
+        "save": {
+          "one": "Saves the whole report as a text file in Downloads.",
+          "full": ["Writes the report to a file named **device_info_** followed by the date and time, ending in **.txt**, in your Downloads folder."],
+          "why": "A file keeps the values of today, so you can compare them later or attach them to a message.",
+          "next": "A message names the file when it is saved, or says that it could not be saved.",
+          "undo": "The file stays until you delete it in your file manager."
+        },
+        "expand-collapse": {
+          "one": "Opens every section, or closes every section.",
+          "full": ["When every section is open the button closes them all; otherwise it opens them all. Its picture and name change with it."],
+          "why": "One tap to see everything, or to get back to a short list of titles.",
+          "next": "The choice is remembered the next time you start the app.",
+          "undo": "Press it again."
+        },
+        "share": {
+          "one": "Sends the whole report to another app.",
+          "full": ["Opens the Android share sheet with the report as text, so you can send it by mail or in a chat. When no app can take text, the report is copied instead and a message says so."],
+          "why": "The quickest way to hand your device facts to whoever is helping you.",
+          "next": "The app you pick takes over; this window stays as it was.",
+          "undo": "Sharing is done in the other app; cancel it there before sending."
+        },
+        "help": {
+          "one": "Opens this page.",
+          "full": ["The Help button stands at the right end of the top bar, before the overflow menu. It opens this page from its beginning.", "With a hardware keyboard, F1 does the same, and F1 pressed while the focus is on one of the elements of this window opens the entry of that element."],
+          "why": "It explains the window you are looking at without leaving the app.",
+          "next": "Back returns to the report window.",
+          "undo": "Closing help changes nothing."
+        },
+        "notifications": {
+          "one": "Turns on notifications; shown in the overflow menu while they are off.",
+          "full": ["DeviceInfo shows a notification when your watch sends a report, and you open or share the report from it. While notifications are off, this entry is in the overflow menu: it asks Android to allow them, or opens the notification settings when the question was already answered."],
+          "why": "Without notifications the phone cannot tell you that a watch report arrived, and Send to phone on the watch is declined.",
+          "next": "The entry leaves the menu as soon as notifications are on.",
+          "undo": "You can turn notifications off again in the Android settings."
+        },
+        "interface-size": {
+          "one": "Makes the whole app larger, or back to its normal size.",
+          "full": ["The Interface size entry is in the overflow menu. It offers 100, 115, 130 and 150 percent. The size you choose scales text, pictures, spacing and touch targets together, and applies to this window and to the help pages. It is separate from the text size in the Android settings, which still applies on top of it."],
+          "why": "A larger interface is easier to read and easier to hit, without changing the size of anything else on the phone.",
+          "next": "The window opens again at the new size, with your sections open or closed as you left them. The choice is remembered the next time you start the app.",
+          "undo": "Choose 100 percent to return to the normal size."
+        },
+        "search": {
+          "name": "Search",
+          "one": "Finds a value among all sections.",
+          "full": ["Type any part of a parameter name, of its value or of a section title. Capital letters do not matter. Rows that do not match are hidden, and every section with a match opens while you search. When nothing matches, the list says so."],
+          "why": "The report holds hundreds of values; searching is faster than scrolling.",
+          "next": "Clear the text to see the full report again, with your sections open or closed as you left them.",
+          "undo": "A search only filters the view; it changes no setting and no saved choice of open sections."
+        },
+        "groups": {
+          "name": "Section titles",
+          "one": "Opens or closes a section.",
+          "full": ["Each title shows its picture, its name and the number of rows in brackets. Tap it, or focus it with a keyboard and press Enter, to open or close the section. Closed sections sit side by side to save space; an open section takes the full width."],
+          "why": "You see only what you are interested in, and the list stays short.",
+          "next": "The app remembers which sections are open. During a search, a title opens or closes its section for that search only.",
+          "undo": "Tap the title again."
+        },
+        "copy-section": {
+          "one": "Copies one section.",
+          "full": ["The button at the end of each section title copies the rows of that section as text."],
+          "why": "Sometimes you need only the battery or only the network facts, not the whole report.",
+          "next": "A message names the section that was copied.",
+          "undo": "Copying changes nothing in the app."
+        },
+        "field": {
+          "name": "Rows",
+          "one": "A parameter and its value; tap to copy it.",
+          "full": ["Every row shows one parameter and its value. Tapping a row copies it as the name followed by the value, and a message shows exactly what was copied. Rows are shaded in turn to make a long list easier to follow."],
+          "why": "The fastest way to paste one value, such as the Android version or the model, into a message.",
+          "next": "The text stays on the clipboard until you copy something else.",
+          "undo": "Copying changes nothing in the app."
+        }
+      },
+      "related": {
+        "watch-system-info": "The same facts from your watch, and how to send them to the phone."
+      }
+    },
+    "ru": {
+      "summary": "Окно отчёта: все сведения об этом телефоне по блокам, с поиском, копированием, сохранением и отправкой.",
+      "lead": "Узнайте, из чего сделан ваш телефон и как он себя чувствует, - в одном списке. Откройте блок, чтобы прочитать значения, найдите нужное через поиск и скопируйте, сохраните или отправьте то, что нужно.",
+      "order": [
+        "Откройте блок по его заголовку {groups} или разверните все сразу кнопкой {expand-collapse}. Блоки остаются открытыми или закрытыми так, как вы их оставили.",
+        "Ищете одно значение? Введите часть его названия или значения в поле {search}. Остаются только подходящие строки, а блоки с ними раскрываются.",
+        "Коснитесь строки {field}, чтобы скопировать одно значение, или кнопки копирования в заголовке блока {copy-section}, чтобы скопировать блок целиком.",
+        "Нужно всё? Кнопки {copy}, {save} и {share} выносят весь отчёт из приложения."
+      ],
+      "elements": {
+        "copy": {
+          "one": "Кладёт весь отчёт в буфер обмена.",
+          "full": ["Копирует все значения всех блоков простым текстом, вместе с заголовками блоков, чтобы вставить их в сообщение или заметку."],
+          "why": "На вопрос об устройстве проще ответить, когда вставляешь точные значения, а не пересказываешь их.",
+          "next": "Сообщение подтверждает копирование, а отчёт лежит в буфере, пока вы не скопируете что-то другое.",
+          "undo": "Копирование ничего не меняет в приложении."
+        },
+        "save": {
+          "one": "Сохраняет весь отчёт текстовым файлом в Загрузки.",
+          "full": ["Записывает отчёт в файл, имя которого начинается с **device_info_**, затем идут дата и время, а заканчивается оно на **.txt**, в папку «Загрузки»."],
+          "why": "Файл хранит сегодняшние значения: их можно сравнить позже или приложить к сообщению.",
+          "next": "Сообщение называет файл, когда он сохранён, или говорит, что сохранить не удалось.",
+          "undo": "Файл лежит, пока вы не удалите его в файловом менеджере."
+        },
+        "expand-collapse": {
+          "one": "Раскрывает все блоки или сворачивает все блоки.",
+          "full": ["Если все блоки раскрыты, кнопка сворачивает их все, иначе - раскрывает все. Её значок и название меняются вместе с этим."],
+          "why": "Одно касание, чтобы увидеть всё или вернуться к короткому списку заголовков.",
+          "next": "Выбор запоминается до следующего запуска приложения.",
+          "undo": "Нажмите кнопку ещё раз."
+        },
+        "share": {
+          "one": "Отправляет весь отчёт в другое приложение.",
+          "full": ["Открывает системное меню «Поделиться» с отчётом в виде текста, чтобы отправить его почтой или в чате. Если ни одно приложение не принимает текст, отчёт копируется, и сообщение об этом говорит."],
+          "why": "Самый быстрый способ передать сведения об устройстве тому, кто вам помогает.",
+          "next": "Дальше работает выбранное приложение; это окно остаётся как было.",
+          "undo": "Отправка выполняется в другом приложении; отмените её там до отправки."
+        },
+        "help": {
+          "one": "Открывает эту страницу.",
+          "full": ["Кнопка «Справка» стоит у правого края верхней панели, перед меню с дополнительными действиями. Она открывает эту страницу с самого начала.", "С аппаратной клавиатурой то же делает F1, а F1 при фокусе на одном из элементов этого окна открывает запись об этом элементе."],
+          "why": "Она объясняет окно, на которое вы смотрите, не выходя из приложения.",
+          "next": "Кнопка «Назад» возвращает к окну отчёта.",
+          "undo": "Закрытие справки ничего не меняет."
+        },
+        "notifications": {
+          "one": "Включает уведомления; показывается в меню, пока они выключены.",
+          "full": ["DeviceInfo показывает уведомление, когда часы присылают отчёт, и из него отчёт можно открыть или отправить. Пока уведомления выключены, этот пункт есть в меню дополнительных действий: он просит у Android разрешение или открывает настройки уведомлений, если вопрос уже задавался."],
+          "why": "Без уведомлений телефон не сообщит, что пришёл отчёт с часов, а отправка с часов на телефон отклоняется.",
+          "next": "Пункт исчезает из меню, как только уведомления включены.",
+          "undo": "Уведомления можно снова выключить в настройках Android."
+        },
+        "interface-size": {
+          "one": "Делает всё приложение крупнее или возвращает обычный размер.",
+          "full": ["Пункт «Размер интерфейса» находится в меню дополнительных действий. Он предлагает 100, 115, 130 и 150 процентов. Выбранный размер одновременно увеличивает текст, значки, отступы и области касания и действует в этом окне и на страницах справки. Он не зависит от размера текста в настройках Android, который по-прежнему применяется поверх него."],
+          "why": "Крупный интерфейс легче читать и легче попадать по нему пальцем, а всё остальное на телефоне остаётся прежним.",
+          "next": "Окно открывается заново в новом размере, а блоки остаются открытыми или закрытыми, как вы их оставили. Выбор запоминается до следующего запуска приложения.",
+          "undo": "Выберите 100 процентов, чтобы вернуть обычный размер."
+        },
+        "search": {
+          "name": "Поиск",
+          "one": "Находит значение среди всех блоков.",
+          "full": ["Введите любую часть названия параметра, его значения или заголовка блока. Регистр букв не важен. Строки, которые не подходят, скрываются, а каждый блок с совпадением раскрывается на время поиска. Если ничего не найдено, список так и говорит."],
+          "why": "В отчёте сотни значений; искать быстрее, чем листать.",
+          "next": "Сотрите текст, и снова виден весь отчёт, с блоками открытыми или закрытыми так, как вы их оставили.",
+          "undo": "Поиск только фильтрует вид; он не меняет настроек и не трогает сохранённый выбор открытых блоков."
+        },
+        "groups": {
+          "name": "Заголовки блоков",
+          "one": "Раскрывает или сворачивает блок.",
+          "full": ["В заголовке есть значок, название и число строк в скобках. Коснитесь его или выберите с клавиатуры и нажмите Enter, чтобы раскрыть или свернуть блок. Свёрнутые блоки стоят рядом друг с другом, чтобы экономить место; раскрытый блок занимает всю ширину."],
+          "why": "Вы видите только то, что вам интересно, и список остаётся коротким.",
+          "next": "Приложение помнит, какие блоки раскрыты. Во время поиска заголовок раскрывает или сворачивает блок только на время этого поиска.",
+          "undo": "Коснитесь заголовка ещё раз."
+        },
+        "copy-section": {
+          "one": "Копирует один блок.",
+          "full": ["Кнопка в конце заголовка каждого блока копирует строки этого блока текстом."],
+          "why": "Иногда нужны только сведения о батарее или о сети, а не весь отчёт.",
+          "next": "Сообщение называет скопированный блок.",
+          "undo": "Копирование ничего не меняет в приложении."
+        },
+        "field": {
+          "name": "Строки",
+          "one": "Параметр и его значение; коснитесь, чтобы скопировать.",
+          "full": ["Каждая строка показывает один параметр и его значение. Касание копирует строку как название и значение, а сообщение показывает, что именно скопировано. Строки подкрашиваются через одну, чтобы длинный список легче читался."],
+          "why": "Самый быстрый способ вставить одно значение, например версию Android или модель, в сообщение.",
+          "next": "Текст лежит в буфере обмена, пока вы не скопируете что-то другое.",
+          "undo": "Копирование ничего не меняет в приложении."
+        }
+      },
+      "related": {
+        "watch-system-info": "Те же сведения с часов и способ отправить их на телефон."
+      }
+    },
+    "uk": {
+      "summary": "Вікно звіту: усі відомості про цей телефон за блоками, з пошуком, копіюванням, збереженням і надсиланням.",
+      "lead": "Дізнайтеся, з чого зроблено ваш телефон і як він себе почуває, - в одному списку. Відкрийте блок, щоб прочитати значення, знайдіть потрібне через пошук і скопіюйте, збережіть або надішліть те, що потрібно.",
+      "order": [
+        "Відкрийте блок за його заголовком {groups} або розгорніть усі одразу кнопкою {expand-collapse}. Блоки лишаються відкритими або закритими так, як ви їх залишили.",
+        "Шукаєте одне значення? Введіть частину його назви або значення в поле {search}. Лишаються тільки підхожі рядки, а блоки з ними розгортаються.",
+        "Торкніться рядка {field}, щоб скопіювати одне значення, або кнопки копіювання в заголовку блоку {copy-section}, щоб скопіювати блок цілком.",
+        "Потрібно все? Кнопки {copy}, {save} і {share} виносять увесь звіт із застосунку."
+      ],
+      "elements": {
+        "copy": {
+          "one": "Кладе весь звіт у буфер обміну.",
+          "full": ["Копіює всі значення всіх блоків простим текстом, разом із заголовками блоків, щоб вставити їх у повідомлення або нотатку."],
+          "why": "На запитання про пристрій простіше відповісти, коли вставляєш точні значення, а не переказуєш їх.",
+          "next": "Повідомлення підтверджує копіювання, а звіт лежить у буфері, доки ви не скопіюєте щось інше.",
+          "undo": "Копіювання нічого не змінює в застосунку."
+        },
+        "save": {
+          "one": "Зберігає весь звіт текстовим файлом у Завантаження.",
+          "full": ["Записує звіт у файл, ім'я якого починається з **device_info_**, далі йдуть дата й час, а закінчується воно на **.txt**, у теку «Завантаження»."],
+          "why": "Файл зберігає сьогоднішні значення: їх можна порівняти пізніше або додати до повідомлення.",
+          "next": "Повідомлення називає файл, коли його збережено, або каже, що зберегти не вдалося.",
+          "undo": "Файл лежить, доки ви не видалите його у файловому менеджері."
+        },
+        "expand-collapse": {
+          "one": "Розгортає всі блоки або згортає всі блоки.",
+          "full": ["Якщо всі блоки розгорнуто, кнопка згортає їх усі, інакше - розгортає всі. Її значок і назва змінюються разом із цим."],
+          "why": "Один дотик, щоб побачити все або повернутися до короткого списку заголовків.",
+          "next": "Вибір запам'ятовується до наступного запуску застосунку.",
+          "undo": "Натисніть кнопку ще раз."
+        },
+        "share": {
+          "one": "Надсилає весь звіт в інший застосунок.",
+          "full": ["Відкриває системне меню «Поділитися» зі звітом у вигляді тексту, щоб надіслати його поштою або в чаті. Якщо жоден застосунок не приймає текст, звіт копіюється, і повідомлення про це каже."],
+          "why": "Найшвидший спосіб передати відомості про пристрій тому, хто вам допомагає.",
+          "next": "Далі працює вибраний застосунок; це вікно лишається як було.",
+          "undo": "Надсилання виконується в іншому застосунку; скасуйте його там до надсилання."
+        },
+        "help": {
+          "one": "Відкриває цю сторінку.",
+          "full": ["Кнопка «Довідка» стоїть біля правого краю верхньої панелі, перед меню з додатковими діями. Вона відкриває цю сторінку з самого початку.", "З апаратною клавіатурою те саме робить F1, а F1 за фокусу на одному з елементів цього вікна відкриває запис про цей елемент."],
+          "why": "Вона пояснює вікно, на яке ви дивитеся, не виходячи із застосунку.",
+          "next": "Кнопка «Назад» повертає до вікна звіту.",
+          "undo": "Закриття довідки нічого не змінює."
+        },
+        "notifications": {
+          "one": "Вмикає сповіщення; показується в меню, доки вони вимкнені.",
+          "full": ["DeviceInfo показує сповіщення, коли годинник надсилає звіт, і зі сповіщення звіт можна відкрити або надіслати. Поки сповіщення вимкнено, цей пункт є в меню додаткових дій: він просить в Android дозвіл або відкриває налаштування сповіщень, якщо запитання вже ставилося."],
+          "why": "Без сповіщень телефон не повідомить, що надійшов звіт із годинника, а надсилання з годинника на телефон відхиляється.",
+          "next": "Пункт зникає з меню, щойно сповіщення ввімкнено.",
+          "undo": "Сповіщення можна знову вимкнути в налаштуваннях Android."
+        },
+        "interface-size": {
+          "one": "Робить увесь застосунок більшим або повертає звичайний розмір.",
+          "full": ["Пункт «Розмір інтерфейсу» міститься в меню додаткових дій. Він пропонує 100, 115, 130 і 150 відсотків. Обраний розмір одночасно збільшує текст, значки, відступи та області дотику й діє в цьому вікні та на сторінках довідки. Він не залежить від розміру тексту в налаштуваннях Android, який і далі застосовується поверх нього."],
+          "why": "Більший інтерфейс легше читати і легше влучати по ньому пальцем, а решта на телефоні залишається як була.",
+          "next": "Вікно відкривається знову в новому розмірі, а блоки лишаються відкритими або закритими, як ви їх залишили. Вибір зберігається до наступного запуску застосунку.",
+          "undo": "Оберіть 100 відсотків, щоб повернути звичайний розмір."
+        },
+        "search": {
+          "name": "Пошук",
+          "one": "Знаходить значення серед усіх блоків.",
+          "full": ["Введіть будь-яку частину назви параметра, його значення або заголовка блоку. Регістр літер не важливий. Рядки, що не підходять, ховаються, а кожен блок зі збігом розгортається на час пошуку. Якщо нічого не знайдено, список так і каже."],
+          "why": "У звіті сотні значень; шукати швидше, ніж гортати.",
+          "next": "Зітріть текст, і знову видно весь звіт, із блоками відкритими або закритими так, як ви їх залишили.",
+          "undo": "Пошук лише фільтрує вигляд; він не змінює налаштувань і не чіпає збережений вибір відкритих блоків."
+        },
+        "groups": {
+          "name": "Заголовки блоків",
+          "one": "Розгортає або згортає блок.",
+          "full": ["У заголовку є значок, назва і кількість рядків у дужках. Торкніться його або виберіть з клавіатури й натисніть Enter, щоб розгорнути або згорнути блок. Згорнуті блоки стоять поруч один з одним, щоб заощаджувати місце; розгорнутий блок займає всю ширину."],
+          "why": "Ви бачите тільки те, що вас цікавить, і список лишається коротким.",
+          "next": "Застосунок пам'ятає, які блоки розгорнуто. Під час пошуку заголовок розгортає або згортає блок лише на час цього пошуку.",
+          "undo": "Торкніться заголовка ще раз."
+        },
+        "copy-section": {
+          "one": "Копіює один блок.",
+          "full": ["Кнопка в кінці заголовка кожного блоку копіює рядки цього блоку текстом."],
+          "why": "Іноді потрібні тільки відомості про батарею або про мережу, а не весь звіт.",
+          "next": "Повідомлення називає скопійований блок.",
+          "undo": "Копіювання нічого не змінює в застосунку."
+        },
+        "field": {
+          "name": "Рядки",
+          "one": "Параметр і його значення; торкніться, щоб скопіювати.",
+          "full": ["Кожен рядок показує один параметр і його значення. Дотик копіює рядок як назву й значення, а повідомлення показує, що саме скопійовано. Рядки підфарбовуються через один, щоб довгий список легше читався."],
+          "why": "Найшвидший спосіб вставити одне значення, наприклад версію Android або модель, у повідомлення.",
+          "next": "Текст лежить у буфері обміну, доки ви не скопіюєте щось інше.",
+          "undo": "Копіювання нічого не змінює в застосунку."
+        }
+      },
+      "related": {
+        "watch-system-info": "Ті самі відомості з годинника і спосіб надіслати їх на телефон."
+      }
+    }
+  }
+}

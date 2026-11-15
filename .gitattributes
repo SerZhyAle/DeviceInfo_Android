@@ -1,1 +1,6 @@
 site/assets/sza-kit.css -text
+# Generated help pages and their two stylesheets (S0024): render-help.ps1 -Check compares bytes, so no line-ending
+# normalization may touch them, in the app's assets or on the site.
+phone/src/main/assets/help/** -text
+site/help/** -text
+tools/help/vendor/help.css -text

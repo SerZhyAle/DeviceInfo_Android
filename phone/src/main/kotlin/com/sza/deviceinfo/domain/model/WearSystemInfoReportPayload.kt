@@ -8,10 +8,11 @@ import com.google.gson.annotations.SerializedName
  *
  * Mirrored rather than shared because `:phone` does not depend on `:wear`.
  * Field names are pinned on both sides, so the two copies agree on the wire even after R8 renames one of them.
+ * The format-version constructor default mirrors the watch copy; Gson does not use Kotlin defaults when parsing.
  */
 data class WearSystemInfoReportPayload(
     @SerializedName("requestId") val requestId: String,
-    @SerializedName("formatVersion") val formatVersion: Int,
+    @SerializedName("formatVersion") val formatVersion: Int = FORMAT_VERSION,
     @SerializedName("appVersionName") val appVersionName: String,
     @SerializedName("appVersionCode") val appVersionCode: Long,
     @SerializedName("deviceModel") val deviceModel: String,

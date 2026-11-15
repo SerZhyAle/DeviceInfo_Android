@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,13 +17,16 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
+import com.sza.deviceinfo.wear.R
 
 private val INFORMATION_ROW_VERTICAL_PADDING = 2.dp
 
@@ -44,6 +48,7 @@ fun WearInformationRow(
     value: String,
     modifier: Modifier = Modifier,
     accessibilitySuffix: String? = null,
+    accessibilityState: String? = null,
     accentColor: Color? = null,
     narrow: Boolean = false,
     gestures: WearInformationRowGestures = WearInformationRowGestures()
@@ -58,15 +63,21 @@ fun WearInformationRow(
         clipboard.setText(AnnotatedString(gestures.copyText ?: pair))
         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
     }
-    val interactionModifier = modifier.combinedClickable(
-        onClick = gestures.onClick ?: copy,
-        onLongClick = copy
-    )
+    val minimumTarget = dimensionResource(R.dimen.system_info_touch_target_min)
+    val interactionModifier = modifier
+        .fillMaxWidth()
+        .sizeIn(minWidth = minimumTarget, minHeight = minimumTarget)
+        .combinedClickable(
+            onClick = gestures.onClick ?: copy,
+            onLongClick = copy
+        )
 
     val commonModifier = interactionModifier
-        .fillMaxWidth()
         .padding(vertical = INFORMATION_ROW_VERTICAL_PADDING)
-        .semantics(mergeDescendants = true) { contentDescription = description }
+        .semantics(mergeDescendants = true) {
+            contentDescription = description
+            if (accessibilityState != null) stateDescription = accessibilityState
+        }
 
     if (narrow) {
         Column(

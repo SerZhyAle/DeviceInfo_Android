@@ -1,0 +1,141 @@
+{
+  "ticket": "S0029",
+  "takenOn": "2026-11-14..15",
+  "sources": {
+    "phone": "phone-store-debug.apk on Pixel_9 (API 35), screen set to 1080x1920",
+    "wear": "wear-debug.apk on Wear_OS_Large_Round (API 37), app locale set per language"
+  },
+  "note": "Verdict-bearing extract of the screenshots uploaded to the Play Console listing of com.sza.deviceinfo. The image files were scratch and are not kept in the repository; the console holds the uploaded copies.",
+  "files": [
+    {
+      "surface": "phone",
+      "locale": "default",
+      "file": "phone-01-groups.png",
+      "width": 1080,
+      "height": 1920,
+      "pixelFormat": "Format24bppRgb",
+      "bytes": 110180,
+      "sha256": "cde1682ee865f2c77b3acebd7a16e5ae84da8a9ea709bb12ca9e717c8910cc40"
+    },
+    {
+      "surface": "phone",
+      "locale": "default",
+      "file": "phone-02-battery.png",
+      "width": 1080,
+      "height": 1920,
+      "pixelFormat": "Format24bppRgb",
+      "bytes": 91071,
+      "sha256": "fc7b33f26010cc0b41d925c58ac13275f41b3ff854e799bd559ff4cadb4f4588"
+    },
+    {
+      "surface": "phone",
+      "locale": "default",
+      "file": "phone-03-display.png",
+      "width": 1080,
+      "height": 1920,
+      "pixelFormat": "Format24bppRgb",
+      "bytes": 90394,
+      "sha256": "417bc46ded9958e41cf007fb6610b4f8f025e5d976ef3ca37c1ddf453a556498"
+    },
+    {
+      "surface": "phone",
+      "locale": "default",
+      "file": "phone-04-memory.png",
+      "width": 1080,
+      "height": 1920,
+      "pixelFormat": "Format24bppRgb",
+      "bytes": 104750,
+      "sha256": "11e91d42b474c09f698c9d3404fda9011a1f37dfec327ca1af07cb5fcc79cc9e"
+    },
+    {
+      "surface": "wear",
+      "locale": "en-US",
+      "file": "wear-01-groups.png",
+      "width": 454,
+      "height": 454,
+      "pixelFormat": "Format24bppRgb",
+      "bytes": 19391,
+      "sha256": "4b2f12719a12608e9bb45c1cc6f2e5e2c2d82d8a32f1da2d5b4e5a150e23300e"
+    },
+    {
+      "surface": "wear",
+      "locale": "en-US",
+      "file": "wear-02-health.png",
+      "width": 454,
+      "height": 454,
+      "pixelFormat": "Format24bppRgb",
+      "bytes": 32768,
+      "sha256": "e76c313e1f67150630116589ea4283ba4ada906299955cef584f372ceb82417b"
+    },
+    {
+      "surface": "wear",
+      "locale": "en-US",
+      "file": "wear-03-memory.png",
+      "width": 454,
+      "height": 454,
+      "pixelFormat": "Format24bppRgb",
+      "bytes": 22064,
+      "sha256": "fb1e7f8f54f5651e0cff7a5c41f6f11aa96df98e95d72a4db9cc22e5cce9620c"
+    },
+    {
+      "surface": "wear",
+      "locale": "ru-RU",
+      "file": "wear-01-groups.png",
+      "width": 454,
+      "height": 454,
+      "pixelFormat": "Format24bppRgb",
+      "bytes": 30580,
+      "sha256": "707a62e2feb290606d20990983fdee70cc7cc6da7eb31f52bb5ae1d7f40cd37e"
+    },
+    {
+      "surface": "wear",
+      "locale": "ru-RU",
+      "file": "wear-02-health.png",
+      "width": 454,
+      "height": 454,
+      "pixelFormat": "Format24bppRgb",
+      "bytes": 32184,
+      "sha256": "9a257747f9dddc9ef27cbf54a8573a2a317f9373fade21e9c0eaa49ec39aa6b3"
+    },
+    {
+      "surface": "wear",
+      "locale": "ru-RU",
+      "file": "wear-03-memory.png",
+      "width": 454,
+      "height": 454,
+      "pixelFormat": "Format24bppRgb",
+      "bytes": 23039,
+      "sha256": "171257860c5f193f47203a80738a552c61fd126c5407e64e558b86c1872beef2"
+    },
+    {
+      "surface": "wear",
+      "locale": "uk",
+      "file": "wear-01-groups.png",
+      "width": 454,
+      "height": 454,
+      "pixelFormat": "Format24bppRgb",
+      "bytes": 21289,
+      "sha256": "c0a02e4b72f015075ebd0752c123e6ab5c240b8450908b5224e256bfdca71077"
+    },
+    {
+      "surface": "wear",
+      "locale": "uk",
+      "file": "wear-02-health.png",
+      "width": 454,
+      "height": 454,
+      "pixelFormat": "Format24bppRgb",
+      "bytes": 32304,
+      "sha256": "92a6e7f1e6a89ca1259bc9347c5017c72fbcc742f0344c8eff8df87288a8670c"
+    },
+    {
+      "surface": "wear",
+      "locale": "uk",
+      "file": "wear-03-memory.png",
+      "width": 454,
+      "height": 454,
+      "pixelFormat": "Format24bppRgb",
+      "bytes": 21717,
+      "sha256": "4cc7a26d5133847456b879417645361421906f98679d60f44ffc95c3fce7103e"
+    }
+  ]
+}

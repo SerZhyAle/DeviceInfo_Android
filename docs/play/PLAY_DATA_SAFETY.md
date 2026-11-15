@@ -38,6 +38,7 @@ changes, the inventory, the page and this file change in one edit; a mismatch is
 | Target audience | Not designed for children; 18 and over is selected |
 | News app, COVID-19 app, government app, financial features, health features | No |
 | Permissions declaration forms | None needed: the only sensitive-looking permission is the runtime permission `POST_NOTIFICATIONS`, which needs no declaration form |
+| Declared permissions | Phone: `ACCESS_NETWORK_STATE` (network state), `POST_NOTIFICATIONS` (the watch report notification); watch: `ACCESS_WIFI_STATE` (Wi-Fi bands) - each with its one-sentence justification in `docs/SECURITY_INVENTORY.md` section 1 |
 | Advertising ID | Not used |
 
 ## Content rating (IARC)

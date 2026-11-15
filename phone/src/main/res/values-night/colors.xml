@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Product identity tokens, night members (S0022); the watch carries these as its one palette. -->
+    <color name="identity_accent">#FF64B5F6</color>
+    <color name="identity_on_accent">#FF00315F</color>
+    <color name="identity_accent_container">#FF0D47A1</color>
+    <color name="identity_on_accent_container">#FFD3E3FD</color>
+    <color name="identity_surface">#FF1A1C1E</color>
+    <color name="identity_on_surface">#FFE3E2E6</color>
+    <color name="identity_surface_variant">#FF2B3138</color>
+    <color name="identity_on_surface_variant">#FFC3C7CF</color>
+    <color name="identity_error">#FFFFB4AB</color>
+    <color name="identity_on_error">#FF690005</color>
+
     <color name="system_info_row_shade">#0AFFFFFF</color>
-    <color name="focus_button_stroke">#FF64B5F6</color>
+    <color name="focus_button_stroke">@color/identity_accent</color>
     <color name="text_color_secondary">#99FFFFFF</color>
 </resources>

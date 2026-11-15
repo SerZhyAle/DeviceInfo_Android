@@ -1,6 +1,8 @@
+#requires -Version 7.0
 <#
 .SYNOPSIS
-    Renders the Google Play listing graphics of DeviceInfo from the launcher glyph's geometry.
+    Renders the Google Play listing graphics of DeviceInfo from the launcher glyph's geometry, or checks that the
+    committed files are that render (-Check).
 
 .DESCRIPTION
     docs/play/icon-512.png            512 x 512 listing icon (Play applies its own mask, so the square is full bleed)
@@ -14,20 +16,38 @@
     instead of the 72-unit visible circle of a launcher, so the glyph is drawn 1.5 times larger.
     Needs Windows (System.Drawing). Re-run it after changing the glyph; the PNGs are render targets, never edited.
 
+    -Check (S0036, DOC-INTERNAL-QUALITY rule 4) renders the four files into a scratch folder of the operating system
+    and compares the decoded pixels of each render with the committed file. The pixels are compared, not the PNG
+    bytes: System.Drawing saves through GDI+, a component of the Windows build, so an unchanged picture can come out
+    with other bytes on another build. Both sides are decoded by the same decoder in the same run. The scratch folder
+    is removed; the repository is only read.
+
 .PARAMETER Root
     Repository root. Defaults to two levels above this script.
+
+.PARAMETER Check
+    Compares the committed files with a fresh render instead of writing them. Exit codes: 0 every file equals its
+    render (PASS); 1 a file is missing, cannot be decoded or differs (FAIL); 2 the render could not run (COULD NOT
+    VERIFY). The last line on stdout is the verdict: `store-graphics-check: PASS|FAIL|COULD NOT VERIFY (..)`.
 #>
 [CmdletBinding()]
 param(
-    [string]$Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
+    [string]$Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path,
+    [switch]$Check
 )
 
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 
+# The four render targets, relative to the repository root. The site icon is a copy of the listing icon.
+$targets = @(
+    'docs\play\icon-512.png',
+    'docs\play\feature-graphic-1024x500.png',
+    'site\assets\social-card-1200x630.png',
+    'site\assets\icon-512.png'
+)
+
 $background = [System.Drawing.ColorTranslator]::FromHtml('#0D47A1')
-$outDir = Join-Path $Root 'docs\play'
-New-Item -ItemType Directory -Force $outDir | Out-Null
 
 # Draws the glyph with its centre at ($cx, $cy); $unit is the size in pixels of one geometry unit.
 function Draw-Glyph {
@@ -54,50 +74,126 @@ function New-Canvas {
     [pscustomobject]@{ Bitmap = $bmp; Graphics = $g }
 }
 
-# Listing icon.
-$icon = New-Canvas -Width 512 -Height 512
-Draw-Glyph -G $icon.Graphics -cx 256 -cy 256 -unit ((512 / 108) * 1.5)
-$icon.Graphics.Dispose()
-$iconPath = Join-Path $outDir 'icon-512.png'
-$icon.Bitmap.Save($iconPath, [System.Drawing.Imaging.ImageFormat]::Png)
-$icon.Bitmap.Dispose()
-# The hosted pages use the same icon as their link-preview image (og:image).
-$siteAssets = Join-Path $Root 'site\assets'
-New-Item -ItemType Directory -Force $siteAssets | Out-Null
-Copy-Item -LiteralPath $iconPath -Destination (Join-Path $siteAssets 'icon-512.png') -Force
+# Writes the four render targets under $RenderRoot.
+function Save-StoreGraphics {
+    param([string]$RenderRoot)
 
-# Feature graphic: the glyph on the left, the name on the right.
-$feature = New-Canvas -Width 1024 -Height 500
-Draw-Glyph -G $feature.Graphics -cx 250 -cy 250 -unit 5.2
-$font = New-Object System.Drawing.Font('Segoe UI Semibold', 88, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
+    $outDir = Join-Path $RenderRoot 'docs\play'
+    New-Item -ItemType Directory -Force $outDir | Out-Null
+
+    # Listing icon.
+    $icon = New-Canvas -Width 512 -Height 512
+    Draw-Glyph -G $icon.Graphics -cx 256 -cy 256 -unit ((512 / 108) * 1.5)
+    $icon.Graphics.Dispose()
+    $iconPath = Join-Path $outDir 'icon-512.png'
+    $icon.Bitmap.Save($iconPath, [System.Drawing.Imaging.ImageFormat]::Png)
+    $icon.Bitmap.Dispose()
+    # The hosted pages use the same icon as their link-preview image (og:image).
+    $siteAssets = Join-Path $RenderRoot 'site\assets'
+    New-Item -ItemType Directory -Force $siteAssets | Out-Null
+    Copy-Item -LiteralPath $iconPath -Destination (Join-Path $siteAssets 'icon-512.png') -Force
+
+    # Feature graphic: the glyph on the left, the name on the right.
+    $feature = New-Canvas -Width 1024 -Height 500
+    Draw-Glyph -G $feature.Graphics -cx 250 -cy 250 -unit 5.2
+    $font = New-Object System.Drawing.Font('Segoe UI Semibold', 88, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
+    try {
+        $format = New-Object System.Drawing.StringFormat
+        $format.LineAlignment = [System.Drawing.StringAlignment]::Center
+        $feature.Graphics.DrawString('DeviceInfo', $font, [System.Drawing.Brushes]::White, (New-Object System.Drawing.RectangleF(470, 0, 540, 500)), $format)
+    }
+    finally { $font.Dispose() }
+    $feature.Graphics.Dispose()
+    $featurePath = Join-Path $outDir 'feature-graphic-1024x500.png'
+    $feature.Bitmap.Save($featurePath, [System.Drawing.Imaging.ImageFormat]::Png)
+    $feature.Bitmap.Dispose()
+
+    # Social card of the landing (S0012): the same layout at the 1200 x 630 of an Open Graph preview, locale-neutral.
+    $social = New-Canvas -Width 1200 -Height 630
+    Draw-Glyph -G $social.Graphics -cx 300 -cy 315 -unit 6.4
+    $socialFont = New-Object System.Drawing.Font('Segoe UI Semibold', 104, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
+    try {
+        $socialFormat = New-Object System.Drawing.StringFormat
+        $socialFormat.LineAlignment = [System.Drawing.StringAlignment]::Center
+        $social.Graphics.DrawString('DeviceInfo', $socialFont, [System.Drawing.Brushes]::White, (New-Object System.Drawing.RectangleF(560, 0, 620, 630)), $socialFormat)
+    }
+    finally { $socialFont.Dispose() }
+    $social.Graphics.Dispose()
+    $socialPath = Join-Path $siteAssets 'social-card-1200x630.png'
+    $social.Bitmap.Save($socialPath, [System.Drawing.Imaging.ImageFormat]::Png)
+    $social.Bitmap.Dispose()
+}
+
+# The decoded pixels of a PNG as 32-bit ARGB rows: the size and the SHA-256 of the rows. Both sides of a comparison
+# are decoded by this same function in the same run, so only the pixels decide the result.
+function Get-PixelDigest {
+    param([string]$Path)
+    $bmp = [System.Drawing.Bitmap]::new($Path)
+    try {
+        $rect = [System.Drawing.Rectangle]::new(0, 0, $bmp.Width, $bmp.Height)
+        $data = $bmp.LockBits($rect, [System.Drawing.Imaging.ImageLockMode]::ReadOnly, [System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
+        try {
+            $length = [Math]::Abs($data.Stride) * $bmp.Height
+            $pixels = [byte[]]::new($length)
+            [System.Runtime.InteropServices.Marshal]::Copy($data.Scan0, $pixels, 0, $length)
+            $sha = [System.BitConverter]::ToString([System.Security.Cryptography.SHA256]::HashData($pixels)).Replace('-', '').ToLowerInvariant()
+            [pscustomobject]@{ Width = $bmp.Width; Height = $bmp.Height; Sha256 = $sha }
+        }
+        finally { $bmp.UnlockBits($data) }
+    }
+    finally { $bmp.Dispose() }
+}
+
+# Compares each committed target with its render. Returns the findings; an empty list means every target is equal.
+function Compare-StoreGraphics {
+    param([string]$CommittedRoot, [string]$RenderRoot)
+    $findings = [System.Collections.Generic.List[string]]::new()
+    foreach ($target in $targets) {
+        $committed = Join-Path $CommittedRoot $target
+        if (-not (Test-Path -LiteralPath $committed -PathType Leaf)) { $findings.Add("$target is missing"); continue }
+        try { $have = Get-PixelDigest $committed }
+        catch { $findings.Add("$target cannot be decoded: $($_.Exception.Message)"); continue }
+        $want = Get-PixelDigest (Join-Path $RenderRoot $target)
+        if ($have.Width -ne $want.Width -or $have.Height -ne $want.Height -or $have.Sha256 -ne $want.Sha256) {
+            $findings.Add("$target differs from its render: committed $($have.Width) x $($have.Height) pixels $($have.Sha256.Substring(0, 12)), render $($want.Width) x $($want.Height) pixels $($want.Sha256.Substring(0, 12))")
+            continue
+        }
+        Write-Host "PASS ${target}: $($have.Width) x $($have.Height), pixels equal"
+    }
+    return , $findings
+}
+
+if (-not $Check) {
+    Save-StoreGraphics -RenderRoot $Root
+    foreach ($target in $targets) {
+        $path = Join-Path $Root $target
+        $img = [System.Drawing.Image]::FromFile($path)
+        Write-Host ("{0}: {1} x {2}, {3} bytes" -f $target, $img.Width, $img.Height, (Get-Item $path).Length)
+        $img.Dispose()
+    }
+    return
+}
+
+# Check: the render goes to a scratch folder of the operating system; the repository is only read.
+$scratch = Join-Path ([System.IO.Path]::GetTempPath()) ('deviceinfo-store-check-' + [guid]::NewGuid().ToString('N'))
+$code = 0
 try {
-    $format = New-Object System.Drawing.StringFormat
-    $format.LineAlignment = [System.Drawing.StringAlignment]::Center
-    $feature.Graphics.DrawString('DeviceInfo', $font, [System.Drawing.Brushes]::White, (New-Object System.Drawing.RectangleF(470, 0, 540, 500)), $format)
+    Save-StoreGraphics -RenderRoot $scratch
+    $findings = Compare-StoreGraphics -CommittedRoot $Root -RenderRoot $scratch
+    if ($findings.Count -eq 0) {
+        Write-Host "store-graphics-check: PASS ($($targets.Count) targets, pixels equal to the render)"
+    }
+    else {
+        foreach ($finding in $findings) { Write-Host "FAIL $finding" }
+        Write-Host "store-graphics-check: FAIL ($($findings.Count) of $($targets.Count) target(s) differ or are missing; re-run tools/store/render-store-assets.ps1 on the owner's machine, never edit a PNG)"
+        $code = 1
+    }
 }
-finally { $font.Dispose() }
-$feature.Graphics.Dispose()
-$featurePath = Join-Path $outDir 'feature-graphic-1024x500.png'
-$feature.Bitmap.Save($featurePath, [System.Drawing.Imaging.ImageFormat]::Png)
-$feature.Bitmap.Dispose()
-
-# Social card of the landing (S0012): the same layout at the 1200 x 630 of an Open Graph preview, locale-neutral.
-$social = New-Canvas -Width 1200 -Height 630
-Draw-Glyph -G $social.Graphics -cx 300 -cy 315 -unit 6.4
-$socialFont = New-Object System.Drawing.Font('Segoe UI Semibold', 104, [System.Drawing.FontStyle]::Regular, [System.Drawing.GraphicsUnit]::Pixel)
-try {
-    $socialFormat = New-Object System.Drawing.StringFormat
-    $socialFormat.LineAlignment = [System.Drawing.StringAlignment]::Center
-    $social.Graphics.DrawString('DeviceInfo', $socialFont, [System.Drawing.Brushes]::White, (New-Object System.Drawing.RectangleF(560, 0, 620, 630)), $socialFormat)
+catch {
+    Write-Host "store-graphics-check: COULD NOT VERIFY (the render or the comparison could not run: $($_.Exception.Message))"
+    $code = 2
 }
-finally { $socialFont.Dispose() }
-$social.Graphics.Dispose()
-$socialPath = Join-Path $siteAssets 'social-card-1200x630.png'
-$social.Bitmap.Save($socialPath, [System.Drawing.Imaging.ImageFormat]::Png)
-$social.Bitmap.Dispose()
-
-foreach ($path in $iconPath, $featurePath, $socialPath) {
-    $img = [System.Drawing.Image]::FromFile($path)
-    Write-Host ("{0}: {1} x {2}, {3} bytes" -f (Split-Path $path -Leaf), $img.Width, $img.Height, (Get-Item $path).Length)
-    $img.Dispose()
+finally {
+    if (Test-Path -LiteralPath $scratch) { Remove-Item -LiteralPath $scratch -Recurse -Force }
 }
+exit $code

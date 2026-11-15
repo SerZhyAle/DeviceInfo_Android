@@ -24,6 +24,12 @@
     "sourceRoots": ["phone/src", "wear/src"]
   },
   "commands": {
-    "statusCommands": {}
+    "statusCommands": {},
+    "compileCheck": ".\\gradlew.bat :phone:compileStoreDebugKotlin :phone:compileRestrictedDebugKotlin :phone:processStoreDebugResources :phone:processRestrictedDebugResources :wear:compileDebugKotlin :wear:processDebugResources --continue"
+  },
+  "extraction": {
+    "ledger": "docs/port-ledger.jsonl",
+    "scope": "docs/port-scope.json",
+    "sourceProject": "fms-a"
   }
 }

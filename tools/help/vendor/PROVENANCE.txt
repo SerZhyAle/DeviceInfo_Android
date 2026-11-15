@@ -1,0 +1,11 @@
+Vendored help layer of the help pages (S0024).
+
+help.css sha256 e1adb1db6b450805892aa2a056adcd56a8b3a159e4d930326fc3242e3e45c17b
+  The reference layer of CONTEXT-HELP (in-app-help family of the shared contracts catalog, reference/help.css, the
+  version of CONTEXT-HELP 0.4), copied byte for byte on 2026-11-14. It is never edited in this repository.
+  tools/help/render-help.ps1 copies it beside the generated pages (phone/src/main/assets/help/help.css and
+  site/help/help.css), after the kit site/assets/sza-kit.css (see site/assets/PROVENANCE.txt).
+  Known gap, recorded in docs/UI_CONFORMANCE.md: the file draws a trailing state chevron on the element entries, which
+  CONTEXT-HELP 0.2 section 7 item I accepted as a defect against COLLAPSIBLE-GROUP 1.1; the revision of help.css is
+  owed by the catalog and is not hand-edited here unrendered. A newer file is copied whole and this line is updated
+  with it.

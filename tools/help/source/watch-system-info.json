@@ -1,0 +1,205 @@
+{
+  "id": "watch-system-info",
+  "surface": "watch-system-info",
+  "module": "wear",
+  "revised": "2026-11-14",
+  "titleRef": "system_info_title",
+  "elements": [
+    { "id": "refresh", "nameRef": "system_info_refresh" },
+    { "id": "send", "nameRef": "system_info_send_to_phone" },
+    { "id": "groups" },
+    { "id": "row" },
+    { "id": "interface-size" },
+    { "id": "help-row", "nameRef": "system_info_help_title" }
+  ],
+  "related": [
+    { "page": "system-info", "kind": "window" },
+    { "site": "landing", "kind": "site" },
+    { "site": "privacy", "kind": "site" }
+  ],
+  "text": {
+    "en": {
+      "summary": "The watch screen: sections, rows, Refresh and Send to phone.",
+      "lead": "DeviceInfo on the watch has one screen. It shows what your watch is made of and how it is doing, and it can pass the whole report to your phone.",
+      "order": [
+        "Open the sections you want to read {groups}. Closed sections show how many rows they hold.",
+        "Tap {refresh} to read the current values.",
+        "Tap a row {row} to copy one value.",
+        "Tap {send} to pass the whole report to the phone.",
+        "Need a reminder? The last row of the list {help-row} explains the screen."
+      ],
+      "elements": {
+        "refresh": {
+          "one": "Reads the watch again.",
+          "full": ["Reads every value afresh and updates the rows. The button is dimmed while a read is under way."],
+          "why": "Values such as the battery, the memory and the sensors change; Refresh shows the current ones.",
+          "next": "The rows update in place, and the sections you opened stay open.",
+          "undo": "Reading changes nothing on the watch."
+        },
+        "send": {
+          "one": "Sends the report to your phone.",
+          "full": ["Sends all rows to the DeviceInfo app on the paired phone, which saves the report and shows a notification you can tap to open or share it. A line under the buttons says whether it arrived, or what to do when it did not: bring the phone closer, open the app on it, or turn its notifications on."],
+          "why": "A phone has a clipboard and a share sheet, so a long report is easier to read and pass on there.",
+          "next": "While the report is going, the button reads Sending.., and the result appears under the buttons.",
+          "undo": "Sending only copies the report to the phone; nothing on the watch changes."
+        },
+        "groups": {
+          "name": "Section titles",
+          "one": "Opens or closes a section.",
+          "full": ["A section title has a triangle: it points to the side while the section is closed and down while it is open. Closed sections sit side by side with the number of their rows in brackets; an open section shows its rows under its title."],
+          "why": "The watch screen is small, so you open only what you want to read.",
+          "next": "Your choice is remembered the next time you open the app.",
+          "undo": "Tap the title again."
+        },
+        "row": {
+          "name": "Rows",
+          "one": "A parameter and its value; tap or press and hold to copy.",
+          "full": ["A row shows one value. Tapping it, or pressing and holding it, copies it as the name followed by the value, with a short vibration. A row that stands for a list, such as the sensors, opens the list on a tap and copies the whole list on a long press."],
+          "why": "The watch clipboard lets you paste a value into a text field of the watch; to take the whole report away, use Send to phone.",
+          "next": "The text stays on the clipboard until you copy something else.",
+          "undo": "Copying changes nothing else."
+        },
+        "interface-size": {
+          "name": "Interface size",
+          "one": "Makes the whole screen larger, step by step.",
+          "full": ["The Interface size button sits at the end of the list, above the Help row. Each tap moves to the next size: 100, 115, 130 and 150 percent, and then back to 100. The size scales text, pictures, spacing and touch targets together. It is separate from the text size in the watch settings, which still applies on top of it."],
+          "why": "On a small display a larger interface is easier to read and easier to tap.",
+          "next": "The screen changes at once, and the button shows the current size. The choice is remembered the next time you open the app.",
+          "undo": "Keep tapping until the button shows 100 percent."
+        },
+        "help-row": {
+          "one": "Shows a short note and says where the full help is.",
+          "full": ["The Help row is the last row of the list. Tap it to read a short note; tap it again to hide the note. The full help, with a page for every screen of the watch, is in the DeviceInfo app on the phone and on the site."],
+          "why": "The watch has no keyboard and no top bar, so its help sits at the end of the list instead of in a corner.",
+          "next": "The note stays open until you tap the row again.",
+          "undo": "Tap the row again to hide the note."
+        }
+      },
+      "related": {
+        "system-info": "The report window of the phone app, with search, save and share."
+      }
+    },
+    "ru": {
+      "summary": "Экран часов: блоки, строки, «Обновить» и «Отправить на телефон».",
+      "lead": "У DeviceInfo на часах один экран. Он показывает, из чего сделаны ваши часы и как они себя чувствуют, и может передать весь отчёт на телефон.",
+      "order": [
+        "Раскройте блоки, которые хотите прочитать {groups}. Свёрнутые блоки показывают, сколько в них строк.",
+        "Коснитесь «Обновить» {refresh}, чтобы прочитать актуальные значения.",
+        "Коснитесь строки {row}, чтобы скопировать одно значение.",
+        "Коснитесь «Отправить на телефон» {send}, чтобы передать весь отчёт на телефон.",
+        "Нужна подсказка? Её даёт последняя строка списка {help-row}."
+      ],
+      "elements": {
+        "refresh": {
+          "one": "Читает часы заново.",
+          "full": ["Заново читает все значения и обновляет строки. Пока идёт чтение, кнопка тускнеет."],
+          "why": "Заряд батареи, память и датчики меняются; «Обновить» показывает текущие значения.",
+          "next": "Строки обновляются на месте, а блоки, которые вы раскрыли, остаются раскрытыми.",
+          "undo": "Чтение ничего не меняет на часах."
+        },
+        "send": {
+          "one": "Отправляет отчёт на телефон.",
+          "full": ["Отправляет все строки в приложение DeviceInfo на сопряжённом телефоне: оно сохраняет отчёт и показывает уведомление, из которого его можно открыть или отправить дальше. Строка под кнопками говорит, дошёл ли отчёт, а если нет - что делать: поднести телефон ближе, открыть на нём приложение или включить на нём уведомления."],
+          "why": "На телефоне есть буфер обмена и меню «Поделиться», поэтому длинный отчёт там проще читать и пересылать.",
+          "next": "Пока отчёт уходит, на кнопке написано «Отправка..», а результат появляется под кнопками.",
+          "undo": "Отправка только копирует отчёт на телефон; на часах ничего не меняется."
+        },
+        "groups": {
+          "name": "Заголовки блоков",
+          "one": "Раскрывает или сворачивает блок.",
+          "full": ["В заголовке блока есть треугольник: он смотрит в сторону, пока блок закрыт, и вниз, пока открыт. Свёрнутые блоки стоят рядом, с числом строк в скобках; раскрытый блок показывает свои строки под заголовком."],
+          "why": "Экран часов маленький, поэтому вы раскрываете только то, что хотите прочитать.",
+          "next": "Ваш выбор запоминается до следующего открытия приложения.",
+          "undo": "Коснитесь заголовка ещё раз."
+        },
+        "row": {
+          "name": "Строки",
+          "one": "Параметр и его значение; коснитесь или удерживайте, чтобы скопировать.",
+          "full": ["Строка показывает одно значение. Касание или долгое нажатие копирует его как название и значение, с короткой вибрацией. Строка, за которой стоит список, например датчики, по касанию раскрывает список, а по долгому нажатию копирует весь список."],
+          "why": "Буфер обмена часов позволяет вставить значение в текстовое поле на часах; чтобы унести весь отчёт, используйте «Отправить на телефон».",
+          "next": "Текст лежит в буфере обмена, пока вы не скопируете что-то другое.",
+          "undo": "Копирование больше ничего не меняет."
+        },
+        "interface-size": {
+          "name": "Размер интерфейса",
+          "one": "Делает весь экран крупнее, шаг за шагом.",
+          "full": ["Кнопка «Размер интерфейса» стоит в конце списка, над строкой «Справка». Каждое касание переходит к следующему размеру: 100, 115, 130 и 150 процентов, а затем снова к 100. Размер одновременно увеличивает текст, значки, отступы и области касания. Он не зависит от размера текста в настройках часов, который по-прежнему применяется поверх него."],
+          "why": "На маленьком экране крупный интерфейс легче читать и легче нажимать.",
+          "next": "Экран меняется сразу, а на кнопке написан текущий размер. Выбор запоминается до следующего открытия приложения.",
+          "undo": "Продолжайте касаться, пока на кнопке не появится 100 процентов."
+        },
+        "help-row": {
+          "one": "Показывает короткую подсказку и говорит, где полная справка.",
+          "full": ["Строка «Справка» - последняя в списке. Коснитесь её, чтобы прочитать короткую подсказку, и ещё раз, чтобы скрыть её. Полная справка, со страницей для каждого экрана часов, есть в приложении DeviceInfo на телефоне и на сайте."],
+          "why": "У часов нет клавиатуры и верхней панели, поэтому справка стоит в конце списка, а не в углу.",
+          "next": "Подсказка остаётся открытой, пока вы снова не коснётесь строки.",
+          "undo": "Коснитесь строки ещё раз, чтобы скрыть подсказку."
+        }
+      },
+      "related": {
+        "system-info": "Окно отчёта в приложении на телефоне, с поиском, сохранением и отправкой."
+      }
+    },
+    "uk": {
+      "summary": "Екран годинника: блоки, рядки, «Оновити» та «Надіслати на телефон».",
+      "lead": "У DeviceInfo на годиннику один екран. Він показує, з чого зроблено ваш годинник і як він себе почуває, і може передати весь звіт на телефон.",
+      "order": [
+        "Розгорніть блоки, які хочете прочитати {groups}. Згорнуті блоки показують, скільки в них рядків.",
+        "Торкніться «Оновити» {refresh}, щоб прочитати актуальні значення.",
+        "Торкніться рядка {row}, щоб скопіювати одне значення.",
+        "Торкніться «Надіслати на телефон» {send}, щоб передати весь звіт на телефон.",
+        "Потрібна підказка? Її дає останній рядок списку {help-row}."
+      ],
+      "elements": {
+        "refresh": {
+          "one": "Читає годинник заново.",
+          "full": ["Заново читає всі значення й оновлює рядки. Поки триває читання, кнопка тьмяніє."],
+          "why": "Заряд батареї, пам'ять і датчики змінюються; «Оновити» показує поточні значення.",
+          "next": "Рядки оновлюються на місці, а блоки, які ви розгорнули, лишаються розгорнутими.",
+          "undo": "Читання нічого не змінює на годиннику."
+        },
+        "send": {
+          "one": "Надсилає звіт на телефон.",
+          "full": ["Надсилає всі рядки до застосунку DeviceInfo на спареному телефоні: він зберігає звіт і показує сповіщення, з якого його можна відкрити або надіслати далі. Рядок під кнопками каже, чи дійшов звіт, а якщо ні - що робити: піднести телефон ближче, відкрити на ньому застосунок або ввімкнути на ньому сповіщення."],
+          "why": "На телефоні є буфер обміну і меню «Поділитися», тому довгий звіт там простіше читати й пересилати.",
+          "next": "Поки звіт іде, на кнопці написано «Надсилання..», а результат з'являється під кнопками.",
+          "undo": "Надсилання лише копіює звіт на телефон; на годиннику нічого не змінюється."
+        },
+        "groups": {
+          "name": "Заголовки блоків",
+          "one": "Розгортає або згортає блок.",
+          "full": ["У заголовку блоку є трикутник: він дивиться вбік, поки блок закритий, і вниз, поки відкритий. Згорнуті блоки стоять поруч, із кількістю рядків у дужках; розгорнутий блок показує свої рядки під заголовком."],
+          "why": "Екран годинника малий, тому ви розгортаєте тільки те, що хочете прочитати.",
+          "next": "Ваш вибір запам'ятовується до наступного відкриття застосунку.",
+          "undo": "Торкніться заголовка ще раз."
+        },
+        "row": {
+          "name": "Рядки",
+          "one": "Параметр і його значення; торкніться або втримуйте, щоб скопіювати.",
+          "full": ["Рядок показує одне значення. Дотик або довге натискання копіює його як назву й значення, з короткою вібрацією. Рядок, за яким стоїть список, наприклад датчики, за дотиком розгортає список, а за довгим натисканням копіює весь список."],
+          "why": "Буфер обміну годинника дає змогу вставити значення в текстове поле на годиннику; щоб забрати весь звіт, скористайтеся «Надіслати на телефон».",
+          "next": "Текст лежить у буфері обміну, доки ви не скопіюєте щось інше.",
+          "undo": "Копіювання більше нічого не змінює."
+        },
+        "interface-size": {
+          "name": "Розмір інтерфейсу",
+          "one": "Робить увесь екран більшим, крок за кроком.",
+          "full": ["Кнопка «Розмір інтерфейсу» стоїть наприкінці списку, над рядком «Довідка». Кожен дотик переходить до наступного розміру: 100, 115, 130 і 150 відсотків, а потім знову до 100. Розмір одночасно збільшує текст, значки, відступи та області дотику. Він не залежить від розміру тексту в налаштуваннях годинника, який і далі застосовується поверх нього."],
+          "why": "На маленькому екрані більший інтерфейс легше читати і легше натискати.",
+          "next": "Екран змінюється одразу, а на кнопці написано поточний розмір. Вибір зберігається до наступного відкриття застосунку.",
+          "undo": "Продовжуйте торкатися, доки на кнопці не буде 100 відсотків."
+        },
+        "help-row": {
+          "one": "Показує коротку підказку і каже, де повна довідка.",
+          "full": ["Рядок «Довідка» - останній у списку. Торкніться його, щоб прочитати коротку підказку, і ще раз, щоб приховати її. Повна довідка, зі сторінкою для кожного екрана годинника, є в застосунку DeviceInfo на телефоні та на сайті."],
+          "why": "У годинника немає клавіатури і верхньої панелі, тому довідка стоїть наприкінці списку, а не в куті.",
+          "next": "Підказка лишається відкритою, доки ви знову не торкнетеся рядка.",
+          "undo": "Торкніться рядка ще раз, щоб приховати підказку."
+        }
+      },
+      "related": {
+        "system-info": "Вікно звіту в застосунку на телефоні, з пошуком, збереженням і надсиланням."
+      }
+    }
+  }
+}

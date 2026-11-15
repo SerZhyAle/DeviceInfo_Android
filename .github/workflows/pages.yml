@@ -3,13 +3,15 @@ run-name: Publish site/ to GitHub Pages
 
 # S0008 and S0012: site/ holds the hand-authored privacy pages and the landing in three locales, rendered by
 # tools/site/render-landing.ps1 and committed. This workflow publishes site/ as it is, and refuses to unless the landing
-# equals its sources. The check runs on Windows, where the renderer is measured; the deploy runs on Linux.
+# equals its sources (and, since S0024, the help pages under site/help/ equal theirs). The check runs on Windows, where the renderer is measured; the deploy runs on Linux.
 on:
   push:
     branches: [main]
     paths:
       - 'site/**'
       - 'tools/site/**'
+      - 'tools/help/**'
+      - 'phone/src/main/assets/help/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -35,6 +37,13 @@ jobs:
         shell: pwsh
         run: |
           pwsh -NoProfile -File tools/site/render-landing.ps1 -Check
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      # S0024: site/help/ is rendered from the same sources as the pages bundled in the app; the gate also holds the
+      # app's copy and the site's copy byte for byte equal.
+      - name: Help pages equal their sources
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -File tools/help/check-help-map.ps1
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
   deploy:

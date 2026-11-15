@@ -84,4 +84,9 @@
     <string name="system_info_send_no_answer">Phone did not answer. Open the app on it and try again</string>
     <string name="system_info_send_notifications_off">Phone notifications are off. Turn them on and try again</string>
     <string name="system_info_send_refused">Phone could not accept the report. Update the app on it</string>
+    <string name="sysinfo_group_expanded">Expanded</string>
+    <string name="sysinfo_group_collapsed">Collapsed</string>
+    <string name="system_info_interface_scale">Interface size: %1$d %%</string>
+    <string name="system_info_help_title">Help</string>
+    <string name="system_info_help_text">Tap a section title to open it and a row to copy it. Send to phone passes the whole report on. The full help is in the DeviceInfo app on the phone and at serzhyale.github.io/DeviceInfo_Android/help/</string>
 </resources>

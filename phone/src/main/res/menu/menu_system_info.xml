@@ -10,6 +10,8 @@
 
     <item
         android:id="@+id/action_system_info_save"
+        android:alphabeticShortcut="s"
+        android:alphabeticModifiers="CTRL"
         android:icon="@drawable/ic_save"
         android:title="@string/save"
         app:showAsAction="always" />
@@ -32,10 +34,20 @@
         android:title="@string/help"
         app:showAsAction="always" />
 
-    <!-- Visible only while notifications are off (NotificationPermissionCoordinator.refreshMenu). -->
+    <!-- Visible only while notifications are off (NotificationPermissionCoordinator.refreshMenu). It has no glyph on
+         purpose: it lives in the overflow popup, which draws titles only because nothing here forces optional icons
+         (no setOptionalIconsVisible), so the popup is a sibling set without glyphs (ICON-RENDER 0.25 section 25
+         rule 2). If a change ever shows icons in that popup, every member needs one first (rule 1). -->
     <item
         android:id="@+id/action_system_info_notifications"
         android:title="@string/sysinfo_action_notifications"
         android:visible="false"
+        app:showAsAction="never" />
+
+    <!-- The interface size choice (S0023, exception E1) lives in the same overflow popup and has no glyph for the same
+         reason, so the popup stays a sibling set of titles. -->
+    <item
+        android:id="@+id/action_system_info_interface_size"
+        android:title="@string/sysinfo_action_interface_size"
         app:showAsAction="never" />
 </menu>

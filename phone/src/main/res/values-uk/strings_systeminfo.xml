@@ -133,6 +133,8 @@
     <string name="notifications_denied_message">Сповіщення вимкнено, тому звіти з годинника відхиляються</string>
     <string name="notifications_open_settings">Налаштування</string>
     <string name="sysinfo_action_notifications">Увімкнути сповіщення</string>
+    <string name="sysinfo_action_interface_size">Розмір інтерфейсу</string>
+    <string name="sysinfo_interface_size_option">%1$d %%</string>
     <!-- Extended metrics of the base sections, Sensors and Media &amp; Audio -->
     <string name="sysinfo_battery_on_external_power">Живлення від мережі</string>
     <string name="sysinfo_field_accessibility">Спецможливості / TalkBack</string>
@@ -218,4 +220,13 @@
     <string name="sysinfo_field_webview">Провайдер WebView</string>
     <string name="sysinfo_section_media_audio">Мультимедіа та аудіо</string>
     <string name="sysinfo_section_sensors">Датчики</string>
+    <string name="sysinfo_group_expanded">Розгорнуто</string>
+    <string name="sysinfo_group_collapsed">Згорнуто</string>
+    <string name="sysinfo_search_shortcut_tooltip">Пошук (Ctrl+F)</string>
+    <string name="sysinfo_save_shortcut_tooltip">Зберегти (Ctrl+S)</string>
+    <string name="sysinfo_help_shortcut_tooltip">Довідка (F1)</string>
+
+    <!-- Help viewer (S0024) -->
+    <string name="help_open_on_site">Відкрити на сайті</string>
+    <string name="help_open_site_failed">Немає застосунку, щоб відкрити сайт</string>
 </resources>

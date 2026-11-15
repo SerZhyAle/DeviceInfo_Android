@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="uk" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Довідка DeviceInfo</title>
+<script>
+(function () {
+  try {
+    var q = new URLSearchParams(location.search).get('theme');
+    var t = (q === 'light' || q === 'dark') ? q : (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', t);
+  } catch (e) { /* no script: help.css follows the system */ }
+})();
+</script>
+<link rel="stylesheet" href="../sza-kit.css">
+<link rel="stylesheet" href="../help.css">
+</head>
+<body class="help">
+<main class="container">
+
+  <header class="hero">
+    <p class="kicker">Зміст довідки</p>
+    <h1>Довідка DeviceInfo</h1>
+    <p class="lead">Довідка до DeviceInfo на телефоні та на годиннику. Оберіть екран, про який хочете прочитати.</p>
+  </header>
+
+  <h2>Екрани</h2>
+  <ul class="related">
+  <li><a href="system-info.html"><b>Відомості про систему</b><span class="pill">Телефон</span><small>Вікно звіту: усі відомості про цей телефон за блоками, з пошуком, копіюванням, збереженням і надсиланням.</small></a></li>
+  <li><a href="watch-system-info.html"><b>Відомості про систему</b><span class="pill">Годинник</span><small>Екран годинника: блоки, рядки, «Оновити» та «Надіслати на телефон».</small></a></li>
+  </ul>
+
+<footer class="help-foot">
+  <span>Оновлено 2026-11-14.</span>
+  <a href="https://github.com/SerZhyAle/DeviceInfo_Android/issues" rel="noopener">Поставити запитання або повідомити про проблему</a>
+</footer>
+
+</main>
+</body>
+</html>

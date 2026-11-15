@@ -55,7 +55,7 @@ if ($Json) {
 }
 
 Write-Host "Port ledger: $($states.Count) row(s) in $ledgerPath"
-Write-Host "Upstream root: $sourceRootResolved"
+Write-Host "Upstream root: $sourceRootResolved (from $script:SourceRootOrigin)"
 foreach ($settled in @($states | Where-Object State -eq 'decided')) {
     Write-Host ("  decided      {0}`n               {1}" -f $settled.Source, $settled.Note)
 }

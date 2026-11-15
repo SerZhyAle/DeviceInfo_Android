@@ -1,8 +1,8 @@
 # S0008 - Independent release preparation
 
 **Ticket:** S0008
-**Status:** BlockQuestions
-**Status note:** In-repo release preparation done 2026-11-13 (id, version stamp with parity gate, release variant, icons, notices, privacy pages, listing, canon declarations); compiled, not tested: no compile command. Waiting on the owner. DO: create the upload keystore in P:\ANDROID\DeviceInfo_credentials with keystore.properties and set deviceinfo.signing.dir. DO: create the Play Console app, file the IARC questionnaire, import the app signing key. DO: create the remote SerZhyAle/DeviceInfo_Android and deploy site/. DO: take phone and watch screenshots. Q: Should the first Google Play release wait for S0011 and S0013?
+**Status:** Implemented
+**Status note:** In-repo release preparation done; no compile command - not built, not tested until the release. Owner steps carried to S0029 (keystore, screenshots) and the release run, key import, Wear OS opt-in and review to S0014. Carrier: S0014
 **Priority:** 40
 **Tier:** 3 - Moderate
 **Complexity:** hard - re-assessed 2026-11-13 at the unattended implementation pass, after reading the ticket, `PACKAGE-VERSIONING` 0.6 and the sibling precedents. The work spans both Gradle modules and the build logic (application id, version derivation with a fixed-instant test and a parity gate, a signed and minified release variant that R8 and Gson make provable only on the release build), a new shared-contract amendment that only a catalog session can fold in, a new site tree with three-locale privacy pages, a launcher icon, store listing sources, notices and canon declarations, and it ends in owner-only steps (keystore, Play Console, IARC questionnaire) plus release-tier proof that cannot run between releases.
@@ -26,11 +26,11 @@ Prepare the first independent release packages for phone and Wear OS, configure 
 - **Distribution and identity:** Answered 2026-11-13 - first release on Google Play only (phone and watch in one listing), no sideload channel; public GitHub remote `SerZhyAle/DeviceInfo_Android`; a dedicated page in the site family (SITE-FAMILY-MAP) with a hosted privacy page in en, ru and uk under `site/` of this repository; store name `DeviceInfo`, and a launcher icon is created because neither manifest declares `android:icon`.
 - **License:** Answered 2026-11-13 - MIT. The `LICENSE` file is added by the implementation of this ticket, which also closes the `SZA-LAY01` exemption (expires 2027-02-10).
 - **Local git repository:** Answered 2026-11-13 - yes, initialized during the implementation of this ticket; commits, tags, the remote creation and every push stay on the owner's order. Done 2026-11-13: `git init -b main`, no commit.
-- **DO:** create the upload keystore in `P:\ANDROID\DeviceInfo_credentials` with `keytool`, write `keystore.properties` beside it (`storeFile`, `storePassword`, `keyAlias`, `keyPassword`), keep the app signing key there for the Play import, and set `deviceinfo.signing.dir=P:/ANDROID/DeviceInfo_credentials` in `%USERPROFILE%\.gradle\gradle.properties`. The release variant refuses to package without it, and the signed release build, the R8 run on a device and the Play upload need it.
-- **DO:** in the Play Console create the app `com.sza.deviceinfo`, enter the listing from `docs/play/PLAY_LISTING.md`, the Data safety and app content answers from `docs/play/PLAY_DATA_SAFETY.md`, file a fresh IARC questionnaire, opt the app in to the Wear OS form factor, and import the app signing key at the first upload (one-way) with the upload key registered.
-- **DO:** create the public remote `SerZhyAle/DeviceInfo_Android`, push the tree, and deploy `site/` to `https://serzhyale.github.io/DeviceInfo_Android/` so the privacy URL answers before the Play submission.
-- **DO:** take screenshots of the phone app and the watch app on real devices (the device check of S0007 produces them) and upload them to the listing.
-- **Open (scope):** Q: Should the first Google Play release wait for S0011 and S0013? See `### Questions (v1, 2026-11-13)`.
+- **DO:** create the upload keystore in `P:\ANDROID\DeviceInfo_credentials` with `keytool`, write `keystore.properties` beside it (`storeFile`, `storePassword`, `keyAlias`, `keyPassword`), keep the app signing key there for the Play import, and set `deviceinfo.signing.dir=P:/ANDROID/DeviceInfo_credentials` in `%USERPROFILE%\.gradle\gradle.properties`. The release variant refuses to package without it, and the signed release build, the R8 run on a device and the Play upload need it. State 2026-11-13: not done (directory and property absent); carried by S0014 as the owner's release-time step (quiz, second sitting).
+- **DO:** in the Play Console create the app `com.sza.deviceinfo`, enter the listing from `docs/play/PLAY_LISTING.md`, the Data safety and app content answers from `docs/play/PLAY_DATA_SAFETY.md`, file a fresh IARC questionnaire, opt the app in to the Wear OS form factor, and import the app signing key at the first upload (one-way) with the upload key registered. State 2026-11-13: everything except the key import and the Wear OS opt-in is done; those two are one-way steps carried by S0014.
+- **DO:** create the public remote `SerZhyAle/DeviceInfo_Android`, push the tree, and deploy `site/` to `https://serzhyale.github.io/DeviceInfo_Android/` so the privacy URL answers before the Play submission. Done 2026-11-13 on the owner's order (all site addresses answer 200, recorded in S0014).
+- **DO:** take screenshots of the phone app and the watch app on real devices (the device check of S0007 produces them) and upload them to the listing. State 2026-11-13: not done; carried by S0014 as the owner's release-time step (quiz, second sitting).
+- **Open (scope):** ~~Q: Should the first Google Play release wait for S0011 and S0013?~~ Answered 2026-11-13: wait for both; see `### Quiz decisions (2026-11-13, second sitting)`.
 
 ## Spec pass (2026-11-11)
 
@@ -76,6 +76,15 @@ All nine rows were put to the owner as one table and accepted with the table (th
 - Local git repository -> yes; `git init` during the implementation of this ticket, because the tag step and the remote need it. Commits, tags and pushes only on the owner's order.
 
 Resolved without asking: none beyond the above. Not asked and still owed by the implementation, not decided here: generating the keystore and its password handling, creating the Play Console app and importing the key, the `PACKAGE-VERSIONING` band-table row (needs a catalog session and now has its application id), the derivation code and parity gate, the `release` build type, the `.sza-canon.json` channel, site and privacy declarations, a fresh IARC questionnaire, `THIRD-PARTY-NOTICES.txt` where third-party binaries are bundled, and a per-permission justification for `POST_NOTIFICATIONS` (phone) and `WAKE_LOCK` (watch).
+
+### Quiz decisions (2026-11-13, second sitting)
+
+Asked from the current `### Questions (v1, 2026-11-13)` block; the facts below were read fresh before asking.
+
+- Should the first Google Play release wait for S0011 and S0013? -> wait for both (recommended option chosen by the owner). Facts at the sitting: S0013 is `Implemented` and `tools/port-ledger/check-drift.ps1` exits 0 ("nothing uncarried (92 in step, 0 decided)"); S0011 is in the tree and `BlockNeedUserTest`, its device check is folded into the single release device run of S0014 (criterion 5), so no upload happens before it.
+- DO: upload keystore in `P:\ANDROID\DeviceInfo_credentials` with `keystore.properties` and `deviceinfo.signing.dir`; DO: phone and watch screenshots -> stay as the owner's release-time steps carried by S0014 (recommended option chosen by the owner). Observed at the sitting: the directory, the Gradle property and `DEVICEINFO_SIGNING_DIR` are all absent, so neither step is done; neither gates this ticket's own work.
+
+Resolved without asking (2): the DO that creates the Play Console app, listing, Data safety, IARC and the Wear OS form factor, and the DO that creates the remote and the Pages site, are both done 2026-11-13 on the owner's order (settled by `CLAUDE.md` section 3 and the owner request of S0014 section 0). The app signing key import stays at the first upload (one-way, S0014).
 
 ## Plan pass (2026-11-13, unattended)
 
@@ -133,6 +142,7 @@ Each was taken as the researched recommendation and is reversible inside the tic
 - **`THIRD-PARTY-NOTICES.txt` is an asset of each package,** listing components and license links without pasted license text, kept as a byte-identical pair declared in `.sza-canon.json`. Alternative: one root file. Owner may overrule.
 - **`privacy.sensitiveAccess` is true** in `.sza-canon.json`: the report shows values that identify the device in a network and the app writes the clipboard on request.
 - **The band-table row is a proposal, not an edit,** and the registry row is left to the catalog session: the catalog is sealed to repository sessions (`RULES.md`).
+- **Update 2026-11-14 (S0025):** the band-table proposal was accepted into `PACKAGE-VERSIONING` 0.7 on 2026-11-13, and the registry is not sealed - a product writes its own adoption rows and exceptions (`RULES.md` sections 7 and 14), so the line above is superseded: the rows are written (13 for this product). What the catalog side still blocks for the first release, and what it does not, is `docs/contracts/README.md` section 6.
 
 ## Evidence (2026-11-13)
 
@@ -143,7 +153,7 @@ Each was taken as the researched recommendation and is reversible inside the tic
 - All XML files under `phone/src/main` and `wear/src/main` parse (0 malformed). String keys of `values-ru` and `values-uk` equal the base in both modules except `app_name`, now `translatable="false"`.
 - `tools/check-compliance.ps1` from the plugin root - exit 0, 0 errors; `SZA-LAY01`, `SZA-VER03`, `SZA-SURF01`, `SZA-SURF02`, `SZA-SURF03`, `SZA-LAY02`, `SZA-LAY06` hold with the new declarations. Warning left: `SZA-CANON03`, the stale canon stamp, which `adopt-canon` handles and S0008 does not touch.
 - `spec_catalog/validate` exit 0 (10 OK); `spec_catalog/release-queue -Validate` exit 0.
-- `tools/port-ledger/check-drift.ps1` - **exit 1**: three uncarried upstream changes (BatteryDetailsCollector, PlatformDetailsCollector, SensorsDiagnosticsCollector), none from this ticket. Parked as S0013; the check must be at exit 0 at the release start.
+- `tools/port-ledger/check-drift.ps1` - **exit 1**: three uncarried upstream changes (BatteryDetailsCollector, PlatformDetailsCollector, SensorsDiagnosticsCollector), none from this ticket. Parked as S0013; the check must be at exit 0 at the release start. Re-run at the resume pass: exit 0 (S0013 carried the three files).
 - **Compile gate:** `commands.compileCheck` is absent from `.sza-profile.json`: no compile command. The pass edited compiled source (Kotlin build logic, three Gradle scripts, manifests, resources): **compiled, not tested** - nothing was compiled, and no Gradle run happened.
 
 ## Parked
@@ -166,7 +176,7 @@ Each names the command the release will run; all need the keystore of the DO abo
 
 ## Questions
 
-### Questions (v1, 2026-11-13)
+### Questions (v1, 2026-11-13) - answered 2026-11-13
 
 - Q: Should the first Google Play release wait for S0011 and S0013?
   - Wait for both, then release (recommended) - the watch's Send to phone works on a fresh Android 13+ install and the parity check is at exit 0 before anything ships
@@ -177,18 +187,39 @@ Each names the command the release will run; all need the keystore of the DO abo
 - DO: create the remote `SerZhyAle/DeviceInfo_Android`, push, and deploy `site/` to its Pages address.
 - DO: take phone and watch screenshots on real devices and upload them to the listing.
 
+## Resume pass (2026-11-13, unattended)
+
+- **Taken from `Partial`.** No source, resource or script was edited in this pass; it re-ran the fast tier, re-read the carried work and moved the open owner and release items to the tickets that now own them.
+- **Where the rest lives.** The second quiz sitting decided that the owner's release-time steps leave this ticket; since then the owner split them again (S0014 quiz, 2026-11-13): the upload keystore, `deviceinfo.signing.dir` and the phone and watch screenshots are S0029; the release run (release items 1 to 6 below), the app signing key import at the first upload, the Wear OS opt-in and the review are S0014 criteria 4 to 8; release item 7 (live pages, `site-audit`) is S0014 criterion 9. S0011 and S0013, which the owner made the release wait for, are `BlockNeedUserTest` (device check folded into S0014 criterion 5) and `Implemented` with the drift check at exit 0.
+- Carrier: S0014
+- Carrier: S0029
+- **Entry precondition.** This ticket's own deliverable is the in-repository release preparation (id, version derivation and parity gate, release variant and signing contract, site and privacy pages, license, icon, listing sources, notices, release documentation); all of it exists and the fast gates over it are green. Producing and running the signed packages is S0014's done criterion 4, not a claim of this ticket.
+- **Compile gate:** `commands.compileCheck` is absent from `.sza-profile.json` - no compile command; this pass edited no compiled source. The Kotlin build logic, the Gradle scripts, manifests and resources of the implementation pass are **not built, not tested until the release**.
+
 ## Last Audit
 
-**Date:** 26-11-13 | **Mode:** static | **Outcome:** Partial
-**Counts:** PASS 10 | WARN 2 | FAIL 0 | MANUAL 5 | UNCHECKABLE 0 | EXEMPT 1 | RELEASE 7
+**Date:** 26-11-13 | **Mode:** static | **Outcome:** Implemented
+**Counts:** PASS 15 | WARN 1 | FAIL 0 | MANUAL 0 | UNCHECKABLE 0 | EXEMPT 0 | RELEASE 7
+
+### Evidence (this pass)
+- `pwsh -NoProfile -File tools/harness.ps1 spec_catalog/validate` - exit 0 | expected: 0 FAIL | actual: 9 OK, 1 WARN (S0019, S0022 complexity lines, not this ticket), 0 FAIL.
+- `pwsh -NoProfile -File tools/harness.ps1 spec_catalog/release-queue -Validate` - exit 0 | expected: no drift | actual: "OK - 30 ticket(s), no drift".
+- `pwsh -NoProfile -File tools/port-ledger/check-drift.ps1` - exit 0 | expected: nothing uncarried | actual: "OK: nothing uncarried (92 in step, 0 decided)" (was exit 1 at the implementation pass; S0013 closed it).
+- `pwsh -NoProfile -File tools/release/check-version-parity.ps1` - exit 0 | expected: PASS | actual: "PASS (144 checks; sentinel 2.61.1100.000 / phone 261110000 / watch 261110006)".
+- `pwsh -NoProfile -File tools/site/render-landing.ps1 -Check` - exit 0 | expected: current | actual: "landing pages are current: 3 of 3".
+- `check-compliance.ps1 -RepoRoot P:\ANDROID\deviceinfo_mob` from the plugin root - exit 0 | expected: 0 errors | actual: 0 errors, 3 warnings.
+- Probe sweep: `S0008:` under `phone/`, `wear/`, `buildSrc/` - one hit, a KDoc sentence in `ReleaseSigning.kt`, no `Timber` probe.
+- `P:\ANDROID\DeviceInfo_credentials` - absent | expected for this ticket: not required (S0029 owns it).
 
 ### Action items
-1. Compliance warning `SZA-CANON03` (stale canon stamp) - `.sza-canon.json` - run `adopt-canon`; not part of this ticket, left as it was.
-2. The release-start drift check exits 1 - `tools/port-ledger/check-drift.ps1` - S0013 carries or decides the three files; the release cannot start until it is at exit 0. EXEMPT in the counts: the product landing page, parked as S0012.
+1. Compliance warning `SZA-CANON03` (stale canon stamp) - `.sza-canon.json` - S0026 (canon-resync-stamp) owns it; untouched here. The two `SZA-CTR02` warnings sit in `PLAN/archive/S0001_canon-and-foundation.md` and `PLAN/S0012_product-landing-page.md`, not in this ticket's files; reported, not changed (other tickets).
 
-### Manual / on-target
-- [ ] The upload keystore exists and `deviceinfo.signing.dir` points at it; a release packaging task then proceeds instead of stopping with the refusal message.
-- [ ] The Play Console app, listing, Data safety, IARC and Wear OS opt-in are filled from `docs/play/`, and the app signing key is imported.
-- [ ] The remote exists, the tree is pushed and `https://serzhyale.github.io/DeviceInfo_Android/privacy.html` answers in en, ru and uk.
-- [ ] Screenshots of the phone app and the watch app from real devices are in the listing.
-- [ ] The release variant runs on a phone and a watch with Send to phone working end to end (counts as passing when a report sent from the watch arrives on the phone and every section of the phone report opens).
+### Manual / on-target (carried, not open here)
+- [x] The remote exists, the tree is pushed and the privacy pages answer in en, ru and uk - done 2026-11-13 on the owner's order (S0014 section 0: all 9 addresses answer 200).
+- [x] The Play Console app, listing draft, Data safety, IARC and the Wear OS form factor - done 2026-11-13 (`docs/RELEASE.md` owner step 3); the key import and the Wear OS opt-in are one-way steps carried to S0014 criteria 6 and 7.
+- [x] The upload keystore and `deviceinfo.signing.dir` - carried to S0029 (Carrier token above); S0014 criterion 1 checks it.
+- [x] Screenshots of the phone app and the watch app - carried to S0029; S0014 criteria 2 and 3 check them.
+- [x] The release variant on a phone and a watch with Send to phone end to end - carried to S0014 criterion 4.
+
+### RELEASE
+Release items 1 to 7 above, run by S0014 criterion 4 (items 1 to 6) and criterion 9 (item 7).

@@ -1,0 +1,4 @@
+# Tickets allowed to sit in BlockNeedUserTest with no Timber probe, each with the reason (check-probe-present.ps1).
+# Format: "Sxxxx  <reason>". A row with an id and no reason does not count.
+S0032  PowerShell tools, a recipe and docs only: no application code path to instrument; the open check is the release-tier device run of tools/help/capture-help.ps1 (docs/RELEASE.md step 3a)
+S0027  Acceptance ticket that edits only its own spec file: no application code path to instrument; the open checks are the S0007 device run, the family-map footer rows, the post-publication answers and the release-tier run listed in its audit block

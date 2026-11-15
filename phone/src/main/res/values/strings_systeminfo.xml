@@ -133,6 +133,8 @@
     <string name="notifications_denied_message">Notifications are off, so reports from your watch are declined</string>
     <string name="notifications_open_settings">Settings</string>
     <string name="sysinfo_action_notifications">Turn on notifications</string>
+    <string name="sysinfo_action_interface_size">Interface size</string>
+    <string name="sysinfo_interface_size_option">%1$d %%</string>
     <!-- Extended metrics of the base sections, Sensors and Media &amp; Audio -->
     <string name="sysinfo_battery_on_external_power">On external power</string>
     <string name="sysinfo_field_accessibility">Accessibility / TalkBack</string>
@@ -218,4 +220,13 @@
     <string name="sysinfo_field_webview">WebView provider</string>
     <string name="sysinfo_section_media_audio">Media &amp; Audio</string>
     <string name="sysinfo_section_sensors">Sensors</string>
+    <string name="sysinfo_group_expanded">Expanded</string>
+    <string name="sysinfo_group_collapsed">Collapsed</string>
+    <string name="sysinfo_search_shortcut_tooltip">Search (Ctrl+F)</string>
+    <string name="sysinfo_save_shortcut_tooltip">Save (Ctrl+S)</string>
+    <string name="sysinfo_help_shortcut_tooltip">Help (F1)</string>
+
+    <!-- Help viewer (S0024) -->
+    <string name="help_open_on_site">Open on the site</string>
+    <string name="help_open_site_failed">No app available to open the site</string>
 </resources>

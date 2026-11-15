@@ -40,6 +40,13 @@
             android:exported="false"
             android:label="@string/settings_system_info_title" />
 
+        <!-- The help viewer: shows a bundled help page in a WebView with JavaScript off. It needs no permission:
+             the pages are assets, and a link that leaves for the browser is an ordinary intent. -->
+        <activity
+            android:name=".ui.help.HelpActivity"
+            android:exported="false"
+            android:label="@string/help" />
+
         <service
             android:name=".service.PhoneWearListenerService"
             android:exported="true">

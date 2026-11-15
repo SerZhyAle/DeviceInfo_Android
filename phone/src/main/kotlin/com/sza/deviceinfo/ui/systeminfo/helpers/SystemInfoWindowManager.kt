@@ -3,15 +3,17 @@ package com.sza.deviceinfo.ui.systeminfo.helpers
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.TooltipCompat
+import androidx.core.view.MenuItemCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sza.deviceinfo.R
 import com.sza.deviceinfo.core.clipboard.copyTextToClipboard
 import com.sza.deviceinfo.core.systeminfo.SystemInfoReport
@@ -21,6 +23,8 @@ import com.sza.deviceinfo.core.util.rethrowIfCancellation
 import com.sza.deviceinfo.databinding.ActivitySystemInfoBinding
 import com.sza.deviceinfo.di.IoDispatcher
 import com.sza.deviceinfo.domain.repository.SystemInfoGroupStateRepository
+import com.sza.deviceinfo.ui.help.HelpLauncher
+import com.sza.deviceinfo.ui.help.HelpSurfaces
 import com.sza.deviceinfo.ui.systeminfo.adapter.SystemInfoAdapter
 import com.sza.deviceinfo.ui.systeminfo.model.SystemInfoListItem
 import com.sza.deviceinfo.util.applySystemBarInsetPadding
@@ -36,18 +40,39 @@ import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 
-/** Keeps report gathering, rendering and export behaviour out of the screen host. */
+/**
+ * Keeps report gathering, rendering and export behaviour out of the screen host.
+ *
+ * S0024 deliberate difference from upstream: the Help action opens the in-app help through [HelpLauncher] and carries
+ * the accessible name and tooltip "Help (F1)"; upstream left its branch empty.
+ */
 class SystemInfoWindowManager @Inject constructor(
     private val systemInfoDialogManager: SystemInfoDialogManager,
     private val notificationPermission: NotificationPermissionCoordinator,
     @ApplicationContext private val appContext: Context,
     groupStateRepository: SystemInfoGroupStateRepository,
+    private val viewportStore: SystemInfoViewportStore,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
     private var currentReport: SystemInfoReport? = null
     private var systemInfoAdapter: SystemInfoAdapter? = null
     private val expansionState = SystemInfoExpansionState(groupStateRepository)
     private var currentQuery: String = ""
+
+    private var recyclerView: RecyclerView? = null
+    private var gridLayoutManager: GridLayoutManager? = null
+
+    /**
+     * Groups the user closed while a search is showing (COLLAPSIBLE-GROUP 1.2 section 4 rule 2: a search expands the
+     * groups that hold matches, but activating a header still toggles it). It belongs to one search text and is
+     * dropped when the text changes. Nothing here is remembered across launches: a search is a view of the report,
+     * not a change to the groups' own state.
+     */
+    private val searchCollapsed = mutableSetOf<String>()
+    private var searchedText: String = ""
+
+    /** The saved viewport is applied once per screen instance, after the first list is on screen. */
+    private var viewportPending = true
 
     suspend fun gather(context: Context): SystemInfoReport = systemInfoDialogManager.gather(context)
 
@@ -62,34 +87,57 @@ class SystemInfoWindowManager @Inject constructor(
         binding.root.applySystemBarInsetPadding()
         binding.systemInfoToolbar.setUpNavigation(activity)
         binding.systemInfoToolbar.setOnMenuItemClickListener { item -> onAction(activity, binding, item.itemId) }
+        binding.systemInfoToolbar.menu.findItem(R.id.action_system_info_save)?.let {
+            MenuItemCompat.setTooltipText(it, activity.getString(R.string.sysinfo_save_shortcut_tooltip))
+        }
+        // CONTEXT-HELP rule 2: the Help action is named "Help (F1)" for the eye and for a screen reader.
+        binding.systemInfoToolbar.menu.findItem(R.id.action_help)?.let {
+            val name = activity.getString(R.string.sysinfo_help_shortcut_tooltip)
+            MenuItemCompat.setTooltipText(it, name)
+            MenuItemCompat.setContentDescription(it, name)
+        }
+        TooltipCompat.setTooltipText(binding.systemInfoSearchView, activity.getString(R.string.sysinfo_search_shortcut_tooltip))
 
         systemInfoAdapter = SystemInfoAdapter(
-            onToggleSection = { stateKey ->
-                expansionState.toggle(stateKey)
-                updateExpandCollapseIcon(binding)
-                filterAndSubmit(currentQuery)
-            },
+            onToggleSection = { stateKey -> onToggleSection(binding, stateKey) },
             onCopySection = { stateKey -> onCopySection(stateKey) },
             onCopyField = { label, value -> onCopyField(label, value) },
         )
 
-        val isLandscape = activity.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-        val spanCount = if (isLandscape) SPAN_COUNT_LANDSCAPE else SPAN_COUNT_PORTRAIT
-        val gridLayoutManager = GridLayoutManager(activity, spanCount).apply {
-            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    val item = systemInfoAdapter?.currentList?.getOrNull(position) ?: return spanCount
-                    return when (item) {
-                        is SystemInfoListItem.SectionHeader -> if (item.isExpanded) spanCount else 1
-                        is SystemInfoListItem.Field -> spanCount
-                        is SystemInfoListItem.EmptyState -> spanCount
-                    }
+        val list = binding.systemInfoRecyclerView
+        val density = activity.resources.displayMetrics.density
+        // Content-sized packing: one span per dp of usable width; see SystemInfoHeaderPacking.
+        val manager = GridLayoutManager(activity, 1)
+        manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                val spanCount = manager.spanCount
+                val item = systemInfoAdapter?.currentList?.getOrNull(position) ?: return spanCount
+                return when (item) {
+                    is SystemInfoListItem.SectionHeader ->
+                        if (item.isExpanded) {
+                            spanCount
+                        } else {
+                            val natural = systemInfoAdapter?.collapsedHeaderCellWidthPx(list.context, item) ?: 0
+                            SystemInfoHeaderPacking.spanSize(
+                                naturalWidthPx = natural + (SPAN_SLACK_DP * density).toInt(),
+                                usableWidthPx = usableWidthPx(list),
+                                spanCount = spanCount,
+                            )
+                        }
+                    is SystemInfoListItem.Field -> spanCount
+                    is SystemInfoListItem.EmptyState -> spanCount
                 }
             }
         }
+        list.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            val count = SystemInfoHeaderPacking.spanCountFor(usableWidthPx(list), density)
+            if (manager.spanCount != count) manager.spanCount = count
+        }
+        recyclerView = list
+        gridLayoutManager = manager
 
-        binding.systemInfoRecyclerView.apply {
-            layoutManager = gridLayoutManager
+        list.apply {
+            layoutManager = manager
             adapter = systemInfoAdapter
         }
 
@@ -116,7 +164,8 @@ class SystemInfoWindowManager @Inject constructor(
             R.id.action_system_info_share -> report?.let { share(activity, it.fullText) }
             R.id.action_system_info_expand_collapse -> toggleExpandCollapseAll(binding)
             R.id.action_system_info_notifications -> notificationPermission.onMenuAction(activity)
-            R.id.action_help -> { /* In-app help opened when help contract is implemented */ }
+            R.id.action_system_info_interface_size -> InterfaceScalePicker.show(activity)
+            R.id.action_help -> HelpLauncher.open(activity, HelpSurfaces.SYSTEM_INFO)
             else -> return false
         }
         return true
@@ -131,8 +180,65 @@ class SystemInfoWindowManager @Inject constructor(
     private fun toggleExpandCollapseAll(binding: ActivitySystemInfoBinding) {
         val sections = nonEmptySections() ?: return
         expansionState.setAll(sections, expanded = !expansionState.allExpanded(sections))
+        searchCollapsed.clear()
         updateExpandCollapseIcon(binding)
         filterAndSubmit(currentQuery)
+    }
+
+    /**
+     * Activating a header opens or closes its group. While a search is showing the groups that hold matches are
+     * open, so the activation only closes or reopens that group for this search and leaves the remembered state
+     * alone. Either way the activated header stays the viewport anchor.
+     */
+    private fun onToggleSection(binding: ActivitySystemInfoBinding, stateKey: String) {
+        val anchor = captureHeaderAnchor(stateKey)
+        if (currentQuery.isSearching()) {
+            if (!searchCollapsed.add(stateKey)) searchCollapsed.remove(stateKey)
+        } else {
+            expansionState.toggle(stateKey)
+        }
+        updateExpandCollapseIcon(binding)
+        filterAndSubmit(currentQuery, anchor)
+    }
+
+    private fun String.isSearching(): Boolean = trim().isNotEmpty()
+
+    private fun usableWidthPx(list: RecyclerView): Int = list.width - list.paddingLeft - list.paddingRight
+
+    /** Where the activated header sits now, so it can be put back at the same height after the list reflows. */
+    private fun captureHeaderAnchor(stateKey: String): SystemInfoViewportAnchor? {
+        val list = recyclerView ?: return null
+        val position = systemInfoAdapter?.currentList
+            ?.indexOfFirst { it is SystemInfoListItem.SectionHeader && it.stateKey == stateKey }
+            ?: return null
+        if (position < 0) return null
+        val view = list.layoutManager?.findViewByPosition(position) ?: return null
+        return SystemInfoViewportAnchor("h:$stateKey", view.top - list.paddingTop)
+    }
+
+    /**
+     * Puts the anchor's item back at its offset once, after the list that holds it is committed. The activity does
+     * not scroll to the first child, the top or the end of the group; a boundary keeps the closest feasible position
+     * because the layout manager clamps the offset instead of retrying.
+     */
+    private fun restoreAnchor(items: List<SystemInfoListItem>, anchor: SystemInfoViewportAnchor) {
+        val position = items.indexOfAnchor(anchor.key)
+        if (position >= 0) gridLayoutManager?.scrollToPositionWithOffset(position, anchor.offsetPx)
+    }
+
+    /**
+     * Remembers the first visible item and its offset (COLLAPSIBLE-GROUP 1.2 section 4 rule 7). A search is only a
+     * view of the report, so its scroll position is not remembered, and nothing is saved before a list is shown.
+     */
+    fun saveViewport() {
+        val list = recyclerView ?: return
+        val manager = gridLayoutManager ?: return
+        if (currentQuery.isSearching()) return
+        val position = manager.findFirstVisibleItemPosition()
+        if (position == RecyclerView.NO_POSITION) return
+        val key = systemInfoAdapter?.currentList?.getOrNull(position)?.anchorKey() ?: return
+        val view = manager.findViewByPosition(position) ?: return
+        viewportStore.save(SystemInfoViewportAnchor(key, view.top - list.paddingTop))
     }
 
     private fun nonEmptySections(): List<SystemInfoSection>? =
@@ -150,11 +256,15 @@ class SystemInfoWindowManager @Inject constructor(
         }
     }
 
-    private fun filterAndSubmit(query: String) {
+    private fun filterAndSubmit(query: String, anchor: SystemInfoViewportAnchor? = null) {
         val report = currentReport ?: return
         val items = mutableListOf<SystemInfoListItem>()
         val trimmedQuery = query.trim()
         val isSearch = trimmedQuery.isNotEmpty()
+        if (trimmedQuery != searchedText) {
+            searchedText = trimmedQuery
+            searchCollapsed.clear()
+        }
 
         report.sections.filter { it.fields.isNotEmpty() }.forEach { section ->
             val matchingFields = if (isSearch) {
@@ -168,7 +278,11 @@ class SystemInfoWindowManager @Inject constructor(
             }
 
             if (matchingFields.isNotEmpty()) {
-                val isExpanded = isSearch || expansionState.isExpanded(section.stateKey)
+                val isExpanded = if (isSearch) {
+                    section.stateKey !in searchCollapsed
+                } else {
+                    expansionState.isExpanded(section.stateKey)
+                }
                 items.add(
                     SystemInfoListItem.SectionHeader(
                         title = section.title,
@@ -201,7 +315,17 @@ class SystemInfoWindowManager @Inject constructor(
             )
         }
 
-        systemInfoAdapter?.submitList(items)
+        systemInfoAdapter?.submitList(items) {
+            val restore = anchor ?: savedViewportOnce(isSearch)
+            if (restore != null) restoreAnchor(items, restore)
+        }
+    }
+
+    /** The remembered viewport, handed out once per screen instance and never while a search is showing. */
+    private fun savedViewportOnce(isSearch: Boolean): SystemInfoViewportAnchor? {
+        if (!viewportPending || isSearch) return null
+        viewportPending = false
+        return viewportStore.load()
     }
 
     private fun onCopySection(stateKey: String) {
@@ -271,7 +395,7 @@ class SystemInfoWindowManager @Inject constructor(
     }
 
     private companion object {
-        const val SPAN_COUNT_PORTRAIT = 2
-        const val SPAN_COUNT_LANDSCAPE = 4
+        /** Absorbs rounding between the measured header and the span grid so a header's title does not wrap by a hair. */
+        const val SPAN_SLACK_DP = 2
     }
 }

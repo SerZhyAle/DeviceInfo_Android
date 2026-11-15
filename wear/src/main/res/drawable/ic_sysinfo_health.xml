@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Header glyph ic_sysinfo_health, provisional meaning system.health (S0035): a pulse trace, drawn for this product on
+     the 24 grid as one filled silhouette (only M, L and Z), proposed in
+     PROPOSAL-2026-11-14-deviceinfo-system-info-meanings.md of the shared contracts catalog. Held to docs/design/tokens.json
+     by tools/design/check-tokens.ps1; the Icon composable tints it. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M2,14.1L6.5,14.1L7.54,13.37L8.92,9.49L11.95,19.32L14.02,19.42L16.23,14.1L22,14.1L22,11.9L15.5,11.9L14.48,12.58L13.16,15.77L10.05,5.68L7.96,5.63L5.72,11.9L2,11.9Z" />
+</vector>
